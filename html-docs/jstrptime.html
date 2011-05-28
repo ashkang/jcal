@@ -1,0 +1,294 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of JSTRPTIME</TITLE>
+</HEAD><BODY>
+<H1>JSTRPTIME</H1>
+Section: libjalali Manual (3)<BR>Updated: 2011-05-28<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+jstrptime - convert a string representation of jalali date and time to a jalali time jtm structure
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>#include &lt;<A HREF="file:/usr/include/time.h">time.h</A>&gt;</B>
+
+<P>
+<B>char *jstrptime(const char *</B><I>s</I><B>, const char *</B><I>format</I><B>,</B>
+
+<B>struct jtm *</B><I>jtm</I><B>);</B>
+
+<P>
+Link with -ljalali
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+The
+<B>jstrptime</B>()
+
+function is the converse function to
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+jstrftime">jstrftime</A></B>(3)
+
+and converts the character string pointed to by
+<I>s</I>
+
+to values which are stored in the
+<I>jtm</I>
+
+structure pointed to by
+<I>jtm</I>,
+
+using the format specified by
+<I>format</I>.
+
+Here
+<I>format</I>
+
+is a character string that consists of field descriptors and text characters,
+reminiscent of
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+scanf">scanf</A></B>(3).
+
+Each field descriptor consists of a
+<B>%</B>
+
+character followed by another character that specifies the replacement
+for the field descriptor.
+All other characters in the
+<I>format</I>
+
+string must have a matching character in the input string.
+There should be whitespace or other alphanumeric characters
+between any two field descriptors.
+<P>
+
+The
+<B>jstrptime</B>()
+
+function processes the input string from left
+to right.
+Each of the three possible input elements (whitespace,
+literal, or format) are handled one after the other.
+If the input cannot be matched to the format string the function stops.
+The remainder of the format and input strings are not processed.
+<P>
+
+The supported input field descriptors are listed below.
+In case a text string (such as a weekday or month name)
+is to be matched, the comparison is case insensitive.
+In case a number is to be matched, leading zeros are
+permitted but not required.
+<DL COMPACT>
+<DT><B>%%</B>
+
+<DD>
+The
+<B>%</B>
+
+character.
+<DT><B>%a</B> or <B>%A</B>
+
+<DD>
+The weekday name in abbreviated form or the full name.
+<DT><B>%b</B> or <B>%B</B> or <B>%h</B>
+
+<DD>
+The month name in abbreviated form or the full name.
+<DT><B>%d</B> or <B>%e</B>
+
+<DD>
+The day of month (1-31).
+<DT><B>%H</B>
+
+<DD>
+The hour (0-23).
+<DT><B>%j</B>
+
+<DD>
+The day number in the year (1-366).
+<DT><B>%m</B>
+
+<DD>
+The month number (1-12).
+<DT><B>%M</B>
+
+<DD>
+The minute (0-59).
+<DT><B>%S</B>
+
+<DD>
+The second (0-59).
+<DT><B>%y</B>
+
+<DD>
+The year within century (0-99).
+When a century is not otherwise specified, values in the range 19-99 refer
+to years in the fourteenth century (1319-1399); values in the
+range 00-18 refer to years in the fifteenth century (1400-1418).
+<DT><B>%Y</B>
+
+<DD>
+The year, including century (for example, 1390).
+</DL>
+<P>
+
+The broken-down jalali time structure <I>jtm</I> is defined in <I>&lt;<A HREF="file:/usr/include/jtime.h">jtime.h</A>&gt;</I>
+as follows:
+<P>
+
+<PRE>
+struct jtm {
+    int tm_sec;        /* seconds */
+    int tm_min;        /* minutes */
+    int tm_hour;       /* hours */
+    int tm_mday;       /* day of the month */
+    int tm_mon;        /* month */
+    int tm_year;       /* year */
+    int tm_wday;       /* day of the week */
+    int tm_yday;       /* day in the year */
+    int tm_isdst;      /* daylight saving time */
+};
+</PRE>
+
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>RETURN VALUE</H2>
+
+The return value of the function is a pointer to the first character
+not processed in this function call.
+In case the input string
+contains more characters than required by the format string the return
+value points right after the last consumed input character.
+In case
+the whole input string is consumed the return value points to the null
+byte at the end of the string.
+If
+<B>jstrptime</B>()
+
+fails to match all
+of the format string and therefore an error occurred the function
+returns NULL.
+<A NAME="lbAF">&nbsp;</A>
+<H2>CONFORMING TO</H2>
+
+C99.
+<A NAME="lbAG">&nbsp;</A>
+<H2>NOTES</H2>
+
+<P>
+
+In principle, this function does not initialize <I>jtm</I> but
+only stores the values specified.
+This means that <I>jtm</I> should be initialized before the call.
+libjalali does not touch those fields which are not
+explicitly specified.
+<P>
+<DL COMPACT>
+<DT><B>%u</B>
+
+<DD>
+The day of the week as a decimal number (1-7, where Monday = 1).
+<P>
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>EXAMPLE</H2>
+
+The following example demonstrates the use of
+<B>jstrptime</B>()
+
+and
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+jstrftime">jstrftime</A></B>(3).
+
+<P>
+<PRE>
+#include &lt;<A HREF="file:/usr/include/stdio.h">stdio.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/stdlib.h">stdlib.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/string.h">string.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/time.h">time.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/jalali.h">jalali.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/jtime.h">jtime.h</A>&gt;
+
+int
+main(void)
+{
+    struct jtm tm;
+    char buf[255];
+
+    memset(&amp;jtm, 0, sizeof(struct jtm));
+    jstrptime(&quot;2001-11-12 18:31:01&quot;, &quot;%Y-%m-%d %H:%M:%S&quot;, &amp;jtm);
+    jstrftime(buf, sizeof(buf), &quot;%d %b %Y %H:%M&quot;, &amp;jtm);
+    puts(buf);
+    exit(EXIT_SUCCESS);
+}
+</PRE>
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+time">time</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+jdate">jdate</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+jcal">jcal</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+getdate">getdate</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+scanf">scanf</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+jstrftime">jstrftime</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+jctime">jctime</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+feature_test_macros">feature_test_macros</A></B>(7)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>COLOPHON</H2>
+
+This page is part of release 0.2 of the libjalali
+<I>man-pages</I>
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Written by Ashkan Ghassemi. &lt;<A HREF="mailto:ghassemi@ftml.net">ghassemi@ftml.net</A>&gt;
+<A NAME="lbAL">&nbsp;</A>
+<H2>REPORTING BUGS</H2>
+
+Report libjalali bugs to &lt;<A HREF="mailto:ghassemi@ftml.net">ghassemi@ftml.net</A>&gt;
+<P>
+libjalali home page: &lt;<A HREF="http://savannah.nongnu.org/projects/jcal/">http://savannah.nongnu.org/projects/jcal/</A>&gt;
+<A NAME="lbAM">&nbsp;</A>
+<H2>COPYRIGHT</H2>
+
+Copyright (C) 2011 Ashkan Ghassemi.
+<P>
+License LGPLv3+: GNU LGPL version 3 or later
+&lt;<A HREF="http://gnu.org/licenses/lgpl.html">http://gnu.org/licenses/lgpl.html</A>&gt;.
+This is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by
+law.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">RETURN VALUE</A><DD>
+<DT><A HREF="#lbAF">CONFORMING TO</A><DD>
+<DT><A HREF="#lbAG">NOTES</A><DD>
+<DT><A HREF="#lbAH">EXAMPLE</A><DD>
+<DT><A HREF="#lbAI">SEE ALSO</A><DD>
+<DT><A HREF="#lbAJ">COLOPHON</A><DD>
+<DT><A HREF="#lbAK">AUTHOR</A><DD>
+<DT><A HREF="#lbAL">REPORTING BUGS</A><DD>
+<DT><A HREF="#lbAM">COPYRIGHT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 16:40:48 GMT, May 28, 2011
+</BODY>
+</HTML>

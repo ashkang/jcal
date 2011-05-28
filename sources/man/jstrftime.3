@@ -1,0 +1,299 @@
+.\" * jstrftime.3 - Tools for manipulating Jalali representation of Iranian calendar 
+.\" * and necessary conversations to Gregorian calendar.
+.\" * Copyright (C) 2006, 2007, 2009, 2010, 2011 Ashkan Ghassemi.
+.\" *
+.\" * This file is part of libjalali.
+.\" *
+.\" * libjalali is free software: you can redistribute it and/or modify
+.\" * it under the terms of the GNU Lesser General Public License as published by
+.\" * the Free Software Foundation, either version 3 of the License, or
+.\" * (at your option) any later version.
+.\" * 
+.\" * libjalali is distributed in the hope that it will be useful,
+.\" * but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" * GNU Lesser General Public License for more details.
+.\" *
+.\" * You should have received a copy of the GNU Lesser General Public License
+.\" * along with libjalali.  If not, see <http://www.gnu.org/licenses/>.
+
+.TH JSTRFTIME 3  2011-05-28 "GNU" "libjalali Manual"
+.SH NAME
+jstrftime \- format jalali date and time
+.SH SYNOPSIS
+.nf
+.B #include <jtime.h>
+.sp
+.BI "size_t jstrftime(char *" s ", size_t " max ", const char *" format ,
+.BI "                const struct tm *" jtm );
+.fi
+.sp
+Link with -ljalali
+.SH DESCRIPTION
+The
+.BR jstrftime ()
+function formats the broken-down jalali time \fIjtm\fP
+according to the format specification \fIformat\fP and places the
+result in the character array \fIs\fP of size \fImax\fP.
+.PP
+The format specification is a null-terminated string and may contain
+special character sequences called
+.IR "conversion specifications",
+each of which is introduced by a \(aq%\(aq character and terminated by
+some other character known as a
+.IR "conversion specifier character".
+All other character sequences are
+.IR "ordinary character sequences".
+.PP
+The characters of ordinary character sequences (including the null byte)
+are copied verbatim from \fIformat\fP to \fIs\fP. However, the characters
+of conversion specifications are replaced as follows:
+.TP
+.B %a
+The abbreviated weekday name.
+.TP
+.B %A
+The full weekday name.
+.TP
+.B %b
+The abbreviated month name.
+.TP
+.B %B
+The full month name.
+.TP
+.B %c
+The preferred date and time representation.
+.TP
+.B %C
+The century number (year/100) as a 2-digit integer.
+.TP
+.B %d
+The day of the month as a decimal number (range 01 to 31).
+.TP
+.B %D
+Equivalent to
+.BR %Y/%m/%d .
+.TP
+.B %e
+Like
+.BR %d ,
+the day of the month as a decimal number, but a leading
+zero is replaced by a space. (SU)
+.TP
+.B %F
+Equivalent to
+.B %Y-%m-%d
+(the ISO\ 8601 date format). (C99)
+.TP
+.B %h
+The abbreviated Persian transliteration weekday name.
+.TP
+.B %H
+The hour as a decimal number using a 24-hour clock (range 00 to 23).
+.TP
+.B %I
+The hour as a decimal number using a 12-hour clock (range 01 to 12).
+.TP
+.B %j
+The day of the year as a decimal number (range 001 to 366).
+.TP
+.B %k
+The hour (24-hour clock) as a decimal number (range 0 to 23);
+single digits are preceded by a blank.
+(See also
+.BR %H .)
+(TZ)
+.TP
+.B %l
+The hour (12-hour clock) as a decimal number (range 1 to 12);
+single digits are preceded by a blank.
+(See also
+.BR %I .)
+(TZ)
+.TP
+.B %m
+The month as a decimal number (range 01 to 12).
+.TP
+.B %M
+The minute as a decimal number (range 00 to 59).
+.TP
+.B %n
+A newline character. (SU)
+.TP
+.B %p
+Either "AM" or "PM" according to the given time value, or the
+corresponding strings for the current locale.
+Noon is treated as "PM" and midnight as "AM".
+.TP
+.B %P
+Like
+.B %p
+but in lowercase: "am" or "pm" or a corresponding
+string for the current locale. (GNU)
+.TP
+.B %r
+The time in a.m. or p.m. notation.
+In the POSIX locale this is equivalent to
+.BR "%I:%M:%S %p" .
+(SU)
+.TP
+.B %R
+The time in 24-hour notation (\fB%H:%M\fP). (SU)
+For a version including the seconds, see
+.B %T
+below.
+.TP
+.B %s
+The number of seconds since the Epoch, 1970-01-01 (1348-10-11) 00:00:00 +0000 (UTC). (TZ)
+.TP
+.B %S
+The second as a decimal number (range 00 to 60).
+(The range is up to 60 to allow for occasional leap seconds.)
+.TP
+.B %t
+A tab character. (SU)
+.TP
+.B %T
+The time in 24-hour notation (\fB%H:%M:%S\fP). (SU)
+.TP
+.B %u
+The day of the week as a decimal, range 1 to 7, Saturday being 1.
+See also
+.BR %w .
+(SU)
+.TP
+.B %U
+The week number of the current year as a decimal number,
+range 00 to 53, starting with the first Sunday as the first day
+of week 01.
+.TP
+.B %w
+The day of the week as a decimal, range 0 to 6, Saturday being 0.
+See also
+.BR %u .
+.TP
+.B %x
+The preferred date representation without the time.
+.TP
+.B %X
+The preferred time representation without the date.
+.TP
+.B %y
+The year as a decimal number without a century (range 00 to 99).
+.TP
+.B %Y
+The year as a decimal number including the century.
+.TP
+.B %z
+The
+.I +hhmm
+or
+.I -hhmm
+numeric timezone (that is, the hour and minute offset from UTC). (SU)
+.TP
+.B %Z
+The timezone or name or abbreviation.
+.TP
+.B %%
+A literal \(aq%\(aq character.
+.PP
+The broken-down time structure \fItm\fP is defined in \fI<jtime.h>\fP.
+See also
+.BR jctime (3).
+.SH "RETURN VALUE"
+The
+.BR jstrftime ()
+function returns the number of characters placed
+in the array \fIs\fP, not including the terminating null byte,
+provided the string, including the terminating null byte, fits.
+Otherwise, it returns max, and the contents of the array is undefined.
+.SH ENVIRONMENT
+The environment variables
+.B TZ
+and
+.B LC_TIME
+are used.
+.SH "CONFORMING TO"
+C99.
+.SH EXAMPLES
+.BR "RFC\ 2822-compliant date format"
+(with an English locale for %a and %b)
+.PP
+.in +2n
+"%a,\ %d\ %b\ %Y\ %T\ %z"
+.PP
+.BR "RFC\ 822-compliant date format"
+(with an English locale for %a and %b)
+.PP
+.in +2n
+"%a,\ %d\ %b\ %y\ %T\ %z"
+.SS Example Program
+The program below can be used to experiment with
+.BR jstrftime ().
+.PP
+Some examples of the result string produced by the libjalali implementation of
+.BR jstrftime ()
+are as follows:
+.in +4n
+.nf
+
+.RB "$" " ./a.out \(aq%m\(aq"
+Result string is "11"
+.fi
+.in
+.PP
+Here's the program source:
+.nf
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <jalali.h>
+#include <jtime.h>
+
+int
+main(int argc, char *argv[])
+{
+    char outstr[200];
+    time_t t;
+    struct tm *tmp;
+
+    t = time(NULL);
+    tmp = jlocaltime(&t);
+    if (tmp == NULL) {
+        perror("jlocaltime");
+        exit(EXIT_FAILURE);
+    }
+
+    if (jstrftime(outstr, sizeof(outstr), argv[1], tmp) == 0) {
+        fprintf(stderr, "jstrftime returned 0");
+        exit(EXIT_FAILURE);
+    }
+
+    printf("Result string is \\"%s\\"\\n", outstr);
+    exit(EXIT_SUCCESS);
+}
+.fi
+.SH "SEE ALSO"
+.BR jdate (1),
+.BR jcal (1),
+.BR time (2),
+.BR jctime (3),
+.BR sprintf (3),
+.BR jstrptime (3)
+.SH COLOPHON
+This page is part of release 0.2 of the libjalali
+.I man-pages
+.SH AUTHOR
+Written by Ashkan Ghassemi. <ghassemi@ftml.net>
+.SH REPORTING BUGS
+Report libjalali bugs to <ghassemi@ftml.net>
+
+libjalali home page: <http://savannah.nongnu.org/projects/jcal/>
+.SH COPYRIGHT
+Copyright (C) 2011 Ashkan Ghassemi. 
+
+License LGPLv3+: GNU LGPL version 3 or later
+<http://gnu.org/licenses/lgpl.html>.
+This is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by
+law.

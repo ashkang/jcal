@@ -1,0 +1,39 @@
+/*
+ * README - Unix cal-like interface to libjalali.
+ * Copyright (C) 2006, 2007, 2009, 2010, 2011 Ashkan Ghassemi.
+ *
+ * This file is part of jcal.
+ *
+ * jcal is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * jcal is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with jcal.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+jcal is a UNIX-cal-like tool to display calendar
+based on jalali reperesnation of date.
+
+Switches in brief:
+-y 	Display a calendar for the current year.
+-p	Display year based on Pahlavi epoch. 
+-j 	Display Julian dates (days one-based, numbered from Farvardin 1).
+-1 	Display single month output. (This is the default.)
+-3	Display prev/current/next months output.
+-V 	Display calendar version.
+
+If you're having troubles, compiling the package with GNU's build system keep reading.
+
+Unsafe way of compilation
+=========================
+
+There is a non-portable Makefile available in package tree ``Makefile.old''
+If you had troubles, compiling your package with ./configure script, rename
+Makefile.old to Makefile, then simply invoke make and then make install as root.

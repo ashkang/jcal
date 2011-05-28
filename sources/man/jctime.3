@@ -1,0 +1,521 @@
+.\" * jctime.3 - Tools for manipulating Jalali representation of Iranian calendar 
+.\" * and necessary conversations to Gregorian calendar.
+.\" * Copyright (C) 2006, 2007, 2009, 2010, 2011 Ashkan Ghassemi.
+.\" *
+.\" * This file is part of libjalali.
+.\" *
+.\" * libjalali is free software: you can redistribute it and/or modify
+.\" * it under the terms of the GNU Lesser General Public License as published by
+.\" * the Free Software Foundation, either version 3 of the License, or
+.\" * (at your option) any later version.
+.\" * 
+.\" * libjalali is distributed in the hope that it will be useful,
+.\" * but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" * GNU Lesser General Public License for more details.
+.\" *
+.\" * You should have received a copy of the GNU Lesser General Public License
+.\" * along with libjalali.  If not, see <http://www.gnu.org/licenses/>.
+
+.TH JCTIME 3 2011-05-28 "" "libjalali Manual"
+.SH NAME
+jasctime, jctime, jgmtime, jlocaltime, jmktime, jasctime_r, jctime_r, jgmtime_r,
+jlocaltime_r \- transform jalali date and time to broken-down jalali time or ASCII
+.SH SYNOPSIS
+.nf
+.B #include <jtime.h>
+.sp
+.BI "char *jasctime(const struct jtm *" jtm );
+.br
+.BI "char *jasctime_r(const struct jtm *" jtm ", char *" buf );
+.sp
+.BI "char *jctime(const time_t *" timep );
+.br
+.BI "char *jctime_r(const time_t *" timep ", char *" buf );
+.sp
+.BI "struct jtm *jgmtime(const time_t *" timep );
+.br
+.BI "struct jtm *jgmtime_r(const time_t *" timep ", struct jtm *" result );
+.sp
+.BI "struct jtm *jlocaltime(const time_t *" timep );
+.br
+.BI "struct jtm *jlocaltime_r(const time_t *" timep ", struct jtm *" result );
+.sp
+.BI "time_t jmktime(struct jtm *" jtm );
+.br
+.sp
+.B #include <jalali.h>
+.sp
+.BI "int jalali_is_jleap(int " year );
+.sp
+.BI "void jalali_create_time_from_secs(time_t " time ", struct ab_jtm* " ab_jtm );
+.br
+.BI "time_t jalali_create_secs_from_time(const struct ab_jtm* " ab_jtm );
+.sp
+.BI "int jalali_create_date_from_days(struct jtm* " jtm );
+.br
+.BI "int jalali_create_days_from_date(struct jtm* " jtm );
+.sp
+.BI "void jalali_get_jyear_info(struct jyinfo* " jyinfo );
+.sp
+.BI "void jalali_get_date(int " p ", struct jtm* " jtm );
+.br
+.BI "int jalali_get_diff(const struct jtm* " jtm );
+.sp
+.BI "void jalali_update(struct jtm* " jtm );
+.br
+.fi
+.sp
+.in
+.ad l
+.sp
+Link with -ljalali
+.sp
+.BR jasctime_r (),
+.BR jctime_r (),
+.BR jgmtime_r (),
+.BR jlocaltime_r ():
+.RS
+_POSIX_C_SOURCE\ >=\ 1 || _BSD_SOURCE ||
+_MISC_SOURCE || _POSIX_SOURCE
+.RE
+.ad
+.SH DESCRIPTION
+The
+.BR jctime (),
+.BR jgmtime ()
+and
+.BR jlocaltime ()
+functions all take
+an argument of data type \fItime_t\fP which represents calendar time.
+When interpreted as an absolute time value, it represents the number of
+seconds elapsed since the Epoch, 1970-01-01 (1348-10-11 in Jalali) 00:00:00 +0000 (UTC).
+.PP
+The
+.BR jasctime ()
+and
+.BR jmktime ()
+functions both take an argument
+representing broken-down jalali time which is a representation
+separated into year, month, day, etc.
+.PP
+Broken-down jalali time is stored
+in the structure \fIjtm\fP which is defined in \fI<jtime.h>\fP as follows:
+.sp
+.in +4n
+.nf
+struct jtm {
+    int tm_sec;         /* seconds */
+    int tm_min;         /* minutes */
+    int tm_hour;        /* hours */
+    int tm_mday;        /* day of the month */
+    int tm_mon;         /* month */
+    int tm_year;        /* year */
+    int tm_wday;        /* day of the week */
+    int tm_yday;        /* day in the year */
+    int tm_isdst;       /* daylight saving time */
+};
+.fi
+.in
+.PP
+The members of the \fIjtm\fP structure are:
+.TP 10
+.I tm_sec
+The number of seconds after the minute, in the range 0 to 59.
+.TP
+.I tm_min
+The number of minutes after the hour, in the range 0 to 59.
+.TP
+.I tm_hour
+The number of hours past midnight, in the range 0 to 23.
+.TP
+.I tm_mday
+The day of the month, in the range 1 to 31.
+.TP
+.I tm_mon
+The number of months since Farvadin, in the range 0 to 11.
+.TP
+.I tm_year
+Absolute year number including the century.
+.TP
+.I tm_wday
+The number of days since Saturday, in the range 0 to 6.
+.TP
+.I tm_yday
+The number of days since Farvadin 1, in the range 0 to 365.
+.TP
+.I tm_isdst
+A flag that indicates whether daylight saving time is in effect at the
+time described.
+The value is positive if daylight saving time is in
+effect, zero otherwise.
+.PP
+Information about a certain year in jalali system is stored
+in the structure \fIjyinfo\fP in the following format:
+.sp
+.in +4n
+.nf
+struct jyinfo {
+    int lf;                /* leap indicator flag */
+    int y;                 /* year */
+    int r;                 /* reamining years in grand cycle */
+    int p;                 /* passed years from grand cycle*/
+    int rl;                /* remaining leap years in grand cycle */
+    int pl;                /* passed leap years in grand cycle */
+    int apl;               /* absolute passed leaps */
+};
+.fi
+.in
+.PP
+The members of the \fIjyinfo\fP structure are:
+.TP 10
+.I lf
+A flag that indicates whether a year is leap or not.
+.TP
+.I y
+Absolute year number including the century.
+.TP
+.I r
+The number of remaining years in the grand cycle. (2820 years in length)
+.TP
+.I p
+The number of passed years in the grand cycle.
+.TP
+.I rl
+The number of remaining leap years in the grand cycle.
+.TP
+.I pl
+The number of passed leap years in the grand cycle.
+.TP
+.I apl
+The absolute number of passed leaps since Epoch.
+.PP
+Internal jalali date functions make use of passed days since
+UTC Epoch to calculate date and time. To store these information,
+the following structure is also defined:
+.sp
+.in +4n
+.nf
+struct ab_jtm {
+    int ab_sec;
+    int ab_min;
+    int ab_hour;
+    int ab_days;
+};
+.fi
+.in
+.PP
+The members of the \fIab_jtm\fP structure are as follows:
+.TP 10
+.I ab_sec
+The number of seconds.
+.TP
+.I ab_min
+The number of minutes.
+.TP
+.I ab_hour
+The number of hours
+.TP
+.I ab_days
+The absolute number of days since UTC Epoch. (1348-10-11)
+.PP
+The call
+.BI jctime( t )
+is equivalent to
+.BI jasctime(jlocaltime( t )) \fR.
+It converts the calendar time \fIt\fP into a
+null-terminated string of the form
+.sp
+.RS
+"Jom Kho 06 22:59:17 1390\\n"
+.RE
+.sp
+The abbreviations for the days of the week are "Sun", "Mon", "Tue", "Wed",
+"Thu", "Fri", and "Sat".
+Persian transliteration for the days of the week are "Sha", "Yek", "Dos", "Ses",
+"Cha", "Pan", and "Jom".
+The abbreviations for the months are "Far",
+"Ord", "Kho", "Tir", "Mor", "Sha", "Meh", "Aba", "Aza", "Dey", "Bah", and
+"Esf".
+The return value points to a statically allocated string which
+might be overwritten by subsequent calls to any of the date and time
+functions.
+The reentrant version
+.BR jctime_r ()
+does the same, but stores the
+string in a user-supplied buffer
+which should have room for at least 26 bytes.
+.PP
+The
+.BR jgmtime ()
+function converts the calendar time \fItimep\fP to
+broken-down jalali time representation, expressed in Coordinated Universal Time
+(UTC).
+The return value points to a statically allocated struct which might be
+overwritten by subsequent calls to any of the jalali date and time functions.
+The
+.BR jgmtime_r ()
+function does the same, but stores the data in a
+user-supplied struct.
+The function acts as if it called
+.BR tzset (3)
+.PP
+The
+.BR jlocaltime ()
+function converts the calendar time \fItimep\fP to
+broken-down jalali time representation,
+expressed relative to the user's specified timezone.
+The function acts as if it called
+.BR tzset (3)
+and sets the external variables \fItzname\fP with
+information about the current timezone, \fItimezone\fP with the difference
+between Coordinated Universal Time (UTC) and local standard time in
+seconds, and \fIdaylight\fP to a nonzero value if daylight savings
+time rules apply during some part of the year.
+The return value points to a statically allocated struct which might be
+overwritten by subsequent calls to any of the jalali date and time functions.
+The
+.BR jlocaltime_r ()
+function does the same, but stores the data in a
+user-supplied struct.
+.PP
+The
+.BR jasctime ()
+function converts the broken-down jalali time value
+\fIjtm\fP into a null-terminated string with the same format as
+.BR jctime ().
+The return value points to a statically allocated string which might be
+overwritten by subsequent calls to any of the date and time functions.
+The
+.BR jasctime_r ()
+function does the same, but stores the string in
+a user-supplied buffer which should have room for at least 26 bytes.
+.PP
+The
+.BR jmktime ()
+function converts a broken-down jalali time structure, expressed
+as local time, to calendar time representation.
+The function ignores
+the values supplied by the caller in the
+.I tm_wday
+field.
+The value specified in the
+.I tm_isdst
+field informs
+.BR jmktime ()
+whether or not daylight saving time (DST)
+is in effect for the time supplied in the
+.I jtm
+structure:
+a positive value means DST is in effect;
+zero means that DST is not in effect;
+
+The
+.BR jmktime ()
+function modifies the fields of the
+.IR jtm
+structure as follows:
+.I tm_wday
+and
+.I tm_yday
+are set to values determined from the contents of the other fields;
+if structure members are outside their valid interval, they will be
+normalized (so that, for example, 40 Bahman is changed into 10 Esfand);
+Calling
+.BR jmktime ()
+also sets the external variable \fItzname\fP with
+information about the current timezone.
+
+.BR jmktime ()
+function does not check the values of the \fIjtm\fP structure.
+
+.PP
+There are a number of non-standard functions also provided
+to work with jalali date and time.
+
+.PP
+The
+.BR jalali_is_jleap ()
+function returns an integer indicating whether the year specified is leap or not.
+It returns 1 on the event of encountering a leap year, 0 otherwise.
+
+.PP
+The
+.BR jalali_create_time_from_secs ()
+function fills out the \fIab_jtm\fP structure members based on
+the absolute number of seconds elapsed since UTC Epoch.
+
+.PP
+The
+.BR jalali_create_secs_from_time ()
+function is the converse function to
+.BR jalali_create_time_from_secs ()
+which returns absolute number of seconds elapsed since UTC Epoch
+based on the supplied \fIab_jtm\fP structure.
+
+.PP
+The
+.BR jalali_create_date_from_days ()
+function alters \fItm_mon\fP and \fItm_mday\fP fields of the
+broken-down jalali time strucutre based on it's \fItm_yday\fP field.
+It returns -1 on the event of encountering any errors and structure
+fields remain untouched.
+
+.PP
+The
+.BR jalali_create_days_from_date ()
+function alters \fItm_yday\fP field of the broken-down jalali
+time structure based on it's \fItm_mon\fP and \fItm_mday\fP
+fields. It returns -1 on the event of encountering any errors and
+structure fields remain untouched.
+
+.PP
+The
+.BR jalali_get_jyear_info ()
+function modifies \fIjyinfo\fP structure fields to match
+information for year specified by it's \fIy\fP field. Information
+regarding a year in jalali system includes leap flag, passed and 
+reamining years in the grand cycle, passed and remaining leap
+years in the grand cycle and absolute number of passed leaps
+since UTC Epoch.
+
+.PP
+The
+.BR jalali_get_date ()
+function calculates the jalali date based on number of days since
+UTC epoch. It alters the broken-down jalali time structure fields
+accordingly.
+
+.PP
+The
+.BR jalali_get_diff ()
+function is the converse function of
+.BR jalali_get_date ()
+and calculates the number of days passed since UTC Epoch based
+on a broken-down jalali time structure supplied to it.
+
+.PP
+The
+.BR jalali_update ()
+function updates \fItm_wday\fP and \fItm_yday\fP fields of the
+broken-down jalali time structure based on it's \fItm_year\fP
+, \fItm_mon\fP and \fItm_mday\fP. \fItm_isdst\fP, \fItm_gmtoff\fP 
+and \fItm_zone\fP fields are set accordingly. \fItm_hour\fP, \fItm_min\fP and
+\fItm_sec\fP fields remain untouched.
+
+.SH "EXAMPLES"
+The following program converts a jalali date to gregorian
+.nf
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <jalali.h>
+#include <jtime.h>
+
+int
+main(int argc, char ** argv)
+{
+    struct tm tm;
+    struct jtm jtm;
+    time_t t;
+
+    jtm.tm_year = atoi(argv[1]);
+    jtm.tm_mon = atoi(argv[2]);
+    jtm.tm_mday = atoi(argv[3]);
+
+    jalali_update(&jtm);
+    t = jmktime(&jtm);
+    localtime_r(&t, &tm);
+    printf("%d/%d/%d \\n", tm.tm_year, tm.tm_mon, tm.tm_mday);
+    exit(EXIT_SUCCESS);
+}    
+    
+.SH "RETURN VALUE"
+Each of these functions returns the value described, or NULL
+(\-1 in case of
+.BR jmktime ())
+in case an error was detected.
+.SH "CONFORMING TO"
+C99 Standards.
+These functions are provided with APIs similar to that of POSIX.1-2001 date and time
+manipulation and are 
+.B NOT
+part of POSIX standard. For thread safety
+.BR jasctime (),
+.BR jctime (),
+.BR gmtime (),
+.BR localtime (),
+and
+.BR mktime ()
+set of functions should nout be used. See reentrant versions.
+
+like POSIX.1-2008, the following functions:
+.BR jasctime (),
+.BR jasctime_r (),
+.BR jctime (),
+and
+.BR jctime_r ()
+should be considered obsolete.
+Use
+.BR jstrftime (3)
+instead.
+.SH NOTES
+The four functions
+.BR jasctime (),
+.BR jctime (),
+.BR jgmtime ()
+and
+.BR jlocaltime ()
+return a pointer to static data and hence are not thread-safe.
+Thread-safe versions
+.BR jasctime_r (),
+.BR jctime_r (),
+.BR jgmtime_r ()
+and
+.BR jlocaltime_r ()
+
+.LP
+libjalali version of \fIstruct jtm\fP has additional fields
+.sp
+.RS
+.nf
+long tm_gmtoff;           /* Seconds east of UTC */
+const char *tm_zone;      /* Timezone abbreviation */
+.fi
+.RE
+.sp
+defined when
+.B _BSD_SOURCE
+was set before including
+.IR <jtime.h> .
+
+.BR localtime_r ().
+.SH "SEE ALSO"
+.BR jdate (1),
+.BR jcal (1),
+.BR gettimeofday (2),
+.BR time (2),
+.BR utime (2),
+.BR clock (3),
+.BR difftime (3),
+.BR jstrftime (3),
+.BR jstrptime (3),
+.BR timegm (3),
+.BR tzset (3),
+.BR time (7)
+.SH COLOPHON
+This page is part of release 0.2 of the libjalali
+.I man-pages
+.SH AUTHOR
+Written by Ashkan Ghassemi. <ghassemi@ftml.net>
+.SH REPORTING BUGS
+Report libjalali bugs to <ghassemi@ftml.net>
+
+libjalali home page: <http://savannah.nongnu.org/projects/jcal/>
+.SH COPYRIGHT
+Copyright (C) 2011 Ashkan Ghassemi. 
+
+License LGPLv3+: GNU LGPL version 3 or later
+<http://gnu.org/licenses/lgpl.html>.
+This is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by
+law.

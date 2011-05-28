@@ -1,0 +1,694 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of JCTIME</TITLE>
+</HEAD><BODY>
+<H1>JCTIME</H1>
+Section: libjalali Manual (3)<BR>Updated: 2011-05-28<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+jasctime, jctime, jgmtime, jlocaltime, jmktime, jasctime_r, jctime_r, jgmtime_r,
+jlocaltime_r - transform jalali date and time to broken-down jalali time or ASCII
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/jtime.h">jtime.h</A>&gt;</B>
+
+<B>char *jasctime(const struct jtm *</B><I>jtm</I><B>);</B>
+<BR>
+<B>char *jasctime_r(const struct jtm *</B><I>jtm</I><B>, char *</B><I>buf</I><B>);</B>
+
+<B>char *jctime(const time_t *</B><I>timep</I><B>);</B>
+<BR>
+<B>char *jctime_r(const time_t *</B><I>timep</I><B>, char *</B><I>buf</I><B>);</B>
+
+<B>struct jtm *jgmtime(const time_t *</B><I>timep</I><B>);</B>
+<BR>
+<B>struct jtm *jgmtime_r(const time_t *</B><I>timep</I><B>, struct jtm *</B><I>result</I><B>);</B>
+
+<B>struct jtm *jlocaltime(const time_t *</B><I>timep</I><B>);</B>
+<BR>
+<B>struct jtm *jlocaltime_r(const time_t *</B><I>timep</I><B>, struct jtm *</B><I>result</I><B>);</B>
+
+<B>time_t jmktime(struct jtm *</B><I>jtm</I><B>);</B>
+<BR>
+
+<B>#include &lt;<A HREF="file:/usr/include/jalali.h">jalali.h</A>&gt;</B>
+
+<B>int jalali_is_jleap(int </B><I>year</I><B>);</B>
+
+<B>void jalali_create_time_from_secs(time_t </B><I>time</I><B>, struct ab_jtm* </B><I>ab_jtm</I><B>);</B>
+<BR>
+<B>time_t jalali_create_secs_from_time(const struct ab_jtm* </B><I>ab_jtm</I><B>);</B>
+
+<B>int jalali_create_date_from_days(struct jtm* </B><I>jtm</I><B>);</B>
+<BR>
+<B>int jalali_create_days_from_date(struct jtm* </B><I>jtm</I><B>);</B>
+
+<B>void jalali_get_jyear_info(struct jyinfo* </B><I>jyinfo</I><B>);</B>
+
+<B>void jalali_get_date(int </B><I>p</I><B>, struct jtm* </B><I>jtm</I><B>);</B>
+<BR>
+<B>int jalali_get_diff(const struct jtm* </B><I>jtm</I><B>);</B>
+
+<B>void jalali_update(struct jtm* </B><I>jtm</I><B>);</B>
+<BR>
+</PRE>
+
+<P>
+
+
+<P>
+Link with -ljalali
+<P>
+<B>jasctime_r</B>(),
+
+<B>jctime_r</B>(),
+
+<B>jgmtime_r</B>(),
+
+<B>jlocaltime_r</B>():
+
+<DL COMPACT><DT><DD>
+_POSIX_C_SOURCE&nbsp;&gt;=&nbsp;1 || _BSD_SOURCE ||
+_MISC_SOURCE || _POSIX_SOURCE
+</DL>
+
+
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+The
+<B>jctime</B>(),
+
+<B>jgmtime</B>()
+
+and
+<B>jlocaltime</B>()
+
+functions all take
+an argument of data type <I>time_t</I> which represents calendar time.
+When interpreted as an absolute time value, it represents the number of
+seconds elapsed since the Epoch, 1970-01-01 (1348-10-11 in Jalali) 00:00:00 +0000 (UTC).
+<P>
+
+The
+<B>jasctime</B>()
+
+and
+<B>jmktime</B>()
+
+functions both take an argument
+representing broken-down jalali time which is a representation
+separated into year, month, day, etc.
+<P>
+
+Broken-down jalali time is stored
+in the structure <I>jtm</I> which is defined in <I>&lt;<A HREF="file:/usr/include/jtime.h">jtime.h</A>&gt;</I> as follows:
+<P>
+
+<PRE>
+struct jtm {
+    int tm_sec;         /* seconds */
+    int tm_min;         /* minutes */
+    int tm_hour;        /* hours */
+    int tm_mday;        /* day of the month */
+    int tm_mon;         /* month */
+    int tm_year;        /* year */
+    int tm_wday;        /* day of the week */
+    int tm_yday;        /* day in the year */
+    int tm_isdst;       /* daylight saving time */
+};
+</PRE>
+
+
+<P>
+
+The members of the <I>jtm</I> structure are:
+<DL COMPACT>
+<DT><I>tm_sec</I>
+
+<DD>
+The number of seconds after the minute, in the range 0 to 59.
+<DT><I>tm_min</I>
+
+<DD>
+The number of minutes after the hour, in the range 0 to 59.
+<DT><I>tm_hour</I>
+
+<DD>
+The number of hours past midnight, in the range 0 to 23.
+<DT><I>tm_mday</I>
+
+<DD>
+The day of the month, in the range 1 to 31.
+<DT><I>tm_mon</I>
+
+<DD>
+The number of months since Farvadin, in the range 0 to 11.
+<DT><I>tm_year</I>
+
+<DD>
+Absolute year number including the century.
+<DT><I>tm_wday</I>
+
+<DD>
+The number of days since Saturday, in the range 0 to 6.
+<DT><I>tm_yday</I>
+
+<DD>
+The number of days since Farvadin 1, in the range 0 to 365.
+<DT><I>tm_isdst</I>
+
+<DD>
+A flag that indicates whether daylight saving time is in effect at the
+time described.
+The value is positive if daylight saving time is in
+effect, zero otherwise.
+</DL>
+<P>
+
+Information about a certain year in jalali system is stored
+in the structure <I>jyinfo</I> in the following format:
+<P>
+
+<PRE>
+struct jyinfo {
+    int lf;                /* leap indicator flag */
+    int y;                 /* year */
+    int r;                 /* reamining years in grand cycle */
+    int p;                 /* passed years from grand cycle*/
+    int rl;                /* remaining leap years in grand cycle */
+    int pl;                /* passed leap years in grand cycle */
+    int apl;               /* absolute passed leaps */
+};
+</PRE>
+
+
+<P>
+
+The members of the <I>jyinfo</I> structure are:
+<DL COMPACT>
+<DT><I>lf</I>
+
+<DD>
+A flag that indicates whether a year is leap or not.
+<DT><I>y</I>
+
+<DD>
+Absolute year number including the century.
+<DT><I>r</I>
+
+<DD>
+The number of remaining years in the grand cycle. (2820 years in length)
+<DT><I>p</I>
+
+<DD>
+The number of passed years in the grand cycle.
+<DT><I>rl</I>
+
+<DD>
+The number of remaining leap years in the grand cycle.
+<DT><I>pl</I>
+
+<DD>
+The number of passed leap years in the grand cycle.
+<DT><I>apl</I>
+
+<DD>
+The absolute number of passed leaps since Epoch.
+</DL>
+<P>
+
+Internal jalali date functions make use of passed days since
+UTC Epoch to calculate date and time. To store these information,
+the following structure is also defined:
+<P>
+
+<PRE>
+struct ab_jtm {
+    int ab_sec;
+    int ab_min;
+    int ab_hour;
+    int ab_days;
+};
+</PRE>
+
+
+<P>
+
+The members of the <I>ab_jtm</I> structure are as follows:
+<DL COMPACT>
+<DT><I>ab_sec</I>
+
+<DD>
+The number of seconds.
+<DT><I>ab_min</I>
+
+<DD>
+The number of minutes.
+<DT><I>ab_hour</I>
+
+<DD>
+The number of hours
+<DT><I>ab_days</I>
+
+<DD>
+The absolute number of days since UTC Epoch. (1348-10-11)
+</DL>
+<P>
+
+The call
+<B>jctime(</B><I>t</I><B>)</B>
+
+is equivalent to
+<B>jasctime(jlocaltime(</B><I>t</I><B>))</B><I></I>.
+
+It converts the calendar time <I>t</I> into a
+null-terminated string of the form
+<P>
+<DL COMPACT><DT><DD>
+&quot;Jom Kho 06 22:59:17 1390\n&quot;
+</DL>
+
+<P>
+The abbreviations for the days of the week are &quot;Sun&quot;, &quot;Mon&quot;, &quot;Tue&quot;, &quot;Wed&quot;,
+&quot;Thu&quot;, &quot;Fri&quot;, and &quot;Sat&quot;.
+Persian transliteration for the days of the week are &quot;Sha&quot;, &quot;Yek&quot;, &quot;Dos&quot;, &quot;Ses&quot;,
+&quot;Cha&quot;, &quot;Pan&quot;, and &quot;Jom&quot;.
+The abbreviations for the months are &quot;Far&quot;,
+&quot;Ord&quot;, &quot;Kho&quot;, &quot;Tir&quot;, &quot;Mor&quot;, &quot;Sha&quot;, &quot;Meh&quot;, &quot;Aba&quot;, &quot;Aza&quot;, &quot;Dey&quot;, &quot;Bah&quot;, and
+&quot;Esf&quot;.
+The return value points to a statically allocated string which
+might be overwritten by subsequent calls to any of the date and time
+functions.
+The reentrant version
+<B>jctime_r</B>()
+
+does the same, but stores the
+string in a user-supplied buffer
+which should have room for at least 26 bytes.
+<P>
+
+The
+<B>jgmtime</B>()
+
+function converts the calendar time <I>timep</I> to
+broken-down jalali time representation, expressed in Coordinated Universal Time
+(UTC).
+The return value points to a statically allocated struct which might be
+overwritten by subsequent calls to any of the jalali date and time functions.
+The
+<B>jgmtime_r</B>()
+
+function does the same, but stores the data in a
+user-supplied struct.
+The function acts as if it called
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+tzset">tzset</A></B>(3)
+
+<P>
+
+The
+<B>jlocaltime</B>()
+
+function converts the calendar time <I>timep</I> to
+broken-down jalali time representation,
+expressed relative to the user's specified timezone.
+The function acts as if it called
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+tzset">tzset</A></B>(3)
+
+and sets the external variables <I>tzname</I> with
+information about the current timezone, <I>timezone</I> with the difference
+between Coordinated Universal Time (UTC) and local standard time in
+seconds, and <I>daylight</I> to a nonzero value if daylight savings
+time rules apply during some part of the year.
+The return value points to a statically allocated struct which might be
+overwritten by subsequent calls to any of the jalali date and time functions.
+The
+<B>jlocaltime_r</B>()
+
+function does the same, but stores the data in a
+user-supplied struct.
+<P>
+
+The
+<B>jasctime</B>()
+
+function converts the broken-down jalali time value
+<I>jtm</I> into a null-terminated string with the same format as
+<B>jctime</B>().
+
+The return value points to a statically allocated string which might be
+overwritten by subsequent calls to any of the date and time functions.
+The
+<B>jasctime_r</B>()
+
+function does the same, but stores the string in
+a user-supplied buffer which should have room for at least 26 bytes.
+<P>
+
+The
+<B>jmktime</B>()
+
+function converts a broken-down jalali time structure, expressed
+as local time, to calendar time representation.
+The function ignores
+the values supplied by the caller in the
+<I>tm_wday</I>
+
+field.
+The value specified in the
+<I>tm_isdst</I>
+
+field informs
+<B>jmktime</B>()
+
+whether or not daylight saving time (DST)
+is in effect for the time supplied in the
+<I>jtm</I>
+
+structure:
+a positive value means DST is in effect;
+zero means that DST is not in effect;
+<P>
+The
+<B>jmktime</B>()
+
+function modifies the fields of the
+<I>jtm</I>
+
+structure as follows:
+<I>tm_wday</I>
+
+and
+<I>tm_yday</I>
+
+are set to values determined from the contents of the other fields;
+if structure members are outside their valid interval, they will be
+normalized (so that, for example, 40 Bahman is changed into 10 Esfand);
+Calling
+<B>jmktime</B>()
+
+also sets the external variable <I>tzname</I> with
+information about the current timezone.
+<P>
+<B>jmktime</B>()
+
+function does not check the values of the <I>jtm</I> structure.
+<P>
+<P>
+
+There are a number of non-standard functions also provided
+to work with jalali date and time.
+<P>
+<P>
+
+The
+<B>jalali_is_jleap</B>()
+
+function returns an integer indicating whether the year specified is leap or not.
+It returns 1 on the event of encountering a leap year, 0 otherwise.
+<P>
+<P>
+
+The
+<B>jalali_create_time_from_secs</B>()
+
+function fills out the <I>ab_jtm</I> structure members based on
+the absolute number of seconds elapsed since UTC Epoch.
+<P>
+<P>
+
+The
+<B>jalali_create_secs_from_time</B>()
+
+function is the converse function to
+<B>jalali_create_time_from_secs</B>()
+
+which returns absolute number of seconds elapsed since UTC Epoch
+based on the supplied <I>ab_jtm</I> structure.
+<P>
+<P>
+
+The
+<B>jalali_create_date_from_days</B>()
+
+function alters <I>tm_mon</I> and <I>tm_mday</I> fields of the
+broken-down jalali time strucutre based on it's <I>tm_yday</I> field.
+It returns -1 on the event of encountering any errors and structure
+fields remain untouched.
+<P>
+<P>
+
+The
+<B>jalali_create_days_from_date</B>()
+
+function alters <I>tm_yday</I> field of the broken-down jalali
+time structure based on it's <I>tm_mon</I> and <I>tm_mday</I>
+fields. It returns -1 on the event of encountering any errors and
+structure fields remain untouched.
+<P>
+<P>
+
+The
+<B>jalali_get_jyear_info</B>()
+
+function modifies <I>jyinfo</I> structure fields to match
+information for year specified by it's <I>y</I> field. Information
+regarding a year in jalali system includes leap flag, passed and 
+reamining years in the grand cycle, passed and remaining leap
+years in the grand cycle and absolute number of passed leaps
+since UTC Epoch.
+<P>
+<P>
+
+The
+<B>jalali_get_date</B>()
+
+function calculates the jalali date based on number of days since
+UTC epoch. It alters the broken-down jalali time structure fields
+accordingly.
+<P>
+<P>
+
+The
+<B>jalali_get_diff</B>()
+
+function is the converse function of
+<B>jalali_get_date</B>()
+
+and calculates the number of days passed since UTC Epoch based
+on a broken-down jalali time structure supplied to it.
+<P>
+<P>
+
+The
+<B>jalali_update</B>()
+
+function updates <I>tm_wday</I> and <I>tm_yday</I> fields of the
+broken-down jalali time structure based on it's <I>tm_year</I>
+, <I>tm_mon</I> and <I>tm_mday</I>. <I>tm_isdst</I>, <I>tm_gmtoff</I> 
+and <I>tm_zone</I> fields are set accordingly. <I>tm_hour</I>, <I>tm_min</I> and
+<I>tm_sec</I> fields remain untouched.
+<P>
+<A NAME="lbAE">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+The following program converts a jalali date to gregorian
+<PRE>
+#include &lt;<A HREF="file:/usr/include/stdio.h">stdio.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/stdlib.h">stdlib.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/time.h">time.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/jalali.h">jalali.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/jtime.h">jtime.h</A>&gt;
+
+int
+main(int argc, char ** argv)
+{
+    struct tm tm;
+    struct jtm jtm;
+    time_t t;
+
+    jtm.tm_year = atoi(argv[1]);
+    jtm.tm_mon = atoi(argv[2]);
+    jtm.tm_mday = atoi(argv[3]);
+
+    jalali_update(&amp;jtm);
+    t = jmktime(&amp;jtm);
+    localtime_r(&amp;t, &amp;tm);
+    printf(&quot;%d/%d/%d \n&quot;, tm.tm_year, tm.tm_mon, tm.tm_mday);
+    exit(EXIT_SUCCESS);
+}    
+    
+</PRE><A NAME="lbAF">&nbsp;</A>
+<H2>RETURN VALUE</H2>
+
+Each of these functions returns the value described, or NULL
+(-1 in case of
+<B>jmktime</B>())
+
+in case an error was detected.
+<A NAME="lbAG">&nbsp;</A>
+<H2>CONFORMING TO</H2>
+
+C99 Standards.
+These functions are provided with APIs similar to that of POSIX.1-2001 date and time
+manipulation and are 
+<B>NOT</B>
+
+part of POSIX standard. For thread safety
+<B>jasctime</B>(),
+
+<B>jctime</B>(),
+
+<B>gmtime</B>(),
+
+<B>localtime</B>(),
+
+and
+<B>mktime</B>()
+
+set of functions should nout be used. See reentrant versions.
+<P>
+like POSIX.1-2008, the following functions:
+<B>jasctime</B>(),
+
+<B>jasctime_r</B>(),
+
+<B>jctime</B>(),
+
+and
+<B>jctime_r</B>()
+
+should be considered obsolete.
+Use
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+jstrftime">jstrftime</A></B>(3)
+
+instead.
+<A NAME="lbAH">&nbsp;</A>
+<H2>NOTES</H2>
+
+The four functions
+<B>jasctime</B>(),
+
+<B>jctime</B>(),
+
+<B>jgmtime</B>()
+
+and
+<B>jlocaltime</B>()
+
+return a pointer to static data and hence are not thread-safe.
+Thread-safe versions
+<B>jasctime_r</B>(),
+
+<B>jctime_r</B>(),
+
+<B>jgmtime_r</B>()
+
+and
+<B>jlocaltime_r</B>()
+
+<P>
+<P>
+
+libjalali version of <I>struct jtm</I> has additional fields
+<P>
+<DL COMPACT><DT><DD>
+<PRE>
+long tm_gmtoff;           /* Seconds east of UTC */
+const char *tm_zone;      /* Timezone abbreviation */
+</PRE>
+
+</DL>
+
+<P>
+defined when
+<B>_BSD_SOURCE</B>
+
+was set before including
+<I>&lt;<A HREF="file:/usr/include/jtime.h">jtime.h</A>&gt;</I>.
+
+<P>
+<B>localtime_r</B>().
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+jdate">jdate</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+jcal">jcal</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+gettimeofday">gettimeofday</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+time">time</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+utime">utime</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+clock">clock</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+difftime">difftime</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+jstrftime">jstrftime</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+jstrptime">jstrptime</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+timegm">timegm</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+tzset">tzset</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?7+time">time</A></B>(7)
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>COLOPHON</H2>
+
+This page is part of release 0.2 of the libjalali
+<I>man-pages</I>
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Written by Ashkan Ghassemi. &lt;<A HREF="mailto:ghassemi@ftml.net">ghassemi@ftml.net</A>&gt;
+<A NAME="lbAL">&nbsp;</A>
+<H2>REPORTING BUGS</H2>
+
+Report libjalali bugs to &lt;<A HREF="mailto:ghassemi@ftml.net">ghassemi@ftml.net</A>&gt;
+<P>
+libjalali home page: &lt;<A HREF="http://savannah.nongnu.org/projects/jcal/">http://savannah.nongnu.org/projects/jcal/</A>&gt;
+<A NAME="lbAM">&nbsp;</A>
+<H2>COPYRIGHT</H2>
+
+Copyright (C) 2011 Ashkan Ghassemi. 
+<P>
+License LGPLv3+: GNU LGPL version 3 or later
+&lt;<A HREF="http://gnu.org/licenses/lgpl.html">http://gnu.org/licenses/lgpl.html</A>&gt;.
+This is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by
+law.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">EXAMPLES</A><DD>
+<DT><A HREF="#lbAF">RETURN VALUE</A><DD>
+<DT><A HREF="#lbAG">CONFORMING TO</A><DD>
+<DT><A HREF="#lbAH">NOTES</A><DD>
+<DT><A HREF="#lbAI">SEE ALSO</A><DD>
+<DT><A HREF="#lbAJ">COLOPHON</A><DD>
+<DT><A HREF="#lbAK">AUTHOR</A><DD>
+<DT><A HREF="#lbAL">REPORTING BUGS</A><DD>
+<DT><A HREF="#lbAM">COPYRIGHT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 16:40:31 GMT, May 28, 2011
+</BODY>
+</HTML>

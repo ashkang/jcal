@@ -1,0 +1,422 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of JSTRFTIME</TITLE>
+</HEAD><BODY>
+<H1>JSTRFTIME</H1>
+Section: libjalali Manual (3)<BR>Updated: 2011-05-28<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+jstrftime - format jalali date and time
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<PRE>
+<B>#include &lt;<A HREF="file:/usr/include/jtime.h">jtime.h</A>&gt;</B>
+
+<B>size_t jstrftime(char *</B><I>s</I><B>, size_t </B><I>max</I><B>, const char *</B><I>format</I><B>,</B>
+<B>                const struct tm *</B><I>jtm</I><B>);</B>
+</PRE>
+
+<P>
+Link with -ljalali
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+The
+<B>jstrftime</B>()
+
+function formats the broken-down jalali time <I>jtm</I>
+according to the format specification <I>format</I> and places the
+result in the character array <I>s</I> of size <I>max</I>.
+<P>
+
+The format specification is a null-terminated string and may contain
+special character sequences called
+<I>conversion specifications,</I>
+
+each of which is introduced by a aq%aq character and terminated by
+some other character known as a
+<I>conversion specifier character.</I>
+
+All other character sequences are
+<I>ordinary character sequences.</I>
+
+<P>
+
+The characters of ordinary character sequences (including the null byte)
+are copied verbatim from <I>format</I> to <I>s</I>. However, the characters
+of conversion specifications are replaced as follows:
+<DL COMPACT>
+<DT><B>%a</B>
+
+<DD>
+The abbreviated weekday name.
+<DT><B>%A</B>
+
+<DD>
+The full weekday name.
+<DT><B>%b</B>
+
+<DD>
+The abbreviated month name.
+<DT><B>%B</B>
+
+<DD>
+The full month name.
+<DT><B>%c</B>
+
+<DD>
+The preferred date and time representation.
+<DT><B>%C</B>
+
+<DD>
+The century number (year/100) as a 2-digit integer.
+<DT><B>%d</B>
+
+<DD>
+The day of the month as a decimal number (range 01 to 31).
+<DT><B>%D</B>
+
+<DD>
+Equivalent to
+<B>%Y/%m/%d</B>.
+
+<DT><B>%e</B>
+
+<DD>
+Like
+<B>%d</B>,
+
+the day of the month as a decimal number, but a leading
+zero is replaced by a space. (SU)
+<DT><B>%F</B>
+
+<DD>
+Equivalent to
+<B>%Y-%m-%d</B>
+
+(the ISO&nbsp;8601 date format). (C99)
+<DT><B>%h</B>
+
+<DD>
+The abbreviated Persian transliteration weekday name.
+<DT><B>%H</B>
+
+<DD>
+The hour as a decimal number using a 24-hour clock (range 00 to 23).
+<DT><B>%I</B>
+
+<DD>
+The hour as a decimal number using a 12-hour clock (range 01 to 12).
+<DT><B>%j</B>
+
+<DD>
+The day of the year as a decimal number (range 001 to 366).
+<DT><B>%k</B>
+
+<DD>
+The hour (24-hour clock) as a decimal number (range 0 to 23);
+single digits are preceded by a blank.
+(See also
+<B>%H</B>.)
+
+(TZ)
+<DT><B>%l</B>
+
+<DD>
+The hour (12-hour clock) as a decimal number (range 1 to 12);
+single digits are preceded by a blank.
+(See also
+<B>%I</B>.)
+
+(TZ)
+<DT><B>%m</B>
+
+<DD>
+The month as a decimal number (range 01 to 12).
+<DT><B>%M</B>
+
+<DD>
+The minute as a decimal number (range 00 to 59).
+<DT><B>%n</B>
+
+<DD>
+A newline character. (SU)
+<DT><B>%p</B>
+
+<DD>
+Either &quot;AM&quot; or &quot;PM&quot; according to the given time value, or the
+corresponding strings for the current locale.
+Noon is treated as &quot;PM&quot; and midnight as &quot;AM&quot;.
+<DT><B>%P</B>
+
+<DD>
+Like
+<B>%p</B>
+
+but in lowercase: &quot;am&quot; or &quot;pm&quot; or a corresponding
+string for the current locale. (GNU)
+<DT><B>%r</B>
+
+<DD>
+The time in a.m. or p.m. notation.
+In the POSIX locale this is equivalent to
+<B>%I:%M:%S %p</B>.
+
+(SU)
+<DT><B>%R</B>
+
+<DD>
+The time in 24-hour notation (<B>%H:%M</B>). (SU)
+For a version including the seconds, see
+<B>%T</B>
+
+below.
+<DT><B>%s</B>
+
+<DD>
+The number of seconds since the Epoch, 1970-01-01 (1348-10-11) 00:00:00 +0000 (UTC). (TZ)
+<DT><B>%S</B>
+
+<DD>
+The second as a decimal number (range 00 to 60).
+(The range is up to 60 to allow for occasional leap seconds.)
+<DT><B>%t</B>
+
+<DD>
+A tab character. (SU)
+<DT><B>%T</B>
+
+<DD>
+The time in 24-hour notation (<B>%H:%M:%S</B>). (SU)
+<DT><B>%u</B>
+
+<DD>
+The day of the week as a decimal, range 1 to 7, Saturday being 1.
+See also
+<B>%w</B>.
+
+(SU)
+<DT><B>%U</B>
+
+<DD>
+The week number of the current year as a decimal number,
+range 00 to 53, starting with the first Sunday as the first day
+of week 01.
+<DT><B>%w</B>
+
+<DD>
+The day of the week as a decimal, range 0 to 6, Saturday being 0.
+See also
+<B>%u</B>.
+
+<DT><B>%x</B>
+
+<DD>
+The preferred date representation without the time.
+<DT><B>%X</B>
+
+<DD>
+The preferred time representation without the date.
+<DT><B>%y</B>
+
+<DD>
+The year as a decimal number without a century (range 00 to 99).
+<DT><B>%Y</B>
+
+<DD>
+The year as a decimal number including the century.
+<DT><B>%z</B>
+
+<DD>
+The
+<I>+hhmm</I>
+
+or
+<I>-hhmm</I>
+
+numeric timezone (that is, the hour and minute offset from UTC). (SU)
+<DT><B>%Z</B>
+
+<DD>
+The timezone or name or abbreviation.
+<DT><B>%%</B>
+
+<DD>
+A literal aq%aq character.
+</DL>
+<P>
+
+The broken-down time structure <I>tm</I> is defined in <I>&lt;<A HREF="file:/usr/include/jtime.h">jtime.h</A>&gt;</I>.
+See also
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+jctime">jctime</A></B>(3).
+
+<A NAME="lbAE">&nbsp;</A>
+<H2>RETURN VALUE</H2>
+
+The
+<B>jstrftime</B>()
+
+function returns the number of characters placed
+in the array <I>s</I>, not including the terminating null byte,
+provided the string, including the terminating null byte, fits.
+Otherwise, it returns max, and the contents of the array is undefined.
+<A NAME="lbAF">&nbsp;</A>
+<H2>ENVIRONMENT</H2>
+
+The environment variables
+<B>TZ</B>
+
+and
+<B>LC_TIME</B>
+
+are used.
+<A NAME="lbAG">&nbsp;</A>
+<H2>CONFORMING TO</H2>
+
+C99.
+<A NAME="lbAH">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+<B>RFC&nbsp;2822-compliant date format</B>
+
+(with an English locale for %a and %b)
+<P>
+
+
+&quot;%a,&nbsp;%d&nbsp;%b&nbsp;%Y&nbsp;%T&nbsp;%z&quot;
+<P>
+
+<B>RFC&nbsp;822-compliant date format</B>
+
+(with an English locale for %a and %b)
+<P>
+
+
+&quot;%a,&nbsp;%d&nbsp;%b&nbsp;%y&nbsp;%T&nbsp;%z&quot;
+<A NAME="lbAI">&nbsp;</A>
+<H3>Example Program</H3>
+
+The program below can be used to experiment with
+<B>jstrftime</B>().
+
+<P>
+
+Some examples of the result string produced by the libjalali implementation of
+<B>jstrftime</B>()
+
+are as follows:
+
+<PRE>
+
+$<B> ./a.out aq%maq</B>
+Result string is &quot;11&quot;
+</PRE>
+
+
+<P>
+
+Here's the program source:
+<PRE>
+
+#include &lt;<A HREF="file:/usr/include/stdio.h">stdio.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/stdlib.h">stdlib.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/time.h">time.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/jalali.h">jalali.h</A>&gt;
+#include &lt;<A HREF="file:/usr/include/jtime.h">jtime.h</A>&gt;
+
+int
+main(int argc, char *argv[])
+{
+    char outstr[200];
+    time_t t;
+    struct tm *tmp;
+
+    t = time(NULL);
+    tmp = jlocaltime(&amp;t);
+    if (tmp == NULL) {
+        perror(&quot;jlocaltime&quot;);
+        exit(EXIT_FAILURE);
+    }
+
+    if (jstrftime(outstr, sizeof(outstr), argv[1], tmp) == 0) {
+        fprintf(stderr, &quot;jstrftime returned 0&quot;);
+        exit(EXIT_FAILURE);
+    }
+
+    printf(&quot;Result string is \&quot;%s\&quot;\n&quot;, outstr);
+    exit(EXIT_SUCCESS);
+}
+</PRE>
+
+<A NAME="lbAJ">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+jdate">jdate</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+jcal">jcal</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?2+time">time</A></B>(2),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+jctime">jctime</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+sprintf">sprintf</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+jstrptime">jstrptime</A></B>(3)
+
+<A NAME="lbAK">&nbsp;</A>
+<H2>COLOPHON</H2>
+
+This page is part of release 0.2 of the libjalali
+<I>man-pages</I>
+
+<A NAME="lbAL">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Written by Ashkan Ghassemi. &lt;<A HREF="mailto:ghassemi@ftml.net">ghassemi@ftml.net</A>&gt;
+<A NAME="lbAM">&nbsp;</A>
+<H2>REPORTING BUGS</H2>
+
+Report libjalali bugs to &lt;<A HREF="mailto:ghassemi@ftml.net">ghassemi@ftml.net</A>&gt;
+<P>
+libjalali home page: &lt;<A HREF="http://savannah.nongnu.org/projects/jcal/">http://savannah.nongnu.org/projects/jcal/</A>&gt;
+<A NAME="lbAN">&nbsp;</A>
+<H2>COPYRIGHT</H2>
+
+Copyright (C) 2011 Ashkan Ghassemi. 
+<P>
+License LGPLv3+: GNU LGPL version 3 or later
+&lt;<A HREF="http://gnu.org/licenses/lgpl.html">http://gnu.org/licenses/lgpl.html</A>&gt;.
+This is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by
+law.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">RETURN VALUE</A><DD>
+<DT><A HREF="#lbAF">ENVIRONMENT</A><DD>
+<DT><A HREF="#lbAG">CONFORMING TO</A><DD>
+<DT><A HREF="#lbAH">EXAMPLES</A><DD>
+<DL>
+<DT><A HREF="#lbAI">Example Program</A><DD>
+</DL>
+<DT><A HREF="#lbAJ">SEE ALSO</A><DD>
+<DT><A HREF="#lbAK">COLOPHON</A><DD>
+<DT><A HREF="#lbAL">AUTHOR</A><DD>
+<DT><A HREF="#lbAM">REPORTING BUGS</A><DD>
+<DT><A HREF="#lbAN">COPYRIGHT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 16:40:40 GMT, May 28, 2011
+</BODY>
+</HTML>

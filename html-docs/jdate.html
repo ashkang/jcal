@@ -1,0 +1,179 @@
+Content-type: text/html
+
+<HTML><HEAD><TITLE>Manpage of JDATE</TITLE>
+</HEAD><BODY>
+<H1>JDATE</H1>
+Section: User Commands (1)<BR>Updated: Khordad 6, 1390<BR><A HREF="#index">Index</A>
+<A HREF="http://localhost/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+jdate - manual page for jdate
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>jdate</B>
+
+[<I>arRuhV</I>]... [<I>+OUTPUT_FORMAT</I>][<I>d INPUT_FORMAT;DATE_STRING</I>]
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+Display the current date and time in the given FORMAT.
+<DL COMPACT>
+<DT><B>-d</B>, <B>--date</B>=<I>FORMAT</I>;STRING<DD>
+display time described by STRING, not `now'
+<DT><B>-a</B>, <B>--access</B>=<I>FILE</I><DD>
+display the last access time of FILE.
+<DT><B>-r</B>, <B>--reference</B>=<I>FILE</I><DD>
+display the last modification time of FILE.
+<DT><B>-R</B>, <B>--rfc-2822</B><DD>
+output date and time in RFC 2822 format.
+Example: Jom, 06 Khor 1390 13:44:56 <B>-0430</B>.
+<DT><B>-u</B>, <B>--utc</B>, <B>--universal</B><DD>
+print Coordinated Universal Time.
+<DT><B>-h</B>, <B>--help</B><DD>
+display this help and exit.
+<DT><B>-V</B>, <B>--version</B><DD>
+output version information and exit.
+<DT>FORMAT controls the output.<DD>
+Interpreted sequences are:
+<DT>%%<DD>
+a literal %
+<DT>%a<DD>
+abbreviated weekday name (e.g., Sun)
+<DT>%A<DD>
+full weekday name (e.g., Sunday)
+<DT>%b<DD>
+abbreviated month name (e.g., Khor)
+<DT>%B<DD>
+full month name (e.g., Khordad)
+<DT>%c<DD>
+date and time (e.g., Jome Kho  6 17:18:25 1390)
+<DT>%C<DD>
+century; like %Y, except omit last two digits (e.g., 13)
+<DT>%d<DD>
+day of month (e.g., 01)
+<DT>%D<DD>
+date; same as %Y/%m/%d
+<DT>%e<DD>
+day of month, space padded; same as %_d
+<DT>%F<DD>
+full date; same as %Y-%m-%d
+<DT>%h<DD>
+abbreviated weekday name in Persian transliteration (e.g. Jom)
+<DT>%H<DD>
+hour (00..23)
+<DT>%I<DD>
+hour (01..12)
+<DT>%j<DD>
+day of year (001..366)
+<DT>%k<DD>
+hour (0..23)
+<DT>%l<DD>
+hour (1..12)
+<DT>%m<DD>
+month (01..12)
+<DT>%M<DD>
+minute (00..59)
+<DT>%n<DD>
+a newline
+<DT>%p<DD>
+either AM or PM; blank if not known
+<DT>%P<DD>
+like %p, but lower case
+<DT>%r<DD>
+12-hour clock time (e.g., 17:24:04 PM)
+<DT>%R<DD>
+24-hour hour and minute; same as %H:%M
+<DT>%s<DD>
+seconds since 1970-01-01 00:00:00 UTC
+<DT>%S<DD>
+second (00..59)
+<DT>%t<DD>
+a tab
+<DT>%T<DD>
+time; same as %H:%M:%S
+<DT>%u<DD>
+day of week (1..7); 1 is Saturday
+<DT>%U<DD>
+week number of year, with Saturday as first day of week (00..53)
+<DT>%w<DD>
+day of week (0..6); 0 is Saturday
+<DT>%x<DD>
+date representation (e.g., 06/03/90)
+<DT>%X<DD>
+time representation (e.g., 23:13:48)
+<DT>%y<DD>
+last two digits of year (00..99)
+<DT>%Y<DD>
+year
+<DT>%z<DD>
++hhmm numeric time zone (e.g., +0330)
+<DT>%Z<DD>
+alphabetic time zone abbreviation (e.g., IRST)
+</DL>
+<A NAME="lbAE">&nbsp;</A>
+<H2>EXAMPLES</H2>
+
+<DL COMPACT>
+<DT>jdate -uR<DD>
+formats current UTC date and time in RFC2822 format.
+<DT>jdate '+%Y-%m-%d %H:%M:%S'<DD>
+formats current local date and time in the above format. e.g. 1390-03-06 21:12:17
+<DT>jdate --access=foo.bar<DD>
+displays last access time for file foo.bar
+<DT>jdate '+%s' --date='%Y/%m/%d-%H:%M:%S;1390/03/06-21:14:17'<DD>
+displays seconds since epoch (UTC) for local date specified by date string.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Written by Ashkan Ghassemi. &lt;<A HREF="mailto:ghassemi@ftml.net">ghassemi@ftml.net</A>&gt;
+<A NAME="lbAG">&nbsp;</A>
+<H2>REPORTING BUGS</H2>
+
+Report jdate bugs to &lt;<A HREF="mailto:ghassemi@ftml.net">ghassemi@ftml.net</A>&gt;
+<P>
+libjalali home page: &lt;<A HREF="http://savannah.nongnu.org/projects/jcal/">http://savannah.nongnu.org/projects/jcal/</A>&gt;
+<A NAME="lbAH">&nbsp;</A>
+<H2>SEE ALSO</H2>
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?1+jcal">jcal</A></B>(1),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+jctime">jctime</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+jstrftime">jstrftime</A></B>(3),
+
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+jstrptime">jstrptime</A></B>(3)
+
+<A NAME="lbAI">&nbsp;</A>
+<H2>COPYRIGHT</H2>
+
+Copyright (C) 2011 Ashkan Ghassemi. 
+<P>
+License GPLv3+: GNU GPL version 3 or later
+&lt;<A HREF="http://gnu.org/licenses/gpl.html">http://gnu.org/licenses/gpl.html</A>&gt;.
+This is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by
+law.
+<P>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">EXAMPLES</A><DD>
+<DT><A HREF="#lbAF">AUTHOR</A><DD>
+<DT><A HREF="#lbAG">REPORTING BUGS</A><DD>
+<DT><A HREF="#lbAH">SEE ALSO</A><DD>
+<DT><A HREF="#lbAI">COPYRIGHT</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 16:40:06 GMT, May 28, 2011
+</BODY>
+</HTML>
