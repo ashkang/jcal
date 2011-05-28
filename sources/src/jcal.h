@@ -24,7 +24,7 @@
 #include "../libjalali/jalali.h"
 #include "../libjalali/jtime.h"
 
-#define JCAL_VALID_ARGS "13jyVNpP"
+#define JCAL_VALID_ARGS "13jyVNeP"
 #define PAHLAVI_ISLAMIC_DIFF 1180
 
 #define JCAL_VERSION "0.2"
@@ -33,7 +33,7 @@ struct cal_layout {
     int color;      /* If enabled, drawer tries to colorize output. */
     int julian;     /* Displays julian days (1-366) instead of month days. */
     int pahlavi;    /* If enabled, jcal uses Pahlavi instead of Islamic epoch. */
-    int persian;    /* Use Persian transliteration for weekday names. */
+    int english;    /* Use Persian transliteration for weekday names. */
     int margin;     /* Marginal space between two cals. */
     int syear;      /* If enabled, jcal shows year above cals. */
 };

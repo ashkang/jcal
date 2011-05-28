@@ -226,9 +226,9 @@ show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j) {
     int cal_tw[3];
 
     if (l->julian)
-	ptr_d = (l->persian) ? (char**)jalali_days_3_fa : (char**)jalali_days_3; 
+	ptr_d = (l->english) ? (char**)jalali_days_3 : (char**)jalali_days_3_fa; 
     else
-	ptr_d = (l->persian) ? (char**)jalali_days_2_fa : (char**)jalali_days_2;
+	ptr_d = (l->english) ? (char**)jalali_days_2 : (char**)jalali_days_2_fa;
 
     for (i=0; i<m->n; i++) {
 	snprintf(cal_y[i], 20, "%d%s", _j[i]->tm_year + ((l->pahlavi) ? PAHLAVI_ISLAMIC_DIFF : 0),
@@ -435,7 +435,7 @@ main(int argc, char** argv) {
     l.color = 1;
     l.pahlavi = 0;
     l.julian = 0;
-    l.persian = 0;
+    l.english = 0;
     l.margin = 3;
 
     /* Parsing date values. (YYYY MM DD) */
@@ -482,9 +482,9 @@ main(int argc, char** argv) {
 	    l.julian = 1;
 	    break;
 	    
-	    /* Displays Persian transliteration of week days. */  
-	case 'p':
-	    l.persian = 1;
+	    /* Displays English names of weekdays. */  
+	case 'e':
+	    l.english = 1;
 	    break;
 	    
 	    /* Display one-month calendar for a given date. */
