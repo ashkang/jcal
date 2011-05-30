@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
-#include <jalali.h>
-#include <jtime.h>
+#include <jalali/jalali.h>
+#include <jalali/jtime.h>
 
 int main() {
     time_t ltime;
@@ -15,6 +15,7 @@ int main() {
     j.tm_hour = a.ab_hour;
     jalali_create_date_from_days(&j);
     printf("%s", jasctime(&j));
+    return 0;
 }
 
     

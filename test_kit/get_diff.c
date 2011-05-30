@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <jalali.h>
+#include <jalali/jalali.h>
 
 int main(int argc, char** argv)
 {
@@ -13,5 +13,8 @@ int main(int argc, char** argv)
     j.tm_year = y;
 
     jalali_create_days_from_date(&j);
-    jalali_get_diff(&j);
+    jalali_update(&j);
+    jalali_show_time(&j);
+    printf("diff = %d\n", jalali_get_diff(&j));
+    return 0;
 }

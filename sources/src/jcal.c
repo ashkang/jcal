@@ -307,7 +307,6 @@ show_3(struct cal_layout* l, struct jtm* j) {
 
     int i;
 
-    l->syear = 1;
     m.n = 3;
 
     _j = malloc(m.n * sizeof(struct jtm*));
@@ -494,6 +493,7 @@ main(int argc, char** argv) {
 	    
 	    /* Display previous, current and next month's calendar for the given date. */
 	case '3':
+	    l.syear = 1;
 	    show = &show_3;
 	    break;
 	    /* Whole-year calendar for a given date. */

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <jalali.h>
+#include <jalali/jalali.h>
 
 int main(int argc, char** argv)
 {
@@ -13,5 +13,6 @@ int main(int argc, char** argv)
 	fprintf(stdout, "Year %d: lf = %d, apl = %d, pl = %d, rl = %d, p = %d, r = %d.\n", a.y, a.lf, 
 		a.apl, a.pl, a.rl, a.p, a.r);
     }
+    return 0;
 }
 

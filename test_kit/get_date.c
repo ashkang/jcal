@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <jalali.h>
+#include <jalali/jalali.h>
 
 int main(int argc, char** argv)
 {
@@ -7,4 +7,5 @@ int main(int argc, char** argv)
     struct jtm j;
     jalali_get_date(p, &j);
     jalali_create_date_from_days(&j);
+    jalali_show_time(&j);
 }

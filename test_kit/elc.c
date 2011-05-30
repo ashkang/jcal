@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <jalali.h>
+#include <jalali/jalali.h>
 
 int main(int argc, char** argv)
 {
