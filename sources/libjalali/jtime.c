@@ -296,6 +296,11 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 		strncpy(buf, jalali_days_3_fa[jtm->tm_wday], MAX_BUF_SIZE);
 		break;
 
+		/* The full weekday name. (Persian) */
+	    case 'q':
+		strncpy(buf, jalali_days_fa[jtm->tm_wday], MAX_BUF_SIZE);
+		break;
+
 		/* The hour as a decimal number using a 24-hour clock (range 00 to 23). */
 	    case 'H':
 		snprintf(buf, MAX_BUF_SIZE, "%02d", jtm->tm_hour);
@@ -628,9 +633,9 @@ jstrptime(const char* s, const char* format, struct jtm* jtm) {
 	    break;
 
 	    /* The abbreviated or full weekday name. (Persian) */
-	case 'x':
+	case 'q':
 	case 'h':
- 	    ptr = (fd == 'x') ? (char**) jalali_days_3_fa : (char**) jalali_days_fa;
+ 	    ptr = (fd == 'h') ? (char**) jalali_days_3_fa : (char**) jalali_days_fa;
 	    f = 0;
 
 	    for (k=0; k<J_WEEK_LENGTH; k++) {
