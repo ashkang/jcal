@@ -48,7 +48,6 @@ static char in_buf[MAX_BUF_SIZE] = {0};
 static struct jtm in_jtm;
 
 extern char* tzname[2];
-extern long timezone;
 
 void
 in_jasctime(const struct jtm* jtm, char* buf) {
@@ -85,13 +84,11 @@ in_jlocaltime(const time_t* timep, struct jtm* result) {
     struct tm t;
     struct jtm c_jtm;
     struct ab_jtm ab;
-    int d;
     time_t c;
     tzset();
 
     localtime_r(timep, &t);
-    d = t.tm_isdst;
-    c = (*timep) - timezone + (d * J_HOUR_LENGTH_IN_SECONDS);
+    c = (*timep) + t.tm_gmtoff;
 
     jalali_create_time_from_secs(c, &ab);
     jalali_get_date(ab.ab_days, &c_jtm);
@@ -99,10 +96,10 @@ in_jlocaltime(const time_t* timep, struct jtm* result) {
     c_jtm.tm_sec = ab.ab_sec;
     c_jtm.tm_min = ab.ab_min;
     c_jtm.tm_hour = ab.ab_hour;
-    c_jtm.tm_isdst = d;
+    c_jtm.tm_isdst = t.tm_isdst;
 
-    c_jtm.tm_zone = tzname[d];
-    c_jtm.tm_gmtoff = -timezone;
+    c_jtm.tm_zone = tzname[t.tm_isdst];
+    c_jtm.tm_gmtoff = t.tm_gmtoff;
 
     if (result) {
 	memcpy(result, &c_jtm, sizeof(struct jtm));
@@ -132,22 +129,26 @@ in_jgmtime(const time_t* timep, struct jtm* result) {
     if (!timep)
 	return;
 
-    struct jtm c_jtm;
     struct tm t;
-    int d;
-
+    struct jtm c_jtm;
+    struct ab_jtm ab;
+    time_t c;
     tzset();
-    localtime_r(timep, &t);
-    d = t.tm_isdst;
 
-    time_t c = (*timep) + timezone - (d * J_HOUR_LENGTH_IN_SECONDS);
+    gmtime_r(timep, &t);
+    c = *timep;
 
-    in_jlocaltime(&c, &c_jtm);
+    jalali_create_time_from_secs(c, &ab);
+    jalali_get_date(ab.ab_days, &c_jtm);
+    jalali_create_date_from_days(&c_jtm);
+    c_jtm.tm_sec = ab.ab_sec;
+    c_jtm.tm_min = ab.ab_min;
+    c_jtm.tm_hour = ab.ab_hour;
     c_jtm.tm_isdst = 0;
 
-    c_jtm.tm_gmtoff = 0;
     c_jtm.tm_zone = GMT_ZONE;
-    
+    c_jtm.tm_gmtoff = 0;
+
     if (result) {
 	memcpy(result, &c_jtm, sizeof(struct jtm));
     }
@@ -439,7 +440,7 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 
 		/* The +hhmm or -hhmm numeric timezone (that is, the hour and minute offset from UTC). */
 	    case 'z':
-		tmp = ((int)jtm->tm_gmtoff / J_HOUR_LENGTH_IN_SECONDS) + jtm->tm_isdst;
+		tmp = ((int)jtm->tm_gmtoff / J_HOUR_LENGTH_IN_SECONDS);
 		tmp1 = ((int)jtm->tm_gmtoff % J_HOUR_LENGTH_IN_SECONDS) / J_MINUTE_LENGTH_IN_SECONDS;
 		snprintf(buf, MAX_BUF_SIZE, "%s%02d%02d", (tmp >= 0) ? "+" : "-", abs(tmp), abs(tmp1));
 		break;

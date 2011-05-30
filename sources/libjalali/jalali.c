@@ -33,7 +33,6 @@ const int jalali_month_len[] = { 31, 31, 31, 31, 31, 31, 30, 30, 30, 30,
 				 30, 29 };
 
 extern char* tzname[2];
-extern long timezone;
 
 /*
  * Jalali leap year indication function. The algorithm used here 
@@ -261,9 +260,9 @@ jalali_get_date(int p, struct jtm* j)
     
     jalali_create_date_from_days(j);
     tzset();
-    j->tm_gmtoff = -timezone;
-    time(&t);
+    t = p * J_DAY_LENGTH_IN_SECONDS;
     localtime_r(&t, &lt);
+    j->tm_gmtoff = lt.tm_gmtoff;
     j->tm_isdst = lt.tm_isdst;
     j->tm_zone = tzname[lt.tm_isdst];
 }
