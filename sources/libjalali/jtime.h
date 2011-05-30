@@ -22,6 +22,13 @@
 #ifndef JTIME_H
 #define JTIME_H
 
+#ifdef __cplusplus
+extern "C" {
+#if 0 /* /me mutters something about emacs. */
+}
+#endif
+#endif
+
 #define MAX_BUF_SIZE 2048
 
 extern char* jasctime(const struct jtm* jtm);
@@ -39,8 +46,6 @@ extern size_t jstrftime(char* s, size_t max, const char* format,
 
 extern char* jstrptime(const char* s, const char* format, struct jtm* jtm);
 
-#if defined __USE_POSIX || defined __USE_MISC
-
 extern char* jasctime_r(const struct jtm* jtm, char* buf);
 
 extern char* jctime_r(const time_t* timep, char* buf);
@@ -49,6 +54,8 @@ extern struct jtm* jgmtime_r(const time_t* timep, struct jtm* result);
 
 extern struct jtm* jlocaltime_r(const time_t* timep, struct jtm* result);
 
-#endif /* POSIX or misc. */
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* JTIME_H */

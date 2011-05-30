@@ -43,10 +43,8 @@ struct jtm {
     int tm_wday;           /* Day of the week. (0-6) */
     int tm_yday;           /* Day in the year. (0-365) */
     int tm_isdst;          /* Daylight saving time is in effect. */
-#ifdef __USE_BSD
     long int tm_gmtoff;    /* Seconds east of UTC. */
     const char *tm_zone;   /* Timezone abbreviation.  */
-#endif
 };
 
 struct ab_jtm {

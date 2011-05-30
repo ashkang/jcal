@@ -101,10 +101,9 @@ in_jlocaltime(const time_t* timep, struct jtm* result) {
     c_jtm.tm_hour = ab.ab_hour;
     c_jtm.tm_isdst = d;
 
-#ifdef __USE_BSD
     c_jtm.tm_zone = tzname[d];
     c_jtm.tm_gmtoff = -timezone;
-#endif
+
     if (result) {
 	memcpy(result, &c_jtm, sizeof(struct jtm));
     }
@@ -146,10 +145,8 @@ in_jgmtime(const time_t* timep, struct jtm* result) {
     in_jlocaltime(&c, &c_jtm);
     c_jtm.tm_isdst = 0;
 
-#ifdef __USE_BSD
     c_jtm.tm_gmtoff = 0;
     c_jtm.tm_zone = GMT_ZONE;
-#endif
     
     if (result) {
 	memcpy(result, &c_jtm, sizeof(struct jtm));
@@ -663,8 +660,6 @@ jstrptime(const char* s, const char* format, struct jtm* jtm) {
     return (char*) &s[s_s];
 }
     
-#if defined __USE_POSIX || defined __USE_MISC
-
 char*
 jasctime_r(const struct jtm* jtm, char* buf) {
     if (!jtm || !buf)
@@ -704,5 +699,3 @@ jctime_r(const time_t* timep, char* buf) {
 
     return in_buf;
 }
-
-#endif /* POSIX or misc. */
