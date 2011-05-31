@@ -1,3 +1,14 @@
+2011-06-01  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * sources/ChangeLog, sources/libjalali/Makefile.am,
+  sources/libjalali/jalali.c, sources/libjalali/jalali.h,
+  sources/libjalali/jconfig.h, sources/libjalali/jtime.c,
+  sources/libjalali/jtime.h, sources/man/jcal.1, sources/man/jctime.3,
+  sources/man/jdate.1, sources/man/jstrftime.3, sources/man/jstrptime.3,
+  sources/src/Makefile.am, sources/src/jcal.c, sources/src/jcal.h,
+  sources/src/jdate.c, sources/src/jdate.h, sources/src/termcap.h: removed
+  trailing whitespaces. ChangeLog update.
+
 2011-05-31  Ashkan Ghassemi <ghassemi@ftml.net>
 
   * sources/libjalali/jalali.c, sources/libjalali/jtime.c: usage of timezone
