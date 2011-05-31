@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * jcal is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -78,7 +78,7 @@ main(int argc, char** argv) {
 	{0, 0, 0, 0}
     };
 
-    
+
     action.normal = 1;
 
     time_t t;
@@ -93,13 +93,13 @@ main(int argc, char** argv) {
 	    action.access = 1;
 	    action.access_ptr = optarg;
 	    break;
-	    
+
 	    /* last modification time. */
 	case 'r':
 	    action.reference = 1;
 	    action.reference_ptr = optarg;
 	    break;
-	    
+
 	    /* display time described by FORMAT and DATE_STRING, not `now'. */
 	case 'd':
 	    action.date = 1;
@@ -125,7 +125,7 @@ main(int argc, char** argv) {
 	    action.format = 0;
 	    action.rfc2822 = 0;
 	    break;
-	    
+
 	    /* version */
 	case 'V':
 	    action.version = 1;
@@ -140,8 +140,8 @@ main(int argc, char** argv) {
 	    exit(EXIT_FAILURE);
 	}
     }
- 
-    /* 
+
+    /*
      * Format string handler. INPUT_FORMAT and DATE_STRING
      * are separated using a semicolon. ';'
      * e.g. "%Y/%m/%d %H:%M:%S;1390/03/06 18:35:41"
@@ -169,7 +169,7 @@ main(int argc, char** argv) {
 	    fprintf(stderr, "Malformed date string. Use ';' to specify format and date string\n");
 	    exit(EXIT_FAILURE);
 	}
-	
+
 	ds = strlen(ptr);
 
 	strncpy(date_format, action.date_ptr, (size_t) (ptr - action.date_ptr));
@@ -187,8 +187,8 @@ main(int argc, char** argv) {
 	    fprintf(stderr, "jdate: %s: No such file or directory\n", action.access_ptr);
 	    exit(EXIT_FAILURE);
 	}
-    } 
-    
+    }
+
     if (action.reference) {
 	err = mod_time(action.reference_ptr, &t, 0);
 
@@ -196,7 +196,7 @@ main(int argc, char** argv) {
 	    fprintf(stderr, "jdate: %s: No such file or directory\n", action.reference_ptr);
 	    exit(EXIT_FAILURE);
 	}
-    } 
+    }
 
     if (action.rfc2822) {
 	action.utc ? jgmtime_r(&t, &j) : jlocaltime_r(&t, &j);

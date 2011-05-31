@@ -1,5 +1,5 @@
 /*
- * jalali.h - Tools for manipulating Jalali representation of Iranian calendar 
+ * jalali.h - Tools for manipulating Jalali representation of Iranian calendar
  * and necessary conversations to Gregorian calendar.
  * Copyright (C) 2006, 2007, 2009, 2010, 2011 Ashkan Ghassemi.
  *
@@ -9,7 +9,7 @@
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * libjalali is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -53,7 +53,7 @@ struct ab_jtm {
     int ab_hour;
     int ab_days;
 };
-  
+
 struct jyinfo {
     int lf;                /* leap indicator flag */
     int y;                 /* year */
@@ -83,7 +83,7 @@ extern int jalali_get_diff(const struct jtm* jtm);
 extern void jalali_update(struct jtm* jtm);
 
 extern void jalali_show_time(const struct jtm* j);
-    
+
 #ifdef __cplusplus
 }
 #endif

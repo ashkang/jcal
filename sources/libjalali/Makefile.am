@@ -16,7 +16,7 @@ libjalali_la_SOURCES = jalali.c jtime.c
 
 libjalali_la_LDFLAGS = -version-info 0:2:0
 includedir= $(prefix)/include/jalali
-include_HEADERS = jalali.h jtime.h jconfig.h 
+include_HEADERS = jalali.h jtime.h jconfig.h
 INCLUDES        =  -I. -I@includedir@
 LIBS            = @LIBS@ $(THREAD_LIBS)
-AM_CFLAGS          = @CFLAGS@ -D_REENTRANT -W -Wall -O2 
+AM_CFLAGS          = @CFLAGS@ -D_REENTRANT -W -Wall -O2

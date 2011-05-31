@@ -1,4 +1,4 @@
-.\" * jctime.3 - Tools for manipulating Jalali representation of Iranian calendar 
+.\" * jctime.3 - Tools for manipulating Jalali representation of Iranian calendar
 .\" * and necessary conversations to Gregorian calendar.
 .\" * Copyright (C) 2006, 2007, 2009, 2010, 2011 Ashkan Ghassemi.
 .\" *
@@ -8,7 +8,7 @@
 .\" * it under the terms of the GNU Lesser General Public License as published by
 .\" * the Free Software Foundation, either version 3 of the License, or
 .\" * (at your option) any later version.
-.\" * 
+.\" *
 .\" * libjalali is distributed in the hope that it will be useful,
 .\" * but WITHOUT ANY WARRANTY; without even the implied warranty of
 .\" * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -374,7 +374,7 @@ The
 .BR jalali_get_jyear_info ()
 function modifies \fIjyinfo\fP structure fields to match
 information for year specified by it's \fIy\fP field. Information
-regarding a year in jalali system includes leap flag, passed and 
+regarding a year in jalali system includes leap flag, passed and
 reamining years in the grand cycle, passed and remaining leap
 years in the grand cycle and absolute number of passed leaps
 since UTC Epoch.
@@ -399,7 +399,7 @@ The
 .BR jalali_update ()
 function updates \fItm_wday\fP and \fItm_yday\fP fields of the
 broken-down jalali time structure based on it's \fItm_year\fP
-, \fItm_mon\fP and \fItm_mday\fP. \fItm_isdst\fP, \fItm_gmtoff\fP 
+, \fItm_mon\fP and \fItm_mday\fP. \fItm_isdst\fP, \fItm_gmtoff\fP
 and \fItm_zone\fP fields are set accordingly. \fItm_hour\fP, \fItm_min\fP and
 \fItm_sec\fP fields remain untouched.
 
@@ -428,8 +428,8 @@ main(int argc, char ** argv)
     localtime_r(&t, &tm);
     printf("%d/%d/%d \\n", tm.tm_year, tm.tm_mon, tm.tm_mday);
     exit(EXIT_SUCCESS);
-}    
-    
+}
+
 .SH "RETURN VALUE"
 Each of these functions returns the value described, or NULL
 (\-1 in case of
@@ -438,7 +438,7 @@ in case an error was detected.
 .SH "CONFORMING TO"
 C99 Standards.
 These functions are provided with APIs similar to that of POSIX.1-2001 date and time
-manipulation and are 
+manipulation and are
 .B NOT
 part of POSIX standard. For thread safety
 .BR jasctime (),
@@ -513,7 +513,7 @@ Report libjalali bugs to <ghassemi@ftml.net>
 
 libjalali home page: <http://savannah.nongnu.org/projects/jcal/>
 .SH COPYRIGHT
-Copyright (C) 2011 Ashkan Ghassemi. 
+Copyright (C) 2011 Ashkan Ghassemi.
 
 License LGPLv3+: GNU LGPL version 3 or later
 <http://gnu.org/licenses/lgpl.html>.

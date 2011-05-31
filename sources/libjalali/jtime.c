@@ -1,5 +1,5 @@
 /*
- * jtime.c - Tools for manipulating Jalali representation of Iranian calendar 
+ * jtime.c - Tools for manipulating Jalali representation of Iranian calendar
  * and necessary conversations to Gregorian calendar.
  * Copyright (C) 2006, 2007, 2009, 2010, 2011 Ashkan Ghassemi.
  *
@@ -9,7 +9,7 @@
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * libjalali is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,7 +29,7 @@
 
 const char* GMT_ZONE = "UTC";
 
-const char* jalali_months[] = { "Farvardin", "Ordibehesht", "Khordaad", 
+const char* jalali_months[] = { "Farvardin", "Ordibehesht", "Khordaad",
 				"Tir", "Mordaad", "Shahrivar", "Mehr",
 				"Aabaan", "Aazar", "Dey", "Bahman", "Esfand" };
 const char* jalali_months_3[] = { "Far", "Ord", "Kho", "Tir", "Amo", "Sha",
@@ -64,15 +64,15 @@ in_jasctime(const struct jtm* jtm, char* buf) {
 	return;
 
     if (buf) {
-	snprintf(buf, MAX_BUF_SIZE, "%s %s %02d %02d:%02d:%02d %d\n", 
+	snprintf(buf, MAX_BUF_SIZE, "%s %s %02d %02d:%02d:%02d %d\n",
 	     jalali_days_3[jtm->tm_wday], jalali_months_3[jtm->tm_mon], jtm->tm_mday,
 	     jtm->tm_hour, jtm->tm_min, jtm->tm_sec, jtm->tm_year);
 	memcpy(in_buf, buf, MAX_BUF_SIZE);
     } else {
-	snprintf(in_buf, MAX_BUF_SIZE, "%s %s %02d %02d:%02d:%02d %d\n", 
+	snprintf(in_buf, MAX_BUF_SIZE, "%s %s %02d %02d:%02d:%02d %d\n",
 	     jalali_days_3[jtm->tm_wday], jalali_months_3[jtm->tm_mon], jtm->tm_mday,
 	     jtm->tm_hour, jtm->tm_min, jtm->tm_sec, jtm->tm_year);
-    
+
     }
 }
 
@@ -169,7 +169,7 @@ char*
 jctime(const time_t* timep) {
     if (!timep)
 	return 0;
-    
+
     in_jctime(timep, 0);
     return in_buf;
 }
@@ -200,7 +200,7 @@ jmktime(const struct jtm* jtm) {
     int p = jalali_get_diff(jtm);
     time_t t;
     t = (p * J_DAY_LENGTH_IN_SECONDS) + (jtm->tm_hour * J_HOUR_LENGTH_IN_SECONDS)
-	+ (jtm->tm_min * J_MINUTE_LENGTH_IN_SECONDS) + jtm->tm_sec 
+	+ (jtm->tm_min * J_MINUTE_LENGTH_IN_SECONDS) + jtm->tm_sec
 	- (jtm->tm_isdst * J_HOUR_LENGTH_IN_SECONDS) - (jtm->tm_gmtoff);
     return t;
 }
@@ -247,8 +247,8 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 		strncpy(buf, jalali_months[jtm->tm_mon], MAX_BUF_SIZE);
 		break;
 
-		/* 
-		 * The preferred date and time representation. 
+		/*
+		 * The preferred date and time representation.
 		 * example: Tue 27 Ord 1390 03:28:19 IRDT.
 		 */
 	    case 'c':
@@ -271,7 +271,7 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 
 		/* Equivalent to %Y/%m/%d. */
 	    case 'D':
-		snprintf(buf, MAX_BUF_SIZE, "%d/%02d/%02d", jtm->tm_year, jtm->tm_mon + 1, 
+		snprintf(buf, MAX_BUF_SIZE, "%d/%02d/%02d", jtm->tm_year, jtm->tm_mon + 1,
 			 jtm->tm_mday);
 		break;
 
@@ -314,8 +314,8 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 		snprintf(buf, MAX_BUF_SIZE, "%03d", jtm->tm_yday + 1);
 		break;
 
-		/* 
-		 * The hour (24-hour clock) as a decimal number (range 0 to 23); single digits 
+		/*
+		 * The hour (24-hour clock) as a decimal number (range 0 to 23); single digits
 		 * are preceded by a blank.  (See  also %H.)
 		 */
 	    case 'k':
@@ -323,8 +323,8 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 		break;
 
 		/*
-		 * The  hour (12-hour clock) as a decimal number (range 1 to 12); single digits 
-		 * are preceded by a blank.  (See also %I.) 
+		 * The  hour (12-hour clock) as a decimal number (range 1 to 12); single digits
+		 * are preceded by a blank.  (See also %I.)
 		 */
 	    case 'l':
 		tmp = (jtm->tm_hour == 12) ? 12 : jtm->tm_hour % 12;
@@ -350,7 +350,7 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 	    case 'O':
 		break;
 
-		/* 
+		/*
 		 * Either "AM" or "PM" according to the given time value.
 		 * Noon is treated as "PM" and midnight as "AM".
 		 */
@@ -363,8 +363,8 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 		snprintf(buf, MAX_BUF_SIZE, "%s", (jtm->tm_hour >= 0 && jtm->tm_hour < 12) ? "am" : "pm");
 		break;
 
-		/* 
-		 * The time in a.m. or p.m. notation.  
+		/*
+		 * The time in a.m. or p.m. notation.
 		 * In the POSIX locale this is equivalent to %I:%M:%S %p.
 		 */
 	    case 'r':
@@ -372,8 +372,8 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 			 jtm->tm_min, jtm->tm_sec, (jtm->tm_hour >= 0 && jtm->tm_hour < 12) ? "AM" : "PM");
 		break;
 
-		/* 
-		 * The time in 24-hour notation (%H:%M). 
+		/*
+		 * The time in 24-hour notation (%H:%M).
 		 * For a version including the seconds, see %T below.
 		 */
 	    case 'R':
@@ -390,7 +390,7 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 	    case 'S':
 		snprintf(buf, MAX_BUF_SIZE, "%02d", jtm->tm_sec);
 		break;
-		
+
 		/* A tab character. */
 	    case 't':
 		snprintf(buf, MAX_BUF_SIZE, "\t");
@@ -406,8 +406,8 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 		snprintf(buf, MAX_BUF_SIZE, "%d", jtm->tm_wday + 1);
 		break;
 
-		/* 
-		 * The  week  number of the current year as a decimal number, range 00 to 53, 
+		/*
+		 * The  week  number of the current year as a decimal number, range 00 to 53,
 		 * starting with the first Saturday as the first day of week 01.
 		 */
 	    case 'U':
@@ -422,7 +422,7 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 	    case 'x':
 		snprintf(buf, MAX_BUF_SIZE, "%02d/%02d/%d", jtm->tm_mday, jtm->tm_mon+1, jtm->tm_year);
 		break;
-		
+
 		/* Unused. */
 	    case 'X':
 		break;
@@ -459,14 +459,14 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 	    default:
 		break;
 	    }
-	    
+
 	    b_n = strlen(buf);
 	    for (j=0; j<b_n; j++) {
 		if (rb > (int) (max - 2)) {
 		    s[max-1] =  '\0';
 		    return (max-1);
 		}
-		
+
 		s[rb] = buf[j];
 		rb++;
 	    }
@@ -476,7 +476,7 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
     s[rb] = '\0';
     return rb;
 }
-	
+
 char*
 jstrptime(const char* s, const char* format, struct jtm* jtm) {
     char buf[MAX_BUF_SIZE];
@@ -500,7 +500,7 @@ jstrptime(const char* s, const char* format, struct jtm* jtm) {
      * Traversing format string for the matching characters in input string.
      * Each time an identical character is found, we simply pass to the next one.
      * In the event of finding a % (format specifier) we find the matching
-     * argument by means of finding the delimiter between the found format 
+     * argument by means of finding the delimiter between the found format
      * specifier and the next. If there was no format specifiers after the current
      * one, we consider the remaining set of characters as delimiter.
      */
@@ -544,7 +544,7 @@ jstrptime(const char* s, const char* format, struct jtm* jtm) {
 
             diff1 = (pos_e - &s[i]);
         }
-	
+
 	fd = format[j+1];
         memcpy(buf, &s[i], diff1);
         buf[diff1] = 0;
@@ -652,7 +652,7 @@ jstrptime(const char* s, const char* format, struct jtm* jtm) {
 	    break;
 	}
 
-	
+
 	c++;
         j += diff + 2;
         i += diff1 + diff;
@@ -660,7 +660,7 @@ jstrptime(const char* s, const char* format, struct jtm* jtm) {
 
     return (char*) &s[s_s];
 }
-    
+
 char*
 jasctime_r(const struct jtm* jtm, char* buf) {
     if (!jtm || !buf)

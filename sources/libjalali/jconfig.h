@@ -1,5 +1,5 @@
 /*
- * jconfig.h - Tools for manipulating Jalali representation of Iranian calendar 
+ * jconfig.h - Tools for manipulating Jalali representation of Iranian calendar
  * and necessary conversations to Gregorian calendar.
  * Copyright (C) 2006, 2007, 2009, 2010, 2011 Ashkan Ghassemi.
  *
@@ -9,7 +9,7 @@
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * libjalali is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -24,11 +24,11 @@
 
 #define JALALI_LEAP_BASE 475 /* Jalali 2820 year period epoch. */
 #define JALALI_LEAP_PERIOD 2820 /* Jalali recurring pattern length. */
-    
+
 #define JALALI_NORMAL_CYCLE_LENGTH 128 /* A normal cycle length. */
 #define JALALI_EXTRA_CYCLE_LENGTH 132 /* Last cycle length. */
 #define JALALI_LAST_CYCLE_START 2688 /* Starting year of the last cycle in the period. */
-    
+
 #define J_PT0 0 /* No partitions passed. */
 #define J_PT1 29 /* First partition passed. 0+29 */
 #define J_PT2 62 /* Second partition passed. 0+29+33 */
@@ -38,7 +38,7 @@
 #define J_L1 7
 #define J_L2 15
 #define J_L3 23
-    
+
 #define J_C1 29 /* First type of partitions, 29 years in length. */
 #define J_C2 33 /* Second type of partitions, 33 years in length. */
 #define J_C2e 37 /* Extension to the second type, only one instance. */

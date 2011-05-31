@@ -1,4 +1,61 @@
-2007-05-12 Ashkan Ghassemi <ghassemi@ftml.net>
+2011-05-31  Ashkan Ghassemi <ghassemi@ftml.net>
 
-	* jcal: Initial release.
-	
+  * sources/libjalali/jalali.c, sources/libjalali/jtime.c: usage of timezone
+  from tzset() removed due to a faulty implementation of BSD standards in OS X
+  and possibly others.
+
+2011-05-30  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * sources/libjalali/jalali.h, sources/libjalali/jtime.c,
+  sources/libjalali/jtime.h: BSD-compatible macros.
+
+  * sources/libjalali/jtime.c, sources/man/jdate.1, sources/man/jstrftime.3,
+  sources/man/jstrptime.3: added %h (full English transliteration for Persian
+  weekday names) to jstrftime(), jstrptime(), and manual pages.
+
+  * .gitignore, sources/src/jcal.c, test_kit/compile_me.sh, test_kit/elc.c,
+  test_kit/get_date.c, test_kit/get_diff.c, test_kit/jtime/asctime.c,
+  test_kit/jtime/compile_me.sh, test_kit/jtime/ctime.c,
+  test_kit/jtime/gmtime.c, test_kit/jtime/jstrftime.c,
+  test_kit/jtime/jstrptime.c, test_kit/jtime/localtime.c,
+  test_kit/jtime/mktime.c, test_kit/jyinfo.c, test_kit/leap.c,
+  test_kit/sec_converter.c: fix whole year month titles. gitignore update.
+  test_kit update.
+
+2011-05-29  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * .gitignore, sources/src/jcal.o, sources/src/jdate.o: gitignore added.
+  unwanted files removed from repo.
+
+  * html-docs/jcal.html, sources/man/jcal.1, sources/src/jcal.c,
+  sources/src/jcal.h, sources/src/jcal.o, sources/src/jdate.o: default weekday
+  names to Persian in jcal.
+
+2011-05-28  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * html-docs/jalali.html, html-docs/jcal.html, html-docs/jdate.html,
+  html-docs/jstrftime.html, html-docs/jstrptime.html, sources/AUTHORS,
+  sources/ChangeLog, sources/Makefile.am, sources/NEWS, sources/README,
+  sources/configure.in, sources/libjalali/Makefile.am,
+  sources/libjalali/jalali.c, sources/libjalali/jalali.h,
+  sources/libjalali/jconfig.h, sources/libjalali/jtime.c,
+  sources/libjalali/jtime.h, sources/man/Makefile.am,
+  sources/man/jalali_create_date_from_days.3,
+  sources/man/jalali_create_days_from_date.3,
+  sources/man/jalali_create_secs_from_time.3,
+  sources/man/jalali_create_time_from_secs.3, sources/man/jalali_get_date.3,
+  sources/man/jalali_get_diff.3, sources/man/jalali_get_jyear_info.3,
+  sources/man/jalali_is_jleap.3, sources/man/jalali_update.3,
+  sources/man/jasctime.3, sources/man/jasctime_r.3, sources/man/jcal.1,
+  sources/man/jctime.3, sources/man/jctime_r.3, sources/man/jdate.1,
+  sources/man/jgmtime.3, sources/man/jgmtime_r.3, sources/man/jlocaltime.3,
+  sources/man/jlocaltime_r.3, sources/man/jmktime.3, sources/man/jstrftime.3,
+  sources/man/jstrptime.3, sources/src/Makefile.am, sources/src/jcal.c,
+  sources/src/jcal.h, sources/src/jcal.o, sources/src/jdate.c,
+  sources/src/jdate.h, sources/src/jdate.o, sources/src/termcap.h,
+  test_kit/compile_me.sh, test_kit/elc.c, test_kit/get_date.c,
+  test_kit/get_diff.c, test_kit/jtime/asctime.c, test_kit/jtime/compile_me.sh,
+  test_kit/jtime/ctime.c, test_kit/jtime/gmtime.c, test_kit/jtime/jstrftime.c,
+  test_kit/jtime/jstrptime.c, test_kit/jtime/localtime.c,
+  test_kit/jtime/mktime.c, test_kit/jyinfo.c, test_kit/leap.c,
+  test_kit/sec_converter.c: Initial import

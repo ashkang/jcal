@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * jcal is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -47,7 +47,7 @@ extern char* optarg;
  * is effectively independent of termcap.
  * To disable standard terminal escape sequences for colors completely, compile with NO_COLOR.
  */
-  
+
 /*
  * Sets the matrix according to a given jalali date and prefix.
  */
@@ -58,7 +58,7 @@ set_cal_matrix(struct cal_layout* l, struct jtm* ct, struct cal_matrix* mat, int
     struct jtm lt;
 
     time_t t;
-    
+
     int diff;
     int _prefix = prefix * (7 + l->margin);
     int m, c;
@@ -77,7 +77,7 @@ set_cal_matrix(struct cal_layout* l, struct jtm* ct, struct cal_matrix* mat, int
     mb.tm_mday = 1;
     jalali_create_days_from_date(&mb);
 
-    m = (jalali_is_jleap(mb.tm_year) && mb.tm_mon == 11) ? 30 : 
+    m = (jalali_is_jleap(mb.tm_year) && mb.tm_mon == 11) ? 30 :
 	jalali_month_len[mb.tm_mon];
 
     j = mb.tm_wday;
@@ -185,7 +185,7 @@ void
 create_cal_matrix(struct cal_layout* l, struct cal_matrix* mat) {
     mat->width = (mat->n * 7) + ((mat->n - 1) * l->margin) ;
     mat->height = 6;
-       
+
     mat->m = malloc(mat->height * sizeof(int*));
     int i;
     for (i=0; i<mat->height; i++) {
@@ -226,7 +226,7 @@ show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j) {
     int cal_tw[3];
 
     if (l->julian)
-	ptr_d = (l->english) ? (char**)jalali_days_3 : (char**)jalali_days_3_fa; 
+	ptr_d = (l->english) ? (char**)jalali_days_3 : (char**)jalali_days_3_fa;
     else
 	ptr_d = (l->english) ? (char**)jalali_days_2 : (char**)jalali_days_2_fa;
 
@@ -236,7 +236,7 @@ show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j) {
     }
 
     for (i=0; i<m->n; i++) {
-	snprintf(cal_t[i], MAX_BUF_SIZE, "%s %s", jalali_months[_j[i]->tm_mon], 
+	snprintf(cal_t[i], MAX_BUF_SIZE, "%s %s", jalali_months[_j[i]->tm_mon],
 		 (l->syear) ? cal_y[i] : "");
 	cal_tw[i] = (cal_width - strlen(cal_t[i])) / 2;
     }
@@ -245,9 +245,9 @@ show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j) {
 	for (k=0; k<cal_tw[i]; k++) {
 	    printf(" ");
 	}
-	
+
 	printf("%s", cal_t[i]);
-	
+
 	for (k=0; k<(cal_width  - cal_tw[i] - strlen(cal_t[i])); k++) {
 	    printf(" ");
 	}
@@ -270,7 +270,7 @@ show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j) {
 	    printf("%s%s%s", TERM_RED, ptr_d[6], TERM_RESET);
 	else
 	    printf("%s", ptr_d[6]);
-	
+
 	if (i != m->n-1) {
 	    for (k=0; k<l->margin; k++) {
 		printf(" ");
@@ -297,10 +297,10 @@ show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j) {
  */
 
 void
-show_3(struct cal_layout* l, struct jtm* j) {    
+show_3(struct cal_layout* l, struct jtm* j) {
     struct jtm** _j;
     struct cal_matrix m;
-    
+
     int diff_p;
     int diff_c;
     int diff_n;
@@ -319,13 +319,13 @@ show_3(struct cal_layout* l, struct jtm* j) {
 
     diff_c = jalali_get_diff(_j[1]);
     diff_p = diff_c - (_j[1]->tm_mday + 1);
-    diff_n = (jalali_is_jleap(_j[1]->tm_year) && _j[1]->tm_mon == 11) ? 
+    diff_n = (jalali_is_jleap(_j[1]->tm_year) && _j[1]->tm_mon == 11) ?
 	diff_c + (30 - _j[1]->tm_mday + 1) : diff_c + (jalali_month_len[_j[1]->tm_mon] - _j[1]->tm_mday + 1);
 
     jalali_get_date(diff_p, _j[0]);
     jalali_get_date(diff_n, _j[2]);
     show_cal(l, &m, _j);
-    
+
     for (i=0; i<3; i++) {
 	free(_j[i]);
     }
@@ -347,7 +347,7 @@ show_1(struct cal_layout* l, struct jtm* j) {
 
     _j = malloc(sizeof(struct jtm*));
     _j[0] = malloc(sizeof(struct jtm));
-    
+
     memcpy(_j[0], j, sizeof(struct jtm));
     m.n = 1;
     show_cal(l, &m, _j);
@@ -366,10 +366,10 @@ show_year(struct cal_layout* l, struct jtm* j) {
     struct jtm _j[4];
 
     char title[20];
-    
-    int cal_width = (((l->julian) ? (3 * 7 + 6) : (2 * 7 + 6)) * 3) + 
+
+    int cal_width = (((l->julian) ? (3 * 7 + 6) : (2 * 7 + 6)) * 3) +
 	(2 * l->margin);
-    
+
     int cal_tw;
     int i;
 
@@ -384,7 +384,7 @@ show_year(struct cal_layout* l, struct jtm* j) {
     printf("%s\n", title);
 
     l->syear = 0;
-    
+
     _j[0].tm_year = j->tm_year;
     _j[0].tm_mon = 1;
     _j[0].tm_mday = 1;
@@ -404,7 +404,7 @@ show_year(struct cal_layout* l, struct jtm* j) {
     _j[3].tm_mon = 10;
     _j[3].tm_mday = 1;
     jalali_update(&_j[3]);
-    
+
     show_3(l, &_j[0]);
     show_3(l, &_j[1]);
     show_3(l, &_j[2]);
@@ -445,7 +445,7 @@ main(int argc, char** argv) {
 	    c++;
 	}
     }
-    
+
     if (c > 0) {
 	if (c == 1)
 	    show = &show_year;
@@ -475,22 +475,22 @@ main(int argc, char** argv) {
 	case 'P':
 	    l.pahlavi = 1;
 	    break;
-	    
+
 	    /* Displays Julian days (Day of year) instead of day of month.  */
 	case 'j':
 	    l.julian = 1;
 	    break;
-	    
-	    /* Displays English names of weekdays. */  
+
+	    /* Displays English names of weekdays. */
 	case 'e':
 	    l.english = 1;
 	    break;
-	    
+
 	    /* Display one-month calendar for a given date. */
 	case '1':
 	    show = &show_1;
 	    break;
-	    
+
 	    /* Display previous, current and next month's calendar for the given date. */
 	case '3':
 	    l.syear = 1;
@@ -512,7 +512,7 @@ main(int argc, char** argv) {
             printf("Written by Ashkan Ghassemi.\n");
 	    exit(EXIT_SUCCESS);
 	    break;
-	    
+
 	    /* Unknown parameter. */
 	default:
 	    printf("usage: jcal [-13jypPV] [year [month[day]]]\n");

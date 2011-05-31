@@ -1,5 +1,5 @@
 /*
- * jalali.c - Tools for manipulating Jalali representation of Iranian calendar 
+ * jalali.c - Tools for manipulating Jalali representation of Iranian calendar
  * and necessary conversations to Gregorian calendar.
  * Copyright (C) 2006, 2007, 2009, 2010, 2011 Ashkan Ghassemi.
  *
@@ -9,7 +9,7 @@
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * libjalali is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,32 +29,32 @@
 const int cycle_patterns[] = { J_PT0, J_PT1, J_PT2, J_PT3, INT_MAX };
 const int leaps[] = { J_L0, J_L1, J_L2, J_L3, INT_MAX };
 
-const int jalali_month_len[] = { 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 
+const int jalali_month_len[] = { 31, 31, 31, 31, 31, 31, 30, 30, 30, 30,
 				 30, 29 };
 
 extern char* tzname[2];
 
 /*
- * Jalali leap year indication function. The algorithm used here 
- * is loosely based on the famous recurring 2820 years length period. This 
- * period is then divided into 88 cycles, each following a 29, 33, 33, 33 
+ * Jalali leap year indication function. The algorithm used here
+ * is loosely based on the famous recurring 2820 years length period. This
+ * period is then divided into 88 cycles, each following a 29, 33, 33, 33
  * years length pattern with the exception for the last being 37 years long.
- * In every of these 29, 33 or 37 years long periods starting with year 0, 
+ * In every of these 29, 33 or 37 years long periods starting with year 0,
  * leap years are multiples of four except for year 0 in each period.
  * The current 2820 year period started in the year AP 475 (AD 1096).
  */
 
-int 
+int
 jalali_is_jleap(int year)
 {
     int pr = year;
 
     /* Shifting ``year'' with 2820 year period epoch. */
     pr -= JALALI_LEAP_BASE;
-    
+
     pr %= JALALI_LEAP_PERIOD;
 
-    /* 
+    /*
      * According to C99 standards, modulo operator's result has the same sign
      * as dividend. Since what we require to process has to be in range
      * 0-2819, we have to shift the remainder to be positive if dividend is
@@ -66,16 +66,16 @@ jalali_is_jleap(int year)
 
     /*
      * Every cycle consists of one 29 year period and three identical 33 year
-     * periods forming a 128 years length cycle. An exception applies to the 
+     * periods forming a 128 years length cycle. An exception applies to the
      * last cycle being 132 years instead and it's last 33 years long partition
      * will be extended for an extra 4 years thus becoming 37 years long.
      * JALALI_LAST_CYCLE_START literally marks the beginning of this last
-     * cycle. 
+     * cycle.
      */
 
-    pr = (pr > JALALI_LAST_CYCLE_START) ? 
+    pr = (pr > JALALI_LAST_CYCLE_START) ?
 	(pr - JALALI_LAST_CYCLE_START) : pr % JALALI_NORMAL_CYCLE_LENGTH;
-    
+
     /*
      * Classifying year in a cycle. Assigning to one of the four partitions.
      */
@@ -93,8 +93,8 @@ jalali_is_jleap(int year)
 		return !(pr % J_LI);
 	}
     }
-    
-    /* 
+
+    /*
      * Our code flow better not reach this fail-safe
      * return statement and I really mean it.
      */
@@ -123,7 +123,7 @@ jalali_create_time_from_secs(time_t t, struct ab_jtm* d)
 time_t
 jalali_create_secs_from_time(const struct ab_jtm* d)
 {
-    return (d->ab_days * J_DAY_LENGTH_IN_SECONDS + 
+    return (d->ab_days * J_DAY_LENGTH_IN_SECONDS +
 	    d->ab_hour * J_HOUR_LENGTH_IN_SECONDS +
 	    d->ab_min * J_MINUTE_LENGTH_IN_SECONDS +
 	    d->ab_sec);
@@ -134,7 +134,7 @@ jalali_create_secs_from_time(const struct ab_jtm* d)
  * Alters only tm_mday and tm_mon.
  * Zero on success, -1 on failure.
  */
-int 
+int
 jalali_create_date_from_days(struct jtm* j)
 {
     int p = j->tm_yday;
@@ -147,9 +147,9 @@ jalali_create_date_from_days(struct jtm* j)
     /* Traversing all twelve months, ranging from 0 to 11 */
     for (i=0; i<11; i++) {
 	if (p > jalali_month_len[i])
-	    p -= jalali_month_len[i];	
+	    p -= jalali_month_len[i];
  	else
-	    break;	
+	    break;
     }
 
     j->tm_mday = p;
@@ -171,7 +171,7 @@ jalali_create_days_from_date(struct jtm* j)
 
     if (j->tm_mday < 1 || j->tm_mday > 31)
 	return -1;
-   
+
     for (i=0; i<j->tm_mon; i++) {
 	p+= jalali_month_len[i];
     }
@@ -188,7 +188,7 @@ jalali_create_days_from_date(struct jtm* j)
  * 3. Passed and remaining leap years in grand leap cycle. -pl, -rl
  * 4. Absolute passed leap years since grand leap cycle epoch (AP 475). -apl
  */
-void 
+void
 jalali_get_jyear_info(struct jyinfo* year)
 {
     int y = year->y;
@@ -205,9 +205,9 @@ jalali_get_jyear_info(struct jyinfo* year)
 	if (i == year->y)
 	    break;
     }
-    
+
     year->apl = c * d;
-    year->pl = (d > 0) ? c % JALALI_TOTAL_LEAPS_IN_PERIOD : 
+    year->pl = (d > 0) ? c % JALALI_TOTAL_LEAPS_IN_PERIOD :
 	JALALI_TOTAL_LEAPS_IN_PERIOD - (c % JALALI_TOTAL_LEAPS_IN_PERIOD);
     year->rl = JALALI_TOTAL_LEAPS_IN_PERIOD - year->pl;
 
@@ -215,7 +215,7 @@ jalali_get_jyear_info(struct jyinfo* year)
     y%= JALALI_LEAP_PERIOD;
     if (y < 0)
 	y+= JALALI_LEAP_PERIOD;
-    
+
     year->p = y;
     year->r = JALALI_LEAP_PERIOD - y - 1;
 
@@ -226,7 +226,7 @@ jalali_get_jyear_info(struct jyinfo* year)
  * Calculates date (Jalali) based on difference factor from UTC Epoch by days.
  * 0 means 1 January 1970 (11 Dey 1348).
  */
-void 
+void
 jalali_get_date(int p, struct jtm* j)
 {
     time_t t;
@@ -257,7 +257,7 @@ jalali_get_date(int p, struct jtm* j)
 
     j->tm_year = y;
     j->tm_yday = p;
-    
+
     jalali_create_date_from_days(j);
     tzset();
     t = p * J_DAY_LENGTH_IN_SECONDS;
@@ -300,13 +300,13 @@ jalali_get_diff(const struct jtm* j)
     }
 
     for (i=s; i<=e; i++) {
-	p+= jalali_is_jleap(i) ? JALALI_LEAP_YEAR_LENGTH_IN_DAYS : 
+	p+= jalali_is_jleap(i) ? JALALI_LEAP_YEAR_LENGTH_IN_DAYS :
 	    JALALI_NORMAL_YEAR_LENGTH_IN_DAYS;
     }
 
-    int r = jalali_is_jleap(s) ? JALALI_LEAP_YEAR_LENGTH_IN_DAYS - sd - 1 : 
+    int r = jalali_is_jleap(s) ? JALALI_LEAP_YEAR_LENGTH_IN_DAYS - sd - 1 :
 	     JALALI_NORMAL_YEAR_LENGTH_IN_DAYS - sd - 1;
-    
+
     p += r + ed;
     p*= f;
     return p;
