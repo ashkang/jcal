@@ -1,5 +1,8 @@
 2011-06-01  Ashkan Ghassemi <ghassemi@ftml.net>
 
+  * sources/ChangeLog, sources/configure.in: minor fix to Configure.in, removed
+  required libtool version for backward compatibility.
+
   * sources/ChangeLog, sources/libjalali/Makefile.am,
   sources/libjalali/jalali.c, sources/libjalali/jalali.h,
   sources/libjalali/jconfig.h, sources/libjalali/jtime.c,

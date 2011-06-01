@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * jcal is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,7 +23,8 @@ based on jalali reperesnation of date.
 
 Switches in brief:
 -y 	Display a calendar for the current year.
--p	Display year based on Pahlavi epoch. 
+-p	Display year based on Pahlavi epoch.
+-e	Display English names for weekdays.
 -j 	Display Julian dates (days one-based, numbered from Farvardin 1).
 -1 	Display single month output. (This is the default.)
 -3	Display prev/current/next months output.
