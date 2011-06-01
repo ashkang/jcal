@@ -11,5 +11,6 @@ int main() {
     printf("%s", jctime(&t));
     jctime_r(&t, buf);
     printf("%s", buf);
+    return 0;
 }
 

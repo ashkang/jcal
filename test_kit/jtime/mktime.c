@@ -9,7 +9,7 @@ int main() {
     struct jtm j;
     jlocaltime_r(&t, &j);
     jalali_show_time(&j);
-    printf("%d <-> %d\n", (int) jmktime(&j), (int) t);  
+    printf("%d <-> %d\n", (int) jmktime(&j), (int) t);
     return 0;
 }
 

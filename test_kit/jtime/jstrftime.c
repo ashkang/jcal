@@ -1,10 +1,17 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 #include <jalali/jalali.h>
 #include <jalali/jtime.h>
 
-const char* fmt = "%e | %F | %c | %s | u.";
-int main() {
+int main(int argc, char** argv) {
+    if (argc != 2) {
+	printf("wrong arguments given\n");
+	printf("usage jstrftime FORMAT\n");
+	exit(1);
+    }
+
+    const char* fmt = argv[1];
     char buf[32];
     time_t t;
     size_t s;
@@ -13,7 +20,8 @@ int main() {
     jlocaltime_r(&t, &j);
     jalali_show_time(&j);
     s = jstrftime(buf, 32, fmt, &j);
-    printf("%s:%d", buf, (int)s);
-    return 0;
+    printf("%s:%d\n", buf, (int)s);
+
+    exit(0);
 }
 

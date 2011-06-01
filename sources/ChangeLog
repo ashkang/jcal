@@ -1,3 +1,8 @@
+2011-06-02  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * sources/ChangeLog, sources/README, sources/autogen.sh: added autogen.sh
+  build script.
+
 2011-06-01  Ashkan Ghassemi <ghassemi@ftml.net>
 
   * sources/ChangeLog, sources/configure.in: minor fix to Configure.in, removed

@@ -9,8 +9,8 @@ int main() {
     struct jtm j;
     struct jtm* p;
     p = jgmtime(&t);
-    jgmtime_r(&t, &j);
     jalali_show_time(p);
+    jgmtime_r(&t, &j);
     jalali_show_time(&j);
     return 0;
 }
