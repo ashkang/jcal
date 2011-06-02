@@ -37,6 +37,7 @@ function help() {
     echo -e "usage: autogen.sh [-nch]..."
     echo -e "Invokes GNU build system tools in order to create necessary configuration scripts.\n"
     echo -e "Operation modes:"
+    echo -e "  -a, --alternative\t\tdo not invoke autoreconf"
     echo -e "  -n, --nocolor\t\t\tdisable output colors"
     echo -e "  -c, --clean\t\t\tremove all auto-generated scripts and files from source tree"
     echo -e "  -h, --help\t\t\tprint this help, then exit\n"
