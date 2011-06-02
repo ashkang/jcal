@@ -70,7 +70,7 @@ function clean() {
 
     # Makefile is present.
     if test -f Makefile; then
-	echo -ne "${YELLOW}performing make distclean if possible...${RESET} "
+	echo -ne "${YELLOW}performing distclean on sources if possible...${RESET} "
 	make distclean >/dev/null 2>&1
 	let STAT=$?
 
@@ -91,7 +91,7 @@ function clean() {
     echo -e "${GREEN}done${RESET}"
 }
 
-# Setting colors to standard ANSI values, NULL if 0 has been passed to set_color()
+# Setting colors to vt100 standard values, NULL if 0 gets passed to set_color()
 function set_colors() {
     local HAS_COLOR=$1
 
@@ -130,7 +130,7 @@ function is_present() {
     if [ ${OUTPUT} -eq 1 ]; then
 	echo -ne "checking for ${YELLOW}${NAME}${RESET}... "
 	if [ ${PRESENT} -eq 1 ]; then
-	    echo -e "${GREEN}ok${RESET}"
+	    echo -e "${GREEN}yes${RESET}"
 	else
 	    echo -e "${RED}no${RESET}"
 	fi
@@ -147,10 +147,17 @@ function is_present() {
 # Checking for tools
 # aclocal, libtoolize, autoconf, automake and autoreconf
 function check_services() {
+    local STAT
     ACLOCAL="$(which aclocal 2>/dev/null)"
     is_present "${ACLOCAL}" "aclocal" 1 1
-    LIBTOOLIZE="$(which libtoolize 2>/dev/null)"
-    is_present "${LIBTOOLIZE}" "libtoolize" 1 1
+    # glibtoolize glue-patch
+    LIBTOOLIZE="$(which glibtoolize 2>/dev/null)"
+    STAT=$?
+    is_present "${LIBTOOLIZE}" "glibtoolize" 1 0
+    if [ ${STAT} -ne 0 ]; then
+	LIBTOOLIZE="$(which libtoolize 2>/dev/null)"
+	is_present "${LIBTOOLIZE}" "libtoolize" 1 1
+    fi
     AUTOCONF="$(which autoconf 2>/dev/null)"
     is_present "${AUTOCONF}" "autoconf" 1 1
     AUTOMAKE="$(which automake 2>/dev/null)"

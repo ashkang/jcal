@@ -1,5 +1,11 @@
 2011-06-02  Ashkan Ghassemi <ghassemi@ftml.net>
 
+  * sources/ChangeLog, test_kit/elc.c, test_kit/get_date.c,
+  test_kit/get_diff.c, test_kit/jtime/asctime.c, test_kit/jtime/compile_me.sh,
+  test_kit/jtime/ctime.c, test_kit/jtime/gmtime.c, test_kit/jtime/jstrftime.c,
+  test_kit/jtime/localtime.c, test_kit/jtime/mktime.c, test_kit/jyinfo.c,
+  test_kit/leap.c, test_kit/sec_converter.c: test_kit fixes.
+
   * sources/ChangeLog, sources/README, sources/autogen.sh: added autogen.sh
   build script.
 
