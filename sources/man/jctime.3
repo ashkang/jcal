@@ -71,13 +71,6 @@ jlocaltime_r \- transform jalali date and time to broken-down jalali time or ASC
 .sp
 Link with -ljalali
 .sp
-.BR jasctime_r (),
-.BR jctime_r (),
-.BR jgmtime_r (),
-.BR jlocaltime_r ():
-.RS
-_POSIX_C_SOURCE\ >=\ 1 || _BSD_SOURCE ||
-_MISC_SOURCE || _POSIX_SOURCE
 .RE
 .ad
 .SH DESCRIPTION
@@ -467,7 +460,7 @@ The four functions
 and
 .BR jlocaltime ()
 return a pointer to static data and hence are not thread-safe.
-Thread-safe versions
+Thread-safe versions are
 .BR jasctime_r (),
 .BR jctime_r (),
 .BR jgmtime_r ()
@@ -482,14 +475,7 @@ libjalali version of \fIstruct jtm\fP has additional fields
 long tm_gmtoff;           /* Seconds east of UTC */
 const char *tm_zone;      /* Timezone abbreviation */
 .fi
-.RE
-.sp
-defined when
-.B _BSD_SOURCE
-was set before including
-.IR <jtime.h> .
 
-.BR localtime_r ().
 .SH "SEE ALSO"
 .BR jdate (1),
 .BR jcal (1),

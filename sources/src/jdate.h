@@ -11,11 +11,11 @@
  *
  * jcal is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with jcal.  If not, see <http://www.gnu.org/licenses/>.
+ * along with jcal.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef JDATE_H
@@ -37,17 +37,18 @@
 #define VERSION_OPT "version"
 
 /* help string */
-#define HELP_STR "Usage: jdate [arRuhV]... [+OUTPUT_FORMAT][d INPUT_FORMAT;DATE_STRING]\n\
+#define HELP_STR "Usage: jdate [arRuhV]... [+OUTPUT_FORMAT]\
+[d INPUT_FORMAT;DATE_STRING]\n\
 Display the current date and time in the given FORMAT.\n\
 \n\
-  -d, --date=FORMAT;STRING  display time described by STRING, not `now'\n\
-  -a, --access=FILE         display the last access time of FILE.\n\
-  -r, --reference=FILE      display the last modification time of FILE.\n\
-  -R, --rfc-2822            output date and time in RFC 2822 format.\n\
-                            Example: Jom, 06 Khor 1390 13:44:56 -0430.\n\
-  -u, --utc, --universal    print Coordinated Universal Time.\n\
-  -h, --help                display this help and exit.\n\
-  -V, --version             output version information and exit.\n\
+  -d, --date=FORMAT;STRING\tdisplay time described by STRING, not `now'\n\
+  -a, --access=FILE\t\tdisplay the last access time of FILE.\n\
+  -r, --reference=FILE\t\tdisplay the last modification time of FILE.\n\
+  -R, --rfc-2822\t\toutput date and time in RFC 2822 format.\n\
+\t\t\t\tExample: Jom, 06 Khor 1390 13:44:56 -0430.\n\
+  -u, --utc, --universal\tprint Coordinated Universal Time.\n\
+  -h, --help\t\t\tdisplay this help and exit.\n\
+  -V, --version\t\t\toutput version information and exit.\n\
 \n\
   FORMAT controls the output.  Interpreted sequences are:\n\
 \n\
@@ -96,19 +97,19 @@ libjalali home page: <http://savannah.nongnu.org/projects/jcal/>"
  *@action_handler
  */
 struct jdate_action {
-    int normal;           /* standard representation: %h %b %m %H:%M:%S %Z %Y */
-    int reference;        /* last modification time */
-    char* reference_ptr;  /* last modification time argument */
-    int access;           /* last access */
-    char* access_ptr;     /* last access argument */
-    int date;             /* use date string to interpret time instead of 'now' */
-    char* date_ptr;       /* date string argument */
-    int format;           /* +FORMAT. uses jstrftime() to format output */
-    char* format_ptr;     /* +FORMAT argument */
-    int rfc2822;          /* rfc2822 date and time representation: %h, %m %b %Y %H:%M:%S %z */
-    int utc;              /* Coordinated Universal Time */
-    int help;             /* help */
-    int version;          /* version */
+	int normal;		  /* standard representation: %h %b %m %H:%M:%S %Z %Y */
+	int reference;		  /* last modification time */
+	char* reference_ptr;  /* last modification time argument */
+	int access;		  /* last access */
+	char* access_ptr;	  /* last access argument */
+	int date;			  /* use date string instead of 'now' */
+	char* date_ptr;       /* date string argument */
+	int format;		  /* +FORMAT. uses jstrftime() to format output */
+	char* format_ptr;	  /* +FORMAT argument */
+	int rfc2822;		  /* rfc2822 date and time: %h, %m %b %Y %H:%M:%S %z */
+	int utc;			  /* Coordinated Universal Time */
+	int help;			  /* help */
+	int version;		  /* version */
 };
 
 #endif /* JDATE_H */

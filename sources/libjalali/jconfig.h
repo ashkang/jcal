@@ -27,7 +27,9 @@
 
 #define JALALI_NORMAL_CYCLE_LENGTH 128 /* A normal cycle length. */
 #define JALALI_EXTRA_CYCLE_LENGTH 132 /* Last cycle length. */
-#define JALALI_LAST_CYCLE_START 2688 /* Starting year of the last cycle in the period. */
+
+/* Starting year of the last cycle in the period. */
+#define JALALI_LAST_CYCLE_START 2688
 
 #define J_PT0 0 /* No partitions passed. */
 #define J_PT1 29 /* First partition passed. 0+29 */

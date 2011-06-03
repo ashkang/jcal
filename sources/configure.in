@@ -1,4 +1,4 @@
-#                                               -*- Autoconf -*-
+#												-*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
 AC_INIT([jcal], [0.2], [ghassemi@ftml.net])
@@ -25,7 +25,7 @@ AC_FUNC_MALLOC
 AC_CHECK_FUNCS([localtime_r memset strcasecmp strchr strstr tzset])
 
 AC_CONFIG_FILES([Makefile
-                 libjalali/Makefile
-                 man/Makefile
-                 src/Makefile])
+				 libjalali/Makefile
+				 man/Makefile
+				 src/Makefile])
 AC_OUTPUT

@@ -11,11 +11,11 @@
  *
  * jcal is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with jcal.  If not, see <http://www.gnu.org/licenses/>.
+ * along with jcal.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef JCAL_H
@@ -30,22 +30,23 @@
 #define JCAL_VERSION "0.2"
 
 struct cal_layout {
-    int color;      /* If enabled, drawer tries to colorize output. */
-    int julian;     /* Displays julian days (1-366) instead of month days. */
-    int pahlavi;    /* If enabled, jcal uses Pahlavi instead of Islamic epoch. */
-    int english;    /* Use Persian transliteration for weekday names. */
-    int margin;     /* Marginal space between two cals. */
-    int syear;      /* If enabled, jcal shows year above cals. */
+	int color;		/* If enabled, drawer tries to colorize output. */
+	int julian;	/* Displays julian days (1-366) instead of month days. */
+	int pahlavi;	/* jcal uses Pahlavi instead of Islamic epoch. */
+	int english;	/* Use Persian transliteration for weekday names. */
+	int margin;	/* Marginal space between two cals. */
+	int syear;		/* If enabled, jcal shows year above cals. */
 };
 
 struct cal_matrix {
-    int n;      /* Calendar numbers within matrix. */
-    int** m;    /* Calendar matrix. */
-    int width;  /* Matrix width. */
-    int height; /* Matrix height. */
+	int n;		/* Calendar numbers within matrix. */
+	int** m;	/* Calendar matrix. */
+	int width;	/* Matrix width. */
+	int height; /* Matrix height. */
 };
 
-void set_cal_matrix(struct cal_layout* l, struct jtm* ct, struct cal_matrix* mat, int prefix);
+void set_cal_matrix(struct cal_layout* l, struct jtm* ct,
+					struct cal_matrix* mat, int prefix);
 
 int is_in_margin(struct cal_layout* l, struct cal_matrix* mat, int c);
 

@@ -12,7 +12,7 @@
  *
  * libjalali is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
@@ -34,37 +34,39 @@ extern "C" {
 #define LIBJALALI_VERSION "0.2"
 
 struct jtm {
-    int tm_sec;            /* Seconds. (0-59) */
-    int tm_min;            /* Minutes. (0-59) */
-    int tm_hour;           /* Hours. (0-59) */
-    int tm_mday;           /* Day of the month. (1-31) */
-    int tm_mon;            /* Month. (0-11) */
-    int tm_year;           /* Year. */
-    int tm_wday;           /* Day of the week. (0-6) */
-    int tm_yday;           /* Day in the year. (0-365) */
-    int tm_isdst;          /* Daylight saving time is in effect. */
-    long int tm_gmtoff;    /* Seconds east of UTC. */
-    const char *tm_zone;   /* Timezone abbreviation.  */
+	int tm_sec;			   /* Seconds. (0-59) */
+	int tm_min;			   /* Minutes. (0-59) */
+	int tm_hour;		   /* Hours. (0-59) */
+	int tm_mday;		   /* Day of the month. (1-31) */
+	int tm_mon;			   /* Month. (0-11) */
+	int tm_year;		   /* Year. */
+	int tm_wday;		   /* Day of the week. (0-6) */
+	int tm_yday;		   /* Day in the year. (0-365) */
+	int tm_isdst;		   /* Daylight saving time is in effect. */
+	long int tm_gmtoff;	   /* Seconds east of UTC. */
+	const char *tm_zone;   /* Timezone abbreviation.  */
 };
 
 struct ab_jtm {
-    int ab_sec;
-    int ab_min;
-    int ab_hour;
-    int ab_days;
+	int ab_sec;
+	int ab_min;
+	int ab_hour;
+	int ab_days;
 };
 
 struct jyinfo {
-    int lf;                /* leap indicator flag */
-    int y;                 /* year */
-    int r;                 /* reamining years in grand cycle */
-    int p;                 /* passed years from grand cycle*/
-    int rl;                /* remaining leap years in grand cycle */
-    int pl;                /* passed leap years in grand cycle */
-    int apl;               /* absolute passed leaps */
+	int lf;				   /* leap indicator flag */
+	int y;				   /* year */
+	int r;				   /* reamining years in grand cycle */
+	int p;				   /* passed years from grand cycle*/
+	int rl;				   /* remaining leap years in grand cycle */
+	int pl;				   /* passed leap years in grand cycle */
+	int apl;			   /* absolute passed leaps */
 };
 
-extern int jalali_is_jleap(int year); /* Jalali leap year indication function. */
+
+/* Jalali leap year indication function. */
+extern int jalali_is_jleap(int year);
 
 extern void jalali_create_time_from_secs(time_t time, struct ab_jtm* ab_jtm);
 
