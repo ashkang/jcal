@@ -31,7 +31,7 @@ extern "C" {
 #endif
 #endif
 
-#define LIBJALALI_VERSION "0.2"
+#define LIBJALALI_VERSION "0.3"
 
 struct jtm {
 	int tm_sec;			   /* Seconds. (0-59) */

@@ -21,7 +21,7 @@
 #ifndef JDATE_H
 #define JDATE_H
 
-#define JDATE_VERSION "0.2"
+#define JDATE_VERSION "0.3"
 
 /* short options */
 #define JDATE_VALID_ARGS "a:r:d:RuhV"
@@ -64,6 +64,10 @@ Display the current date and time in the given FORMAT.\n\
   %e   day of month, space padded; same as %_d\n\
   %F   full date; same as %Y-%m-%d\n\
   %h   abbreviated weekday name in Persian transliteration (e.g. Jom)\n\
+  %g   abbreviated weekday name (Persian-utf8)\
+  %G   full weekday name (Persian-utf8)\
+  %v   abbreviated month name (Persian-utf8)\
+  %V   full month name (Persian-utf8)\
   %H   hour (00..23)\n\
   %I   hour (01..12)\n\
   %j   day of year (001..366)\n\

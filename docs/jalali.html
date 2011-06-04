@@ -64,18 +64,6 @@ jlocaltime_r - transform jalali date and time to broken-down jalali time or ASCI
 <P>
 Link with -ljalali
 <P>
-<B>jasctime_r</B>(),
-
-<B>jctime_r</B>(),
-
-<B>jgmtime_r</B>(),
-
-<B>jlocaltime_r</B>():
-
-<DL COMPACT><DT><DD>
-_POSIX_C_SOURCE&nbsp;&gt;=&nbsp;1 || _BSD_SOURCE ||
-_MISC_SOURCE || _POSIX_SOURCE
-</DL>
 
 
 <A NAME="lbAD">&nbsp;</A>
@@ -458,7 +446,7 @@ The
 
 function modifies <I>jyinfo</I> structure fields to match
 information for year specified by it's <I>y</I> field. Information
-regarding a year in jalali system includes leap flag, passed and 
+regarding a year in jalali system includes leap flag, passed and
 reamining years in the grand cycle, passed and remaining leap
 years in the grand cycle and absolute number of passed leaps
 since UTC Epoch.
@@ -490,7 +478,7 @@ The
 
 function updates <I>tm_wday</I> and <I>tm_yday</I> fields of the
 broken-down jalali time structure based on it's <I>tm_year</I>
-, <I>tm_mon</I> and <I>tm_mday</I>. <I>tm_isdst</I>, <I>tm_gmtoff</I> 
+, <I>tm_mon</I> and <I>tm_mday</I>. <I>tm_isdst</I>, <I>tm_gmtoff</I>
 and <I>tm_zone</I> fields are set accordingly. <I>tm_hour</I>, <I>tm_min</I> and
 <I>tm_sec</I> fields remain untouched.
 <P>
@@ -521,8 +509,8 @@ main(int argc, char ** argv)
     localtime_r(&amp;t, &amp;tm);
     printf(&quot;%d/%d/%d \n&quot;, tm.tm_year, tm.tm_mon, tm.tm_mday);
     exit(EXIT_SUCCESS);
-}    
-    
+}
+
 </PRE><A NAME="lbAF">&nbsp;</A>
 <H2>RETURN VALUE</H2>
 
@@ -536,7 +524,7 @@ in case an error was detected.
 
 C99 Standards.
 These functions are provided with APIs similar to that of POSIX.1-2001 date and time
-manipulation and are 
+manipulation and are
 <B>NOT</B>
 
 part of POSIX standard. For thread safety
@@ -582,7 +570,7 @@ and
 <B>jlocaltime</B>()
 
 return a pointer to static data and hence are not thread-safe.
-Thread-safe versions
+Thread-safe versions are
 <B>jasctime_r</B>(),
 
 <B>jctime_r</B>(),
@@ -603,18 +591,8 @@ long tm_gmtoff;           /* Seconds east of UTC */
 const char *tm_zone;      /* Timezone abbreviation */
 </PRE>
 
+<P>
 </DL>
-
-<P>
-defined when
-<B>_BSD_SOURCE</B>
-
-was set before including
-<I>&lt;<A HREF="file:/usr/include/jtime.h">jtime.h</A>&gt;</I>.
-
-<P>
-<B>localtime_r</B>().
-
 <A NAME="lbAI">&nbsp;</A>
 <H2>SEE ALSO</H2>
 
@@ -661,7 +639,7 @@ libjalali home page: &lt;<A HREF="http://savannah.nongnu.org/projects/jcal/">htt
 <A NAME="lbAM">&nbsp;</A>
 <H2>COPYRIGHT</H2>
 
-Copyright (C) 2011 Ashkan Ghassemi. 
+Copyright (C) 2011 Ashkan Ghassemi.
 <P>
 License LGPLv3+: GNU LGPL version 3 or later
 &lt;<A HREF="http://gnu.org/licenses/lgpl.html">http://gnu.org/licenses/lgpl.html</A>&gt;.
@@ -689,6 +667,6 @@ law.
 This document was created by
 <A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 16:40:31 GMT, May 28, 2011
+Time: 02:04:19 GMT, June 04, 2011
 </BODY>
 </HTML>

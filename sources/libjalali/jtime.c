@@ -30,17 +30,28 @@
 const char* GMT_ZONE = "UTC";
 
 const char* jalali_months[] = { "Farvardin", "Ordibehesht", "Khordaad",
-				"Tir", "Mordaad", "Shahrivar", "Mehr",
-				"Aabaan", "Aazar", "Dey", "Bahman", "Esfand" };
-const char* jalali_months_3[] = { "Far", "Ord", "Kho", "Tir", "Amo", "Sha",
-				   "Meh", "Aba", "Aza", "Dey", "Bah", "Esf" };
+								"Tir", "Mordaad", "Shahrivar", "Mehr",
+								"Aabaan", "Aazar", "Dey", "Bahman", "Esfand" };
+const char* fa_jalali_months[] = { "فروردین", "اردیبهشت", "خرداد",
+								   "تیر", "مرداد", "شهریور",
+								   "مهر", "آبان", "آذر",
+								   "دی", "بهمن", "اسفند" };
+const char* jalali_months_3[] = { "Far", "Ord", "Kho", "Tir", "Mor", "Sha",
+								  "Meh", "Aba", "Aza", "Dey", "Bah", "Esf" };
+const char* fa_jalali_months_3[] = { "فرو", "ارد", "خرد", "تیر", "مرد", "شهر",
+									 "مهر", "آبا", "آذر", "دی ", "بهم", "اسف"};
 const char* jalali_days_fa[] = { "Shanbeh", "Yek-Shanbeh", "Do-Shanbeh",
 								 "Seh-Shanbeh", "Chahaar-Shanbeh",
 								 "Panj-Shanbeh", "Jomeh" };
-const char* jalali_days_3_fa [] = { "Sha", "Yek", "Dos", "Ses", "Cha", "Pan",
+const char* fa_jalali_days[] = { "شنبه", "یکشنبه", "دوشنبه", "سه شنبه",
+								 "چهارشنبه", "پنجشنبه", "جمعه" };
+const char* jalali_days_3_fa[] = { "Sha", "Yek", "Dos", "Ses", "Cha", "Pan",
 									"Jom" };
-const char* jalali_days_2_fa [] = { "Sh", "Ye", "Do", "Se", "Ch", "Pa", "Jo" };
+const char* fa_jalali_days_3[] = { "شنب", "یکش", "دوش", "سه ", "چها", "پنج",
+								   "جمع" };
+const char* jalali_days_2_fa[] = { "Sh", "Ye", "Do", "Se", "Ch", "Pa", "Jo" };
 
+const char* fa_jalali_days_2[] = { "شن", "یک", "دو", "سه", "چه", "پن", "جم" };
 const char* jalali_days[] = { "Saturday", "Sunday", "Monday", "Tuesday",
 							  "Wednesday", "Thursday", "Friday" };
 const char* jalali_days_3[] = { "Sat", "Sun", "Mon", "Tue", "Wed", "Thu",
@@ -298,6 +309,26 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 			case 'F':
 				snprintf(buf, MAX_BUF_SIZE, "%d-%02d-%02d", jtm->tm_year,
 						 jtm->tm_mon + 1, jtm->tm_mday);
+				break;
+
+				/* The abbreviated weekday name. (Persian-UTF8) */
+			case 'g':
+				strncpy(buf, fa_jalali_days_3[jtm->tm_wday], MAX_BUF_SIZE);
+				break;
+
+				/* The full weekday name. (Persian-UTF8) */
+			case 'G':
+				strncpy(buf, fa_jalali_days[jtm->tm_wday], MAX_BUF_SIZE);
+				break;
+
+				/* The abbreviated month name. (Persian-UTF8) */
+			case 'v':
+				strncpy(buf, fa_jalali_months_3[jtm->tm_mon], MAX_BUF_SIZE);
+				break;
+
+				/* The full month name. (Persian-UTF8) */
+			case 'V':
+				strncpy(buf, fa_jalali_months[jtm->tm_mon], MAX_BUF_SIZE);
 				break;
 
 				/* The abbreviated weekday name. (Persian) */

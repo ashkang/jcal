@@ -1,4 +1,16 @@
+2011-06-03  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * sources/autogen.sh, sources/configure.in, sources/libjalali/jalali.c,
+  sources/libjalali/jalali.h, sources/libjalali/jconfig.h,
+  sources/libjalali/jtime.c, sources/man/Makefile.am, sources/man/jctime.3,
+  sources/src/Makefile.am, sources/src/jcal.c, sources/src/jcal.h,
+  sources/src/jdate.c, sources/src/jdate.h: whitespace fix on sources.
+
 2011-06-02  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * sources/autogen.sh: autogen help fixed.
+
+  * sources/ChangeLog, sources/autogen.sh: glibtoolize fix for autogen script.
 
   * sources/ChangeLog, test_kit/elc.c, test_kit/get_date.c,
   test_kit/get_diff.c, test_kit/jtime/asctime.c, test_kit/jtime/compile_me.sh,
