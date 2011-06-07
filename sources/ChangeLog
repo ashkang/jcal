@@ -1,3 +1,14 @@
+2011-06-04  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * .gitignore, docs/jalali.html, docs/jcal.html, docs/jdate.html,
+  docs/jstrftime.html, docs/jstrptime.html, html-docs/jalali.html,
+  html-docs/jcal.html, html-docs/jdate.html, html-docs/jstrftime.html,
+  html-docs/jstrptime.html, sources/AUTHORS, sources/ChangeLog, sources/README,
+  sources/TODO, sources/libjalali/jalali.h, sources/libjalali/jtime.c,
+  sources/man/jdate.1, sources/man/jstrftime.3, sources/src/jcal.h,
+  sources/src/jdate.h: added utf-8 persian outputs to jstrftime. added TODO.
+  docs updated.
+
 2011-06-03  Ashkan Ghassemi <ghassemi@ftml.net>
 
   * sources/autogen.sh, sources/configure.in, sources/libjalali/jalali.c,

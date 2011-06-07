@@ -22,6 +22,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <locale.h>
+#include <langinfo.h>
 #include "termcap.h"
 #include "jcal.h"
 #include "../libjalali/jalali.h"
@@ -34,6 +36,10 @@ extern const char* jalali_days_3[];
 extern const char* jalali_days_3_fa[];
 extern const char* jalali_days_2[];
 extern const char* jalali_days_2_fa[];
+extern const char* fa_jalali_months[];
+extern const char* fa_jalali_days_3[];
+extern const char* fa_jalali_days_2[];
+
 extern const int jalali_month_len[];
 
 extern char* optarg;
@@ -153,31 +159,50 @@ show_cal_matrix(struct cal_layout* l, struct cal_matrix* mat) {
 				if (mat->m[i][j] == 0)
 					printf((l->julian) ? "    " : "   ");
 				else if (mat->m[i][j] > 1000 && l->color) {
-					printf((l->julian) ? "%s%3d%s " : "%s%2d%s ",
+					printf("%s%I*d%s ",
 						   TERM_BLACK_ON_WHITE,
+						   jalali_calc_utf8_padding((l->julian) ? 3 : 2,
+											 mat->m[i][j] - 1000),
 						   mat->m[i][j] - 1000, TERM_RESET);
 				} else if (mat->m[i][j] > 1000 && !l->color) {
-					printf((l->julian) ? "%3d " : "%2d ", mat->m[i][j] - 1000);
+					printf("%I*d ",
+						   jalali_calc_utf8_padding((l->julian) ? 3 : 2,
+											mat->m[i][j] - 1000),
+						   mat->m[i][j] - 1000);
 				}
 				else {
-					printf((l->julian) ? "%3d " : "%2d ", mat->m[i][j]);
+					printf("%I*d ",
+						   jalali_calc_utf8_padding((l->julian) ? 3 : 2,
+											mat->m[i][j]),
+						   mat->m[i][j]);
 				}
 			}
 			else {
 				if (mat->m[i][j] == 0)
-					printf((l->julian) ? "   " : "	");
+					printf((l->julian) ? "   " : "  ");
 				else if (mat->m[i][j] > 1000 && l->color) {
-					printf((l->julian) ? "%s%3d%s" : "%s%2d%s",
+					printf("%s%I*d%s",
 						   TERM_RED_ON_WHITE,
+						   jalali_calc_utf8_padding((l->julian) ? 3 : 2,
+											 mat->m[i][j] - 1000),
 						   mat->m[i][j] - 1000, TERM_RESET);
 				} else if ((mat->m[i][j] > 1000) && (!l->color)) {
-					printf((l->julian) ? "%3d" : "%2d", mat->m[i][j] - 1000);
+					printf("%I*d",
+						   jalali_calc_utf8_padding((l->julian) ? 3 : 2,
+											 mat->m[i][j] - 1000),
+						   mat->m[i][j] - 1000);
 				} else if (l->color) {
-					printf((l->julian) ? "%s%3d%s" : "%s%2d%s", TERM_RED,
+					printf("%s%I*d%s",
+						   TERM_RED,
+						   jalali_calc_utf8_padding((l->julian) ? 3 : 2,
+											 mat->m[i][j]),
 						   mat->m[i][j], TERM_RESET);
 				}
 				else {
-					printf((l->julian) ? "%3d" : "%2d", mat->m[i][j]);
+					printf("%I*d",
+						   jalali_calc_utf8_padding((l->julian) ? 3 : 2,
+											 mat->m[i][j]),
+						   mat->m[i][j]);
 				}
 			}
 		}
@@ -228,27 +253,34 @@ show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j) {
 	char** ptr_d;
 
 	int i, k;
-	int cal_width = (l->julian) ? (7 * 3 + 6) : (7 * 2 + 6);
+	int cw = (strstr(nl_langinfo(CODESET), "UTF-8")) ? 2 : 1;
+	int cal_width = (l->julian) ? 7 * 3 + 6 : 7 * 2 + 6;
 
 	char cal_t[3][MAX_BUF_SIZE];
-	char cal_y[3][20];
+	char cal_y[3][100];
 	int cal_tw[3];
 
-	if (l->julian)
-		ptr_d = (l->english) ? (char**)jalali_days_3 : (char**)jalali_days_3_fa;
+	if (l->farsi)
+		ptr_d = (l->julian) ? (char**) fa_jalali_days_3 :
+			(char**) fa_jalali_days_2;
+	else if (l->english)
+		ptr_d = (l->julian) ? (char**) jalali_days_3 : (char**) jalali_days_2;
 	else
-		ptr_d = (l->english) ? (char**)jalali_days_2 : (char**)jalali_days_2_fa;
+		ptr_d = (l->julian) ? (char**) jalali_days_3_fa :
+			(char**) jalali_days_2_fa;
 
 	for (i=0; i<m->n; i++) {
-		snprintf(cal_y[i], 20, "%d%s",
+		snprintf(cal_y[i], 100, "%Id%s",
 				 _j[i]->tm_year + ((l->pahlavi) ? PAHLAVI_ISLAMIC_DIFF : 0),
 				 (l->pahlavi) ? "(pa)" : "");
 	}
 
 	for (i=0; i<m->n; i++) {
-		snprintf(cal_t[i], MAX_BUF_SIZE, "%s %s", jalali_months[_j[i]->tm_mon],
+		snprintf(cal_t[i], MAX_BUF_SIZE, "%s %s", (l->farsi) ?
+				 fa_jalali_months[_j[i]->tm_mon] :
+				 jalali_months[_j[i]->tm_mon],
 				 (l->syear) ? cal_y[i] : "");
-		cal_tw[i] = (cal_width - strlen(cal_t[i])) / 2;
+		cal_tw[i] = (cal_width - (strlen(cal_t[i]) / cw)) / 2;
 	}
 
 	for (i=0; i<m->n; i++) {
@@ -256,9 +288,12 @@ show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j) {
 			printf(" ");
 		}
 
-		printf("%s", cal_t[i]);
+		printf("%s%s%s", TERM_WHITE, cal_t[i], TERM_RESET);
 
-		for (k=0; k<(cal_width	- cal_tw[i] - strlen(cal_t[i])); k++) {
+		for (k=0;
+			 k<(cal_width - cal_tw[i] -
+				(strlen(cal_t[i]) / cw + ((cw > 1) ? 1 : 0)));
+			 k++) {
 			printf(" ");
 		}
 
@@ -273,7 +308,7 @@ show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j) {
 
 	for (i=0; i<m->n; i++) {
 		for (k=0; k<6; k++) {
-			printf("%s ", ptr_d[k]);
+			printf("%s%s%s ", TERM_WHITE, ptr_d[k], TERM_RESET);
 		}
 
 		if (l->color)
@@ -377,7 +412,7 @@ void
 show_year(struct cal_layout* l, struct jtm* j) {
 	struct jtm _j[4];
 
-	char title[20];
+	char title[100];
 
 	int cal_width = (((l->julian) ? (3 * 7 + 6) : (2 * 7 + 6)) * 3) +
 		(2 * l->margin);
@@ -385,7 +420,7 @@ show_year(struct cal_layout* l, struct jtm* j) {
 	int cal_tw;
 	int i;
 
-	snprintf(title, 20, "%d%s", j->tm_year + ((l->pahlavi) ?
+	snprintf(title, 100, "%Id%s", j->tm_year + ((l->pahlavi) ?
 											  PAHLAVI_ISLAMIC_DIFF : 0),
 			 (l->pahlavi) ? "(pa)" : "");
 
@@ -446,6 +481,7 @@ main(int argc, char** argv) {
 
 	l.color = 1;
 	l.pahlavi = 0;
+	l.farsi = 0;
 	l.julian = 0;
 	l.english = 0;
 	l.margin = 3;
@@ -487,6 +523,12 @@ main(int argc, char** argv) {
 			/* Using Pahlavi instead of Islamic Epoch. */
 		case 'P':
 			l.pahlavi = 1;
+			break;
+
+		case 'p':
+			l.farsi = 1;
+			l.english = 0;
+			setlocale(LC_ALL, "fa_IR.utf8");
 			break;
 
 			/* Displays Julian days (Day of year) instead of day of month.	*/

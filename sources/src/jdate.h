@@ -21,7 +21,7 @@
 #ifndef JDATE_H
 #define JDATE_H
 
-#define JDATE_VERSION "0.3"
+#define JDATE_VERSION "0.4"
 
 /* short options */
 #define JDATE_VALID_ARGS "a:r:d:RuhV"
@@ -61,13 +61,14 @@ Display the current date and time in the given FORMAT.\n\
   %C   century; like %Y, except omit last two digits (e.g., 13)\n\
   %d   day of month (e.g., 01)\n\
   %D   date; same as %Y/%m/%d\n\
-  %e   day of month, space padded; same as %_d\n\
+  %e   day of month, space padded; same as %d\n\
+  %E   date and time in Farsi (utf8)\n\
   %F   full date; same as %Y-%m-%d\n\
-  %h   abbreviated weekday name in Persian transliteration (e.g. Jom)\n\
-  %g   abbreviated weekday name (Persian-utf8)\
-  %G   full weekday name (Persian-utf8)\
-  %v   abbreviated month name (Persian-utf8)\
-  %V   full month name (Persian-utf8)\
+  %h   abbreviated weekday name in Farsi transliteration (e.g. Jom)\n\
+  %g   abbreviated Farsi weekday name (utf8)\n\
+  %G   full Farsi weekday name (utf8)\n\
+  %v   abbreviated Farsi month name (utf8)\n\
+  %V   full Farsi month name (utf8)\n\
   %H   hour (00..23)\n\
   %I   hour (01..12)\n\
   %j   day of year (001..366)\n\
@@ -76,6 +77,7 @@ Display the current date and time in the given FORMAT.\n\
   %m   month (01..12)\n\
   %M   minute (00..59)\n\
   %n   a newline\n\
+  %O   AM or PM notation for time in Farsi (utf8)\n\
   %p   either AM or PM; blank if not known\n\
   %P   like %p, but lower case\n\
   %r   12-hour clock time (e.g., 17:24:04 PM)\n\
@@ -87,8 +89,9 @@ Display the current date and time in the given FORMAT.\n\
   %u   day of week (1..7); 1 is Saturday\n\
   %U   week number of year, with Saturday as first day of week (00..53)\n\
   %w   day of week (0..6); 0 is Saturday\n\
+  %W   date representation in Farsi (utf8)\n\
   %x   date representation (e.g., 06/03/90)\n\
-  %X   time representation (e.g., 23:13:48)\n\
+  %X   time representation in Farsi (utf8)\n\
   %y   last two digits of year (00..99)\n\
   %Y   year\n\
   %z   +hhmm numeric time zone (e.g., +0330)\n\

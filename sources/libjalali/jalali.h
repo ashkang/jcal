@@ -31,19 +31,19 @@ extern "C" {
 #endif
 #endif
 
-#define LIBJALALI_VERSION "0.3"
+#define LIBJALALI_VERSION "0.4"
 
 struct jtm {
-	int tm_sec;			   /* Seconds. (0-59) */
-	int tm_min;			   /* Minutes. (0-59) */
+	int tm_sec;		   /* Seconds. (0-59) */
+	int tm_min;		   /* Minutes. (0-59) */
 	int tm_hour;		   /* Hours. (0-59) */
 	int tm_mday;		   /* Day of the month. (1-31) */
-	int tm_mon;			   /* Month. (0-11) */
+	int tm_mon;		   /* Month. (0-11) */
 	int tm_year;		   /* Year. */
 	int tm_wday;		   /* Day of the week. (0-6) */
 	int tm_yday;		   /* Day in the year. (0-365) */
 	int tm_isdst;		   /* Daylight saving time is in effect. */
-	long int tm_gmtoff;	   /* Seconds east of UTC. */
+	long int tm_gmtoff;    /* Seconds east of UTC. */
 	const char *tm_zone;   /* Timezone abbreviation.  */
 };
 
@@ -55,12 +55,12 @@ struct ab_jtm {
 };
 
 struct jyinfo {
-	int lf;				   /* leap indicator flag */
+	int lf;			   /* leap indicator flag */
 	int y;				   /* year */
 	int r;				   /* reamining years in grand cycle */
 	int p;				   /* passed years from grand cycle*/
-	int rl;				   /* remaining leap years in grand cycle */
-	int pl;				   /* passed leap years in grand cycle */
+	int rl;			   /* remaining leap years in grand cycle */
+	int pl;			   /* passed leap years in grand cycle */
 	int apl;			   /* absolute passed leaps */
 };
 

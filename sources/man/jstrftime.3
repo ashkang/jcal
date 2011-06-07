@@ -76,32 +76,35 @@ Equivalent to
 .TP
 .B %e
 Like
-.BR %d ,
-the day of the month as a decimal number, but a leading
+.BR %d
+The day of the month as a decimal number, but a leading
 zero is replaced by a space. (SU)
+.TP
+.B %E
+The preferred date and time in Farsi. (utf8)
 .TP
 .B %F
 Equivalent to
 .B %Y-%m-%d
-(the ISO\ 8601 date format). (C99)
+(similar to the ISO\ 8601 date format). (C99)
 .TP
 .B %h
-The abbreviated Persian transliterated weekday name.
+The abbreviated Farsi transliterated weekday name.
 .TP
 .B %q
-The full Persian transliterated weekday name.
+The full Farsi transliterated weekday name.
 .TP
 .B %g
-the abbreviated Persian-utf8 weekday name.
+The abbreviated Farsi weekday name. (utf8)
 .TP
 .B %G
-the full Persian-utf8 weekday name.
+The full Farsi weekday name. (utf8)
 .TP
 .B %v
-the abbreviated Persian-utf8 month name.
+The abbreviated Farsi month name. (utf8)
 .TP
 .B %V
-the full Persian-utf8 month name.
+The full Farsi month name. (utf8)
 .TP
 .B %H
 The hour as a decimal number using a 24-hour clock (range 00 to 23).
@@ -135,6 +138,9 @@ The minute as a decimal number (range 00 to 59).
 .B %n
 A newline character. (SU)
 .TP
+.B %O
+AM or PM notation for the given time in Farsi equivalent. (utf8)
+.TP
 .B %p
 Either "AM" or "PM" according to the given time value, or the
 corresponding strings for the current locale.
@@ -162,8 +168,7 @@ below.
 The number of seconds since the Epoch, 1970-01-01 (1348-10-11) 00:00:00 +0000 (UTC). (TZ)
 .TP
 .B %S
-The second as a decimal number (range 00 to 60).
-(The range is up to 60 to allow for occasional leap seconds.)
+The second as a decimal number (range 00 to 59).
 .TP
 .B %t
 A tab character. (SU)
@@ -187,11 +192,14 @@ The day of the week as a decimal, range 0 to 6, Saturday being 0.
 See also
 .BR %u .
 .TP
+.B %W
+The preferred date in %Y/%m/%d format and Farsi. (utf8)
+.TP
 .B %x
 The preferred date representation without the time.
 .TP
 .B %X
-The preferred time representation without the date.
+The preferred time representation without the date in Farsi. (utf8)
 .TP
 .B %y
 The year as a decimal number without a century (range 00 to 99).

@@ -83,26 +83,29 @@ date; same as %Y/%m/%d
 %e
 day of month, space padded; same as %_d
 .TP
+%E
+date and time in Farsi. (utf8)
+.TP
 %F
 full date; same as %Y\-%m\-%d
 .TP
 %h
-abbreviated Persian weekday name in English transliteration (e.g. Jom)
+abbreviated Farsi weekday name in English transliteration (e.g. Jom)
 .TP
 %q
-full Persian weekday name in English transliteration (e.g. Jomeh)
+full Farsi weekday name in English transliteration (e.g. Jomeh)
 .TP
 %g
-abbreviated Persian-utf8 weekday name.
+abbreviated Farsi weekday name. (utf8)
 .TP
 %G
-full Persian-utf8 weekday name.
+full Farsi weekday name. (utf8)
 .TP
 %v
-abbreviated Persian-utf8 month name.
+abbreviated Farsi month name. (utf8)
 .TP
 %V
-full Persian-utf8 month name.
+full Farsi month name. (utf8)
 .TP
 %H
 hour (00..23)
@@ -127,6 +130,9 @@ minute (00..59)
 .TP
 %n
 a newline
+.TP
+%O
+AM or PM notation for time in Farsi. (utf8)
 .TP
 %p
 either AM or PM; blank if not known
@@ -161,11 +167,14 @@ week number of year, with Saturday as first day of week (00..53)
 %w
 day of week (0..6); 0 is Saturday
 .TP
+%W
+date representation in Farsi. (utf8)
+.TP
 %x
 date representation (e.g., 06/03/90)
 .TP
 %X
-time representation (e.g., 23:13:48)
+time representation in Farsi. (utf8)
 .TP
 %y
 last two digits of year (00..99)

@@ -150,13 +150,9 @@ This means that \fIjtm\fP should be initialized before the call.
 libjalali does not touch those fields which are not
 explicitly specified.
 
-.TP
-.B %u
-The day of the week as a decimal number (1-7, where Monday = 1).
-
 .SH EXAMPLE
 The following example demonstrates the use of
-.BR jstrptime ()
+.BR jstrptime (3)
 and
 .BR jstrftime (3).
 .sp
@@ -175,7 +171,7 @@ main(void)
     char buf[255];
 
     memset(&jtm, 0, sizeof(struct jtm));
-    jstrptime("2001\-11\-12 18:31:01", "%Y\-%m\-%d %H:%M:%S", &jtm);
+    jstrptime("1390\-03\-17 08:33:01", "%Y\-%m\-%d %H:%M:%S", &jtm);
     jstrftime(buf, sizeof(buf), "%d %b %Y %H:%M", &jtm);
     puts(buf);
     exit(EXIT_SUCCESS);

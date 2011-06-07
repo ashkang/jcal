@@ -22,7 +22,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include <locale.h>
+#include <langinfo.h>
 #include "jconfig.h"
 #include "jalali.h"
 #include "jtime.h"
@@ -47,7 +48,7 @@ const char* fa_jalali_days[] = { "شنبه", "یکشنبه", "دوشنبه", "س
 								 "چهارشنبه", "پنجشنبه", "جمعه" };
 const char* jalali_days_3_fa[] = { "Sha", "Yek", "Dos", "Ses", "Cha", "Pan",
 									"Jom" };
-const char* fa_jalali_days_3[] = { "شنب", "یکش", "دوش", "سه ", "چها", "پنج",
+const char* fa_jalali_days_3[] = { "شنب", "یکش", "دوش", "سهش", "چها", "پنج",
 								   "جمع" };
 const char* jalali_days_2_fa[] = { "Sh", "Ye", "Do", "Se", "Ch", "Pa", "Jo" };
 
@@ -227,6 +228,11 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 	if (!s || max <= 0 || !format || !jtm)
 		return -1;
 
+	char* clocale;
+	char _l1[10];
+	char _l2[10];
+	char _l3[10];
+
 	char buf[MAX_BUF_SIZE];
 	int i, j;
 	int fmt_n = strlen(format);
@@ -273,8 +279,8 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 				snprintf(buf, MAX_BUF_SIZE, "%s %d %s %d %02d:%02d:%02d %s",
 						 jalali_days_3[jtm->tm_wday], jtm->tm_mday,
 						 jalali_months_3[jtm->tm_mon], jtm->tm_year,
-						 jtm->tm_hour,jtm->tm_min, jtm->tm_sec,
-						 tzname[jtm->tm_isdst]);
+						 jtm->tm_hour, jtm->tm_min, jtm->tm_sec,
+						 jtm->tm_zone);
 				break;
 
 				/* The century number (year/100) as a 2-digit integer. */
@@ -301,42 +307,62 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 				snprintf(buf, MAX_BUF_SIZE, "%2d", jtm->tm_mday);
 				break;
 
-				/* Unused. */
+				/*
+				 * The preferred date and time representation in Farsi. (utf8)
+				 * example: سه شنبه ۱۷ خرداد ۱۳۹۰، ساعت ۰۸:۱۹:۲۳ (IRDT)
+				 */
 			case 'E':
+				tzset();
+				clocale = setlocale(LC_ALL, NULL);
+				setlocale(LC_ALL, "fa_IR.utf8");
+
+				jalali_zero_pad_fix(_l1, 10, jtm->tm_hour);
+				jalali_zero_pad_fix(_l2, 10, jtm->tm_min);
+				jalali_zero_pad_fix(_l3, 10, jtm->tm_sec);
+
+				snprintf(buf, MAX_BUF_SIZE, "%s %Id %s %Id، ساعت %s:%s:%s (%s)",
+						 fa_jalali_days[jtm->tm_wday], jtm->tm_mday,
+						 fa_jalali_months[jtm->tm_mon], jtm->tm_year,
+						 _l1, _l2, _l3,
+						 jtm->tm_zone);
+
+				setlocale(LC_ALL, clocale);
 				break;
 
-				/* Equivalent to %Y-%m-%d (the ISO 8601 date format). */
+				/*
+				 * Equivalent to %Y-%m-%d (similar to the ISO 8601 date format).
+				 */
 			case 'F':
 				snprintf(buf, MAX_BUF_SIZE, "%d-%02d-%02d", jtm->tm_year,
 						 jtm->tm_mon + 1, jtm->tm_mday);
 				break;
 
-				/* The abbreviated weekday name. (Persian-UTF8) */
+				/* The abbreviated weekday name. (Farsi-UTF8) */
 			case 'g':
 				strncpy(buf, fa_jalali_days_3[jtm->tm_wday], MAX_BUF_SIZE);
 				break;
 
-				/* The full weekday name. (Persian-UTF8) */
+				/* The full weekday name. (Farsi-UTF8) */
 			case 'G':
 				strncpy(buf, fa_jalali_days[jtm->tm_wday], MAX_BUF_SIZE);
 				break;
 
-				/* The abbreviated month name. (Persian-UTF8) */
+				/* The abbreviated month name. (Farsi-UTF8) */
 			case 'v':
 				strncpy(buf, fa_jalali_months_3[jtm->tm_mon], MAX_BUF_SIZE);
 				break;
 
-				/* The full month name. (Persian-UTF8) */
+				/* The full month name. (Farsi-UTF8) */
 			case 'V':
 				strncpy(buf, fa_jalali_months[jtm->tm_mon], MAX_BUF_SIZE);
 				break;
 
-				/* The abbreviated weekday name. (Persian) */
+				/* The abbreviated weekday name. (Farsi) */
 			case 'h':
 				strncpy(buf, jalali_days_3_fa[jtm->tm_wday], MAX_BUF_SIZE);
 				break;
 
-				/* The full weekday name. (Persian) */
+				/* The full weekday name. (Farsi) */
 			case 'q':
 				strncpy(buf, jalali_days_fa[jtm->tm_wday], MAX_BUF_SIZE);
 				break;
@@ -401,8 +427,14 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 				snprintf(buf, MAX_BUF_SIZE, "\n");
 				break;
 
-				/* Unused. */
+				/*
+				 * Either "ق.ظ" or "ب.ظ" according to the given time value.
+				 * Noon is treated as "ق.ظ" and midnight as "ب.ظ".
+				 */
 			case 'O':
+				snprintf(buf, MAX_BUF_SIZE, "%s",
+						 (jtm->tm_hour >= 0 && jtm->tm_hour < 12) ?
+						 "ق.ظ" : "ب.ظ");
 				break;
 
 				/*
@@ -489,14 +521,49 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 				snprintf(buf, MAX_BUF_SIZE, "%02d", tmp);
 				break;
 
+				/*
+				 * The day of the week as a decimal, range 0 to 6
+				 * Saturday being 0.  See also %u.
+				 */
+			case 'w':
+				snprintf(buf, MAX_BUF_SIZE, "%d", jtm->tm_wday);
+				break;
+
+				/*
+				 * The preferred date representation without the time
+				 * in Farsi. (utf8)
+				 */
+			case 'W':
+				clocale = setlocale(LC_ALL, NULL);
+				setlocale(LC_ALL, "fa_IR.utf8");
+				jalali_zero_pad_fix(_l2, 10, jtm->tm_mon+1);
+				jalali_zero_pad_fix(_l1, 10, jtm->tm_mday);
+				snprintf(buf, MAX_BUF_SIZE, "%Id/%s/%s", jtm->tm_year,
+						 _l2, _l1);
+				setlocale(LC_ALL, clocale);
+				break;
+
 				/* The preferred date representation without the time. */
 			case 'x':
 				snprintf(buf, MAX_BUF_SIZE, "%02d/%02d/%d",
 						 jtm->tm_mday, jtm->tm_mon+1, jtm->tm_year);
 				break;
 
-				/* Unused. */
+				/*
+				 * The preferred time representation in Farsi. (utf8)
+				 */
 			case 'X':
+				clocale = setlocale(LC_ALL, NULL);
+				setlocale(LC_ALL, "fa_IR.utf8");
+
+				jalali_zero_pad_fix(_l1, 10, jtm->tm_hour);
+				jalali_zero_pad_fix(_l2, 10, jtm->tm_min);
+				jalali_zero_pad_fix(_l3, 10, jtm->tm_sec);
+
+				snprintf(buf, MAX_BUF_SIZE, "%s:%s:%s",
+						 _l1, _l2, _l3);
+
+				setlocale(LC_ALL, clocale);
 				break;
 
 				/*
@@ -718,7 +785,7 @@ jstrptime(const char* s, const char* format, struct jtm* jtm) {
 			jtm->tm_year = atoi(buf);
 			break;
 
-			/* The abbreviated or full weekday name. (Persian) */
+			/* The abbreviated or full weekday name. (Farsi) */
 		case 'q':
 		case 'h':
 			ptr = (fd == 'h') ? (char**) jalali_days_3_fa :
@@ -788,4 +855,34 @@ jctime_r(const time_t* timep, char* buf) {
 	in_jctime(timep, buf);
 
 	return in_buf;
+}
+
+/*
+ * @Utils
+ * Utility functions for internal used.
+ */
+int
+jalali_calc_utf8_padding(int op, int d) {
+	char buf[MAX_BUF_SIZE];
+	int ld;
+	int cw;
+	int r;
+	snprintf(buf, MAX_BUF_SIZE, "%d", d);
+	ld = strlen(buf);
+	cw = (strstr(nl_langinfo(CODESET), "UTF-8")) ? 2 : 1;
+	r = op - ld + ld * cw;
+	return r;
+}
+
+void jalali_zero_pad_fix(char* buf, size_t max, int d) {
+	if (!buf)
+		return;
+
+	char* clocale = setlocale(LC_ALL, NULL);
+	setlocale(LC_ALL, "fa_IR.utf8");
+	if (d < 10)
+		snprintf(buf, max, "۰%Id", d);
+	else
+		snprintf(buf, max, "%Id", d);
+	setlocale(LC_ALL, clocale);
 }

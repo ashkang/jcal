@@ -184,18 +184,11 @@ This means that <I>jtm</I> should be initialized before the call.
 libjalali does not touch those fields which are not
 explicitly specified.
 <P>
-<DL COMPACT>
-<DT><B>%u</B>
-
-<DD>
-The day of the week as a decimal number (1-7, where Monday = 1).
-<P>
-</DL>
 <A NAME="lbAH">&nbsp;</A>
 <H2>EXAMPLE</H2>
 
 The following example demonstrates the use of
-<B>jstrptime</B>()
+<B><A HREF="http://localhost/cgi-bin/man/man2html?3+jstrptime">jstrptime</A></B>(3)
 
 and
 <B><A HREF="http://localhost/cgi-bin/man/man2html?3+jstrftime">jstrftime</A></B>(3).
@@ -216,7 +209,7 @@ main(void)
     char buf[255];
 
     memset(&amp;jtm, 0, sizeof(struct jtm));
-    jstrptime(&quot;2001-11-12 18:31:01&quot;, &quot;%Y-%m-%d %H:%M:%S&quot;, &amp;jtm);
+    jstrptime(&quot;1390-03-17 08:33:01&quot;, &quot;%Y-%m-%d %H:%M:%S&quot;, &amp;jtm);
     jstrftime(buf, sizeof(buf), &quot;%d %b %Y %H:%M&quot;, &amp;jtm);
     puts(buf);
     exit(EXIT_SUCCESS);
@@ -289,6 +282,6 @@ law.
 This document was created by
 <A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 02:04:19 GMT, June 04, 2011
+Time: 05:04:03 GMT, June 07, 2011
 </BODY>
 </HTML>
