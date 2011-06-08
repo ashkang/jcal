@@ -54,9 +54,7 @@ extern struct jtm* jgmtime_r(const time_t* timep, struct jtm* result);
 
 extern struct jtm* jlocaltime_r(const time_t* timep, struct jtm* result);
 
-extern int jalali_calc_utf8_padding(int op, int d);
-
-extern void jalali_zero_pad_fix(char* buf, size_t max, int d);
+extern int jalali_to_farsi(char* buf, size_t n, int padding, char* pad, int d);
 
 #ifdef __cplusplus
 }

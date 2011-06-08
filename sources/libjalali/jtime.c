@@ -58,6 +58,10 @@ const char* jalali_days[] = { "Saturday", "Sunday", "Monday", "Tuesday",
 const char* jalali_days_3[] = { "Sat", "Sun", "Mon", "Tue", "Wed", "Thu",
 								"Fri" };
 const char* jalali_days_2[] = { "Sa", "Su", "Mo", "Tu", "We", "Th", "Fr" };
+const char* farsi_digits[] = { "۰", "۱", "۲", "۳", "۴",
+							   "۵", "۶", "۷", "۸", "۹" };
+
+const char* tzname_fa[2] = { "ساعت زمستانی", "ساعت تابستانی" };
 
 static char in_buf[MAX_BUF_SIZE] = {0};
 static struct jtm in_jtm;
@@ -228,11 +232,11 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 	if (!s || max <= 0 || !format || !jtm)
 		return -1;
 
-	char* clocale;
 	char _l1[10];
 	char _l2[10];
 	char _l3[10];
-
+	char _la[100];
+	char _lb[100];
 	char buf[MAX_BUF_SIZE];
 	int i, j;
 	int fmt_n = strlen(format);
@@ -313,20 +317,17 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 				 */
 			case 'E':
 				tzset();
-				clocale = setlocale(LC_ALL, NULL);
-				setlocale(LC_ALL, "fa_IR.utf8");
-
-				jalali_zero_pad_fix(_l1, 10, jtm->tm_hour);
-				jalali_zero_pad_fix(_l2, 10, jtm->tm_min);
-				jalali_zero_pad_fix(_l3, 10, jtm->tm_sec);
-
-				snprintf(buf, MAX_BUF_SIZE, "%s %Id %s %Id، ساعت %s:%s:%s (%s)",
-						 fa_jalali_days[jtm->tm_wday], jtm->tm_mday,
-						 fa_jalali_months[jtm->tm_mon], jtm->tm_year,
+				jalali_to_farsi(_l1, 10, 2, "۰", jtm->tm_hour);
+				jalali_to_farsi(_l2, 10, 2, "۰", jtm->tm_min);
+				jalali_to_farsi(_l3, 10, 2, "۰", jtm->tm_sec);
+				jalali_to_farsi(_la, 100, 2, "۰", jtm->tm_mday);
+				jalali_to_farsi(_lb, 100, 0, " ", jtm->tm_year);
+				snprintf(buf, MAX_BUF_SIZE, "%s %s %s %s، ساعت %s:%s:%s (%s)",
+						 fa_jalali_days[jtm->tm_wday], _la,
+						 fa_jalali_months[jtm->tm_mon], _lb,
 						 _l1, _l2, _l3,
 						 jtm->tm_zone);
 
-				setlocale(LC_ALL, clocale);
 				break;
 
 				/*
@@ -534,13 +535,12 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 				 * in Farsi. (utf8)
 				 */
 			case 'W':
-				clocale = setlocale(LC_ALL, NULL);
-				setlocale(LC_ALL, "fa_IR.utf8");
-				jalali_zero_pad_fix(_l2, 10, jtm->tm_mon+1);
-				jalali_zero_pad_fix(_l1, 10, jtm->tm_mday);
-				snprintf(buf, MAX_BUF_SIZE, "%Id/%s/%s", jtm->tm_year,
-						 _l2, _l1);
-				setlocale(LC_ALL, clocale);
+				jalali_to_farsi(_la, 100, 0, " ", jtm->tm_year);
+				jalali_to_farsi(_l1, 10, 2, "۰", jtm->tm_mon+1);
+				jalali_to_farsi(_l2, 10, 2, "۰", jtm->tm_mday);
+
+				snprintf(buf, MAX_BUF_SIZE, "%s/%s/%s", _la,
+						 _l1, _l2);
 				break;
 
 				/* The preferred date representation without the time. */
@@ -553,17 +553,13 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 				 * The preferred time representation in Farsi. (utf8)
 				 */
 			case 'X':
-				clocale = setlocale(LC_ALL, NULL);
-				setlocale(LC_ALL, "fa_IR.utf8");
-
-				jalali_zero_pad_fix(_l1, 10, jtm->tm_hour);
-				jalali_zero_pad_fix(_l2, 10, jtm->tm_min);
-				jalali_zero_pad_fix(_l3, 10, jtm->tm_sec);
+				jalali_to_farsi(_l1, 10, 2, "۰", jtm->tm_hour);
+				jalali_to_farsi(_l2, 10, 2, "۰", jtm->tm_min);
+				jalali_to_farsi(_l3, 10, 2, "۰", jtm->tm_sec);
 
 				snprintf(buf, MAX_BUF_SIZE, "%s:%s:%s",
 						 _l1, _l2, _l3);
 
-				setlocale(LC_ALL, clocale);
 				break;
 
 				/*
@@ -618,6 +614,11 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 				rb++;
 			}
 			i++;
+			_la[0] = 0;
+			_lb[0] = 0;
+			_l1[0] = 0;
+			_l2[0] = 0;
+			_l3[0] = 0;
 		}
 	}
 	s[rb] = '\0';
@@ -859,30 +860,41 @@ jctime_r(const time_t* timep, char* buf) {
 
 /*
  * @Utils
- * Utility functions for internal used.
+ * Utility functions for internal use.
+ * jalali_to_farsi() converts an integer's digits to Arabic-Indic
+ * padding works just like printf() field width.
  */
-int
-jalali_calc_utf8_padding(int op, int d) {
-	char buf[MAX_BUF_SIZE];
-	int ld;
-	int cw;
-	int r;
-	snprintf(buf, MAX_BUF_SIZE, "%d", d);
-	ld = strlen(buf);
-	cw = (strstr(nl_langinfo(CODESET), "UTF-8")) ? 2 : 1;
-	r = op - ld + ld * cw;
-	return r;
-}
+int jalali_to_farsi(char* buf, size_t n, int padding, char* pad,
+					int d) {
+	char _buf[100] = {0};
+	int i=0, j=0;
+	int p = 0;
+	int c = 0;
+	int cw = (pad[0] < 0) ? 2 : 1;
 
-void jalali_zero_pad_fix(char* buf, size_t max, int d) {
-	if (!buf)
-		return;
+	for (i=d; i!=0; c++,
+			 _buf[p] = farsi_digits[i%10 > 0 ? i%10 : -(i%10)][1],
+			 _buf[p+1] = farsi_digits[i%10 > 0 ? i%10 : -(i%10)][0],
+			 i/=10,
+			 p+=2);
 
-	char* clocale = setlocale(LC_ALL, NULL);
-	setlocale(LC_ALL, "fa_IR.utf8");
-	if (d < 10)
-		snprintf(buf, max, "۰%Id", d);
-	else
-		snprintf(buf, max, "%Id", d);
-	setlocale(LC_ALL, clocale);
+	if (d < 0) {
+		_buf[p] = '-';
+		c++;
+		p++;
+	}
+
+	_buf[p]= 0;
+	buf[0] = 0;
+	i=0;
+
+	for (i=0; (i<(padding - c)) && (i*cw < (int)(n-1));
+		 strcat(buf, pad), i++);
+	buf[i*cw] = 0;
+
+	for (j=0, i*=cw; (j<p) && (i < (int)(n-1));
+		 buf[i] = _buf[p - j - 1], i++, j++);
+	buf[i] = 0;
+
+	return i;
 }
