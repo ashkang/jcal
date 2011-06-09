@@ -22,14 +22,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <locale.h>
-#include <langinfo.h>
 #include "jconfig.h"
 #include "jalali.h"
 #include "jtime.h"
 
 const char* GMT_ZONE = "UTC";
-
+const char* GMT_ZONE_fa = "گرینویچ";
 const char* jalali_months[] = { "Farvardin", "Ordibehesht", "Khordaad",
 								"Tir", "Mordaad", "Shahrivar", "Mehr",
 								"Aabaan", "Aazar", "Dey", "Bahman", "Esfand" };
@@ -326,7 +324,8 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 						 fa_jalali_days[jtm->tm_wday], _la,
 						 fa_jalali_months[jtm->tm_mon], _lb,
 						 _l1, _l2, _l3,
-						 jtm->tm_zone);
+						 (jtm->tm_zone == GMT_ZONE) ? GMT_ZONE_fa : 
+						 tzname_fa[jtm->tm_isdst]);
 
 				break;
 

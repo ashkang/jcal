@@ -22,8 +22,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <locale.h>
-#include <langinfo.h>
 #include "termcap.h"
 #include "jcal.h"
 #include "../libjalali/jalali.h"
@@ -291,7 +289,7 @@ destroy_cal_matrix(struct cal_matrix* mat) {
 
 
 /*
- * Displays calendarss, including cal title and week days.
+ * Displays calendar, including cal title and week days.
  */
 
 void
@@ -299,14 +297,14 @@ show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j) {
 	char** ptr_d;
 
 	int i, k;
-	int cw = (strstr(nl_langinfo(CODESET), "UTF-8")) ? 2 : 1;
+	int cw = (l->farsi) ? 2 : 1;
 	int cal_width = (l->julian) ? 7 * 3 + 6 : 7 * 2 + 6;
 
 	char cal_t[3][MAX_BUF_SIZE];
 	char cal_y[3][100];
 	int cal_tw[3];
 	char buf[100];
-
+	
 	if (l->farsi)
 		ptr_d = (l->julian) ? (char**) fa_jalali_days_3 :
 			(char**) fa_jalali_days_2;
@@ -368,11 +366,11 @@ show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j) {
 		for (k=0; k<6; k++) {
 			printf("%s%s%s ", TERM_WHITE, ptr_d[k], TERM_RESET);
 		}
-
+		
 		if (l->color)
 			printf("%s%s%s", TERM_RED, ptr_d[6], TERM_RESET);
 		else
-			printf("%s", ptr_d[6]);
+			printf("%s%s%s", TERM_WHITE, ptr_d[6], TERM_RESET);
 
 		if (i != m->n-1) {
 			for (k=0; k<l->margin; k++) {
@@ -594,7 +592,6 @@ main(int argc, char** argv) {
 		case 'p':
 			l.farsi = 1;
 			l.english = 0;
-			setlocale(LC_ALL, "fa_IR.utf8");
 			break;
 
 			/* Displays Julian days (Day of year) instead of day of month.	*/

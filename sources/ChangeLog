@@ -1,3 +1,18 @@
+2011-06-09  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * sources/libjalali/jtime.c, sources/libjalali/jtime.h, sources/src/jcal.c:
+  platform independent patch on Farsi support.
+
+2011-06-07  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * docs/jalali.html, docs/jcal.html, docs/jdate.html, docs/jstrftime.html,
+  docs/jstrptime.html, sources/ChangeLog, sources/README,
+  sources/libjalali/jalali.h, sources/libjalali/jtime.c,
+  sources/libjalali/jtime.h, sources/man/jcal.1, sources/man/jctime.3,
+  sources/man/jdate.1, sources/man/jstrftime.3, sources/man/jstrptime.3,
+  sources/src/jcal.c, sources/src/jcal.h, sources/src/jdate.h: added Farsi
+  (utf8) output support to jcal and jdate.
+
 2011-06-04  Ashkan Ghassemi <ghassemi@ftml.net>
 
   * .gitignore, docs/jalali.html, docs/jcal.html, docs/jdate.html,
