@@ -23,6 +23,7 @@
 #include <limits.h>
 #include <math.h>
 #include <time.h>
+#include <stdlib.h>
 #include "jalali.h"
 #include "jconfig.h"
 
@@ -111,8 +112,20 @@ jalali_is_jleap(int year)
 void
 jalali_create_time_from_secs(time_t t, struct ab_jtm* d)
 {
-	d->ab_days = (t / J_DAY_LENGTH_IN_SECONDS);
-	t %= J_DAY_LENGTH_IN_SECONDS;
+	d->ab_days = (t >= 0) ? (t / (time_t) J_DAY_LENGTH_IN_SECONDS) :
+		((t - (time_t) J_DAY_LENGTH_IN_SECONDS + (time_t) 1) / 
+		 (time_t) J_DAY_LENGTH_IN_SECONDS);
+
+	if (t >= 0) {
+		t %= (time_t) J_DAY_LENGTH_IN_SECONDS;
+	}
+	else {
+		t = (J_DAY_LENGTH_IN_SECONDS - 
+			 (abs(t - J_DAY_LENGTH_IN_SECONDS) %
+			  J_DAY_LENGTH_IN_SECONDS)) %
+			J_DAY_LENGTH_IN_SECONDS;
+	}
+
 	d->ab_hour = t / J_HOUR_LENGTH_IN_SECONDS;
 	t %= J_HOUR_LENGTH_IN_SECONDS;
 	d->ab_min = t / J_MINUTE_LENGTH_IN_SECONDS;
@@ -126,10 +139,11 @@ jalali_create_time_from_secs(time_t t, struct ab_jtm* d)
 time_t
 jalali_create_secs_from_time(const struct ab_jtm* d)
 {
-	return (d->ab_days * J_DAY_LENGTH_IN_SECONDS +
-			d->ab_hour * J_HOUR_LENGTH_IN_SECONDS +
-			d->ab_min * J_MINUTE_LENGTH_IN_SECONDS +
-			d->ab_sec);
+	return (time_t)
+		((time_t) d->ab_days * (time_t) J_DAY_LENGTH_IN_SECONDS +
+		 (time_t) d->ab_hour * (time_t) J_HOUR_LENGTH_IN_SECONDS +
+		 (time_t) d->ab_min * (time_t) J_MINUTE_LENGTH_IN_SECONDS +
+		 (time_t) d->ab_sec);
 }
 
 /*

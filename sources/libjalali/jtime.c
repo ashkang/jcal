@@ -59,7 +59,7 @@ const char* jalali_days_2[] = { "Sa", "Su", "Mo", "Tu", "We", "Th", "Fr" };
 const char* farsi_digits[] = { "۰", "۱", "۲", "۳", "۴",
 							   "۵", "۶", "۷", "۸", "۹" };
 
-const char* tzname_fa[2] = { "ساعت زمستانی", "ساعت تابستانی" };
+const char* tzname_fa[2] = { "زمان زمستانی", "زمان تابستانی" };
 
 static char in_buf[MAX_BUF_SIZE] = {0};
 static struct jtm in_jtm;
@@ -107,7 +107,7 @@ in_jlocaltime(const time_t* timep, struct jtm* result) {
 	tzset();
 
 	localtime_r(timep, &t);
-	c = (*timep) + t.tm_gmtoff;
+	c = (*timep) + (time_t) t.tm_gmtoff;
 
 	jalali_create_time_from_secs(c, &ab);
 	jalali_get_date(ab.ab_days, &c_jtm);
@@ -218,10 +218,12 @@ jmktime(const struct jtm* jtm) {
 
 	int p = jalali_get_diff(jtm);
 	time_t t;
-	t = (p * J_DAY_LENGTH_IN_SECONDS) +
-		(jtm->tm_hour * J_HOUR_LENGTH_IN_SECONDS)
-		+ (jtm->tm_min * J_MINUTE_LENGTH_IN_SECONDS) + jtm->tm_sec
-		- (jtm->tm_isdst * J_HOUR_LENGTH_IN_SECONDS) - (jtm->tm_gmtoff);
+	t = ((time_t) p * (time_t) J_DAY_LENGTH_IN_SECONDS) +
+		((time_t) jtm->tm_hour * (time_t) J_HOUR_LENGTH_IN_SECONDS)
+		+ ((time_t) jtm->tm_min * 
+		   (time_t) J_MINUTE_LENGTH_IN_SECONDS) + (time_t) jtm->tm_sec
+		- ((time_t) jtm->tm_isdst * (time_t) J_HOUR_LENGTH_IN_SECONDS) - 
+		((time_t) jtm->tm_gmtoff);
 	return t;
 }
 
@@ -320,7 +322,7 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
 				jalali_to_farsi(_l3, 10, 2, "۰", jtm->tm_sec);
 				jalali_to_farsi(_la, 100, 2, "۰", jtm->tm_mday);
 				jalali_to_farsi(_lb, 100, 0, " ", jtm->tm_year);
-				snprintf(buf, MAX_BUF_SIZE, "%s %s %s %s، ساعت %s:%s:%s (%s)",
+				snprintf(buf, MAX_BUF_SIZE, "%s %s %s %s، ساعت %s:%s:%s - %s",
 						 fa_jalali_days[jtm->tm_wday], _la,
 						 fa_jalali_months[jtm->tm_mon], _lb,
 						 _l1, _l2, _l3,
@@ -640,6 +642,9 @@ jstrptime(const char* s, const char* format, struct jtm* jtm) {
 	int i, j, k, f, c = 0;
 	char fd;
 
+	struct jtm _j;
+	time_t t;
+
 	s_s = strlen(s);
 	fmt_s = strlen(format);
 
@@ -761,6 +766,13 @@ jstrptime(const char* s, const char* format, struct jtm* jtm) {
 			/* The minute as a decimal number (range 00 to 59). */
 		case 'M':
 			jtm->tm_min = atoi(buf);
+			break;
+
+			/* Seconds since epoch. (1970/1/1) */
+		case 's':
+			t = (time_t) atol(buf);
+			jlocaltime_r(&t, &_j);
+			memcpy(jtm, &_j, sizeof(struct jtm));
 			break;
 
 			/* The second as a decimal number (range 00 to 59). */
