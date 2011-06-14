@@ -24,12 +24,14 @@
 #define JDATE_VERSION "0.4"
 
 /* short options */
-#define JDATE_VALID_ARGS "a:r:d:RuhV"
+#define JDATE_VALID_ARGS "a:r:d:j:g:RuhV"
 
 /* long options */
 #define DATE_OPT "date"
 #define REF_OPT "reference"
 #define ACC_OPT "access"
+#define JALALI_OPT "jalali"
+#define GREGORIAN_OPT "gregorian"
 #define RFC2822_OPT "rfc-2822"
 #define UTC_OPT "utc"
 #define UNIVERSAL_OPT "universal"
@@ -44,6 +46,10 @@ Display the current date and time in the given FORMAT.\n\
   -d, --date=FORMAT;STRING\tdisplay time described by STRING, not `now'\n\
   -a, --access=FILE\t\tdisplay the last access time of FILE.\n\
   -r, --reference=FILE\t\tdisplay the last modification time of FILE.\n\
+\n\
+  -j, --jalali=%Y/%m/%d\t\tconverts a gregorian date to jalali.\n\
+  -g, --gregorian=%Y/%m/%d\tconverts a jalali date to gregorian.\n\
+\n\
   -R, --rfc-2822\t\toutput date and time in RFC 2822 format.\n\
 \t\t\t\tExample: Jom, 06 Khor 1390 13:44:56 -0430.\n\
   -u, --utc, --universal\tprint Coordinated Universal Time.\n\
@@ -111,6 +117,10 @@ struct jdate_action {
 	char* access_ptr;	  /* last access argument */
 	int date;			  /* use date string instead of 'now' */
 	char* date_ptr;       /* date string argument */
+	int jalali;           /* convert a gregorian date to jalali */
+	char* jalali_ptr;     /* jalali conversion argument */
+	int gregorian;        /* convert a jalali date to gregorian */
+	char* gregorian_ptr;  /* gregorian conversion argument */
 	int format;		  /* +FORMAT. uses jstrftime() to format output */
 	char* format_ptr;	  /* +FORMAT argument */
 	int rfc2822;		  /* rfc2822 date and time: %h, %m %b %Y %H:%M:%S %z */

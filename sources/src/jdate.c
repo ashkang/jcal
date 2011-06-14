@@ -18,12 +18,17 @@
  * along with jcal.	 If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef _XOPEN_SOURCE
+#define _XOPEN_SOURCE
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <getopt.h>
+#include <time.h>
 
 #include "../libjalali/jalali.h"
 #include "../libjalali/jtime.h"
@@ -61,8 +66,12 @@ main(int argc, char** argv) {
 	int option_index;
 
 	char buf[MAX_BUF_SIZE];
+	char date_format[MAX_BUF_SIZE];
+	char date_string[MAX_BUF_SIZE];
 
 	struct jtm j;
+	struct tm g;
+
 	struct jdate_action action = {0};
 
 	/* Long options, see 'jdate.h' for complete list. */
@@ -72,6 +81,8 @@ main(int argc, char** argv) {
 		{ACC_OPT, 1, 0, 'a'},
 		{RFC2822_OPT, 0, 0, 'R'},
 		{UTC_OPT, 0, 0, 'u'},
+		{JALALI_OPT, 1, 0, 'j'},
+		{GREGORIAN_OPT, 1, 0, 'g'},
 		{UNIVERSAL_OPT, 0, 0, 'u'},
 		{HELP_OPT, 0, 0, 'h'},
 		{VERSION_OPT, 0, 0, 'V'},
@@ -104,6 +115,18 @@ main(int argc, char** argv) {
 		case 'd':
 			action.date = 1;
 			action.date_ptr = optarg;
+			break;
+
+			/* convert a jalali date to gregorian. */
+		case 'g':
+			action.gregorian = 1;
+			action.gregorian_ptr = optarg;
+			break;
+
+		    /* convert a gregorian date to jalali. */
+		case 'j':
+			action.jalali = 1;
+			action.jalali_ptr = optarg;
 			break;
 
 			/*
@@ -159,9 +182,34 @@ main(int argc, char** argv) {
 	/*
 	 *@action_handlers
 	 */
+	if (action.jalali) {
+		if (!strptime(action.jalali_ptr, "%Y/%m/%d", &g)) {
+			fprintf(stderr, "Specify gregorian date in the following format\n");
+			fprintf(stderr, "%%Y/%%m/%%d e.g. 2011/06/15\n");
+			exit(EXIT_FAILURE);
+		}
+		
+		g.tm_hour = 0;
+		g.tm_min = 0;
+		g.tm_sec = 0;
+
+		t = mktime(&g);
+	} else if (action.gregorian) {
+		if (!jstrptime(action.gregorian_ptr, "%Y/%m/%d", &j)) {
+			fprintf(stderr, "Specify jalali date in the following format\n");
+			fprintf(stderr, "%%Y/%%m/%%d e.g. 1390/03/25\n");
+			exit(EXIT_FAILURE);
+		}
+		
+		jalali_update(&j);
+		j.tm_hour = 0;
+		j.tm_min = 0;
+		j.tm_sec = 0;
+
+		t = jmktime(&j);
+	}
+
 	if (action.date) {
-		char date_format[MAX_BUF_SIZE];
-		char date_string[MAX_BUF_SIZE];
 
 		char* ptr;
 		size_t ds;
@@ -205,22 +253,40 @@ main(int argc, char** argv) {
 	}
 
 	if (action.rfc2822) {
-		action.utc ? jgmtime_r(&t, &j) : jlocaltime_r(&t, &j);
-		jstrftime(buf, MAX_BUF_SIZE, "%h, %d %b %Y %H:%M:%S %z", &j);
+		if (!action.gregorian) {
+			action.utc ? jgmtime_r(&t, &j) : jlocaltime_r(&t, &j);
+			jstrftime(buf, MAX_BUF_SIZE, "%h, %d %b %Y %H:%M:%S %z", &j);
+		} else {
+			action.utc ? gmtime_r(&t, &g) : localtime_r(&t, &g);
+			strftime(buf, MAX_BUF_SIZE, "%a, %d %b %Y %H:%M:%S %z", &g);
+		}
+
 		printf("%s\n", buf);
 		exit(EXIT_SUCCESS);
 	}
 
 	if (action.format) {
-		action.utc ? jgmtime_r(&t, &j) : jlocaltime_r(&t, &j);
-		jstrftime(buf, MAX_BUF_SIZE, action.format_ptr, &j);
+		if (!action.gregorian) {
+			action.utc ? jgmtime_r(&t, &j) : jlocaltime_r(&t, &j);
+			jstrftime(buf, MAX_BUF_SIZE, action.format_ptr, &j);
+		} else {
+			action.utc ? gmtime_r(&t, &g) : localtime_r(&t, &g);
+			strftime(buf, MAX_BUF_SIZE, action.format_ptr, &g);
+		}
+
 		printf("%s\n", buf);
 		exit(EXIT_SUCCESS);
 	}
 
 	if (action.normal) {
-		action.utc ? jgmtime_r(&t, &j) : jlocaltime_r(&t, &j);
-		jstrftime(buf, MAX_BUF_SIZE, "%h %b %d %H:%M:%S %Z %Y", &j);
+		if (!action.gregorian) {
+			action.utc ? jgmtime_r(&t, &j) : jlocaltime_r(&t, &j);
+			jstrftime(buf, MAX_BUF_SIZE, "%h %b %d %H:%M:%S %Z %Y", &j);
+		} else {
+			action.utc ? gmtime_r(&t, &g) : localtime_r(&t, &g);
+			strftime(buf, MAX_BUF_SIZE, "%a %b %d %H:%M:%S %Z %Y", &g);
+		}
+
 		printf("%s\n", buf);
 		exit(EXIT_SUCCESS);
 	}
@@ -235,5 +301,6 @@ main(int argc, char** argv) {
 		printf("Written by Ashkan Ghassemi.\n");
 		exit(EXIT_SUCCESS);
 	}
+
 	return 0;
 }

@@ -327,7 +327,7 @@ show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j) {
 		}
 		snprintf(cal_y[i], 100, "%s%s",
 				 buf,
-				 (l->pahlavi) ? "(pa)" : "");
+				 (l->pahlavi) ? ((l->farsi) ? " په" : "(pa)") : "");
 		buf[0] = 0;
 	}
 
@@ -486,7 +486,7 @@ show_year(struct cal_layout* l, struct jtm* j) {
 	}
 
 	snprintf(title, 100, "%s%s", buf,
-			 (l->pahlavi) ? "(pa)" : "");
+			 (l->pahlavi) ? (l->farsi ? " پهلوی" : " (Pahlavi)") : "");
 
 	cal_tw = (cal_width - strlen(title)) / 2;
 

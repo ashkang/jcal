@@ -1,4 +1,14 @@
+2011-06-10  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * docs/jalali.html, docs/jcal.html, docs/jdate.html, docs/jstrftime.html,
+  docs/jstrptime.html, sources/libjalali/jalali.c, sources/libjalali/jtime.c,
+  sources/man/jstrptime.3: added %s to jstrptime(). fix for an accidental y2k38
+  issue in type-casting.
+
 2011-06-09  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * sources/ChangeLog, sources/libjalali/jtime.c, sources/man/jstrftime.3,
+  sources/src/jcal.c: fix for farsi indentation problem.
 
   * sources/libjalali/jtime.c, sources/libjalali/jtime.h, sources/src/jcal.c:
   platform independent patch on Farsi support.

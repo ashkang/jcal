@@ -221,8 +221,7 @@ jmktime(const struct jtm* jtm) {
 	t = ((time_t) p * (time_t) J_DAY_LENGTH_IN_SECONDS) +
 		((time_t) jtm->tm_hour * (time_t) J_HOUR_LENGTH_IN_SECONDS)
 		+ ((time_t) jtm->tm_min * 
-		   (time_t) J_MINUTE_LENGTH_IN_SECONDS) + (time_t) jtm->tm_sec
-		- ((time_t) jtm->tm_isdst * (time_t) J_HOUR_LENGTH_IN_SECONDS) - 
+		   (time_t) J_MINUTE_LENGTH_IN_SECONDS) + (time_t) jtm->tm_sec -
 		((time_t) jtm->tm_gmtoff);
 	return t;
 }
@@ -671,7 +670,7 @@ jstrptime(const char* s, const char* format, struct jtm* jtm) {
 
 		/* Malformed string or format. */
 		if (format[j] != '%') {
-			return (char*) &s[i];
+			return NULL;
 		}
 
 		if (j+2 >= fmt_s) {
@@ -692,7 +691,7 @@ jstrptime(const char* s, const char* format, struct jtm* jtm) {
 
 			/* Delimiter not found in string. */
 			if (!pos_e) {
-				return (char*) &s[i];
+				return NULL;
 			}
 
 			diff1 = (pos_e - &s[i]);
