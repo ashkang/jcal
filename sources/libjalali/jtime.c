@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/time.h>
 #include "jconfig.h"
 #include "jalali.h"
 #include "jtime.h"
@@ -103,11 +104,19 @@ in_jlocaltime(const time_t* timep, struct jtm* result) {
 	struct tm t;
 	struct jtm c_jtm;
 	struct ab_jtm ab;
+	struct timeval tv;
+	struct timezone tz;
+
+	long int gmtoff;
 	time_t c;
+	
+	gettimeofday(&tv, &tz);
+	gmtoff = (-tz.tz_minuteswest) * J_MINUTE_LENGTH_IN_SECONDS +
+		(tz.tz_dsttime * J_HOUR_LENGTH_IN_SECONDS);
 	tzset();
 
 	localtime_r(timep, &t);
-	c = (*timep) + (time_t) t.tm_gmtoff;
+	c = (*timep) + (time_t) gmtoff;
 
 	jalali_create_time_from_secs(c, &ab);
 	jalali_get_date(ab.ab_days, &c_jtm);
@@ -118,7 +127,7 @@ in_jlocaltime(const time_t* timep, struct jtm* result) {
 	c_jtm.tm_isdst = t.tm_isdst;
 
 	c_jtm.tm_zone = tzname[t.tm_isdst];
-	c_jtm.tm_gmtoff = t.tm_gmtoff;
+	c_jtm.tm_gmtoff = gmtoff;
 
 	if (result) {
 		memcpy(result, &c_jtm, sizeof(struct jtm));

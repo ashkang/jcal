@@ -1,3 +1,9 @@
+2011-06-15  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * sources/ChangeLog, sources/libjalali/jtime.c, sources/man/jdate.1,
+  sources/src/jcal.c, sources/src/jdate.c, sources/src/jdate.h: conversion
+  added to jdate. minor fixes to libjalali.
+
 2011-06-10  Ashkan Ghassemi <ghassemi@ftml.net>
 
   * docs/jalali.html, docs/jcal.html, docs/jdate.html, docs/jstrftime.html,

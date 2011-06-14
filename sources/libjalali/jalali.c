@@ -24,6 +24,7 @@
 #include <math.h>
 #include <time.h>
 #include <stdlib.h>
+#include <sys/time.h>
 #include "jalali.h"
 #include "jconfig.h"
 
@@ -249,6 +250,9 @@ jalali_get_date(int p, struct jtm* j)
 {
 	time_t t;
 	struct tm lt;
+	struct timezone tz;
+	struct timeval tv;
+
 	int wd = (p + J_UTC_EPOCH_WDAY) % J_WEEK_LENGTH;
 
 	if (wd < 0) {
@@ -281,7 +285,10 @@ jalali_get_date(int p, struct jtm* j)
 	tzset();
 	t = p * J_DAY_LENGTH_IN_SECONDS;
 	localtime_r(&t, &lt);
-	j->tm_gmtoff = lt.tm_gmtoff;
+	gettimeofday(&tv, &tz);
+
+	j->tm_gmtoff = (-tz.tz_minuteswest) * J_MINUTE_LENGTH_IN_SECONDS
+		+ (tz.tz_dsttime * J_HOUR_LENGTH_IN_SECONDS);
 	j->tm_isdst = lt.tm_isdst;
 	j->tm_zone = tzname[lt.tm_isdst];
 }
