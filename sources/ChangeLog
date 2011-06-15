@@ -1,5 +1,8 @@
 2011-06-15  Ashkan Ghassemi <ghassemi@ftml.net>
 
+  * sources/ChangeLog, sources/libjalali/jalali.c, sources/libjalali/jtime.c:
+  using of non-standard time struct fields discarded.
+
   * sources/ChangeLog, sources/libjalali/jtime.c, sources/man/jdate.1,
   sources/src/jcal.c, sources/src/jdate.c, sources/src/jdate.h: conversion
   added to jdate. minor fixes to libjalali.
