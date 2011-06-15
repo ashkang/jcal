@@ -1,5 +1,12 @@
 2011-06-15  Ashkan Ghassemi <ghassemi@ftml.net>
 
+  * docs/jalali.html, docs/jcal.html, docs/jdate.html, docs/jstrftime.html,
+  docs/jstrptime.html, sources/autogen.sh, sources/configure.in: configure.in:
+  minor fixes.
+
+  * docs/jalali.html, docs/jcal.html, docs/jdate.html, docs/jstrftime.html,
+  docs/jstrptime.html, sources/ChangeLog: docs updated.
+
   * sources/ChangeLog, sources/libjalali/jalali.c, sources/libjalali/jtime.c:
   using of non-standard time struct fields discarded.
 

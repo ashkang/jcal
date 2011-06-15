@@ -70,11 +70,11 @@ function clean() {
 		"missing" "src/Makefile.in" "man/Makefile.in"
 		"libjalali/Makefile.in" "INSTALL" )
 
-	echo -e "${YELLOW}cleaning source tree...${RESET}"
+	echo -e "${GREEN}*${RESET} ${YELLOW}cleaning source tree...${RESET}"
 
 	# Makefile is present.
 	if test -f Makefile; then
-		echo -ne "${YELLOW}performing distclean on"
+		echo -ne "${GREEN}*{RESET} {YELLOW}performing distclean on"
 		echo -ne " sources if possible...${RESET} "
 		make distclean >/dev/null 2>&1
 		let STAT=$?
@@ -88,13 +88,13 @@ function clean() {
 
 	for i in ${FUBARS[@]}; do
 		if [ -f $i ] || [ -d $i ]; then
-			echo -ne "${YELLOW}deleting $i...${RESET} "
+			echo -ne "${GREEN}*${RESET} ${YELLOW}deleting $i...${RESET} "
 			rm -rf $i
 			printk 0
 		fi
 	done
 
-	echo -e "${GREEN}done${RESET}"
+	echo -e "${GREEN}* done${RESET}"
 }
 
 # Setting colors to vt100 standard values, NULL if 0 gets passed to set_color()
@@ -135,7 +135,7 @@ function is_present() {
 	fi
 
 	if [ ${OUTPUT} -eq 1 ]; then
-		echo -ne "checking for ${YELLOW}${NAME}${RESET}... "
+		echo -ne "${GREEN}*${RESET} checking for ${YELLOW}${NAME}${RESET}... "
 		if [ ${PRESENT} -eq 1 ]; then
 			echo -e "${GREEN}yes${RESET}"
 		else
@@ -172,7 +172,7 @@ function check_services() {
 	is_present "${AUTOMAKE}" "automake" 1 1
 	AUTORECONF="$(which autoreconf 2>/dev/null)"
 	is_present "${AUTORECONF}" "autoreconf" 1 0
-	echo -e "${GREEN}done${RESET}\n"
+	echo -e "${GREEN}* done${RESET}\n"
 }
 
 # @perform() $SERVICE $NAME $EXIT $PARAMS
@@ -189,7 +189,7 @@ function perform() {
 	local PARAMS=$4
 	local SSTAT
 
-	echo -ne "running ${YELLOW}${NAME}${RESET} ${CYAN}${PARAMS}${RESET}... "
+	echo -ne "${GREEN}*${RESET} running ${YELLOW}${NAME}${RESET} ${CYAN}${PARAMS}${RESET}... "
 	${SERVICE} ${PARAMS} >/dev/null 2>&1
 	let STAT=$?
 
@@ -260,13 +260,13 @@ if [ -z "${AUTORECONF}" ] || [ ${ALTERN} -eq 1 ]; then
 	perform "${ACLOCAL}" "aclocal" "1" "--force"
 	perform "${AUTOMAKE}" "automake" "1" "--add-missing --force-missing --copy"
 	perform "${AUTOCONF}" "autoconf" "1" "--force"
-	echo -e "${GREEN}done${RESET}"
+	echo -e "${GREEN}* done${RESET}"
 # autoreconf method
 else
 	echo -e "using prefered method: ${YELLOW}autoreconf${RESET}"
 	perform "${LIBTOOLIZE}" "libtoolize" "1" "--force --copy --install"
 	perform "${AUTORECONF}" "autoreconf" "1" "--force --install"
-	echo -e "${GREEN}done${RESET}"
+	echo -e "${GREEN}* done${RESET}"
 fi
 
 exit 0
