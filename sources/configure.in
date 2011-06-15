@@ -1,8 +1,7 @@
-#												-*- Autoconf -*-
+#                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_INIT([jcal], [0.2], [ghassemi@ftml.net])
-AC_CONFIG_SRCDIR([src/])
+AC_INIT([jcal], [0.4], [ghassemi@ftml.net])
 
 AM_INIT_AUTOMAKE
 AC_PROG_LIBTOOL
@@ -10,11 +9,11 @@ AC_CONFIG_MACRO_DIR([m4])
 
 # Checks for programs.
 AC_PROG_CC
-
-# Checks for libraries.
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
 
 # Checks for header files.
-AC_CHECK_HEADERS([limits.h stdlib.h string.h])
+AC_CHECK_HEADERS([time.h limits.h stdlib.h string.h sys/time.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_SIZE_T
@@ -22,10 +21,11 @@ AC_STRUCT_TIMEZONE
 
 # Checks for library functions.
 AC_FUNC_MALLOC
-AC_CHECK_FUNCS([localtime_r memset strcasecmp strchr strstr tzset])
+AC_FUNC_MKTIME
+AC_CHECK_FUNCS([gettimeofday localtime_r memset strcasecmp strchr strstr tzset])
 
 AC_CONFIG_FILES([Makefile
-				 libjalali/Makefile
-				 man/Makefile
-				 src/Makefile])
+                 libjalali/Makefile
+                 man/Makefile
+                 src/Makefile])
 AC_OUTPUT

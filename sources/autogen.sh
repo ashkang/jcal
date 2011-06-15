@@ -197,7 +197,7 @@ function perform() {
 
 	if [ ${STAT} -ne 0 ]; then
 		echo -ne "${RED}error${RESET}: cannot run ${YELLOW}${NAME}${RESET}."
-		echo -e "please run ${NAME} manually and check for errors."
+		echo -e " please run ${NAME} manually and check for errors."
 	fi
 
 	if [ ${EXIT} -eq 1 ] && [ ${STAT} -ne 0 ]; then
