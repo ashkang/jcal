@@ -21,7 +21,7 @@
 #ifndef JDATE_H
 #define JDATE_H
 
-#define JDATE_VERSION "0.4"
+#define JDATE_VERSION "0.4.1"
 
 /* short options */
 #define JDATE_VALID_ARGS "a:r:d:j:g:RuhV"

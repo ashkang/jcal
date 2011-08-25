@@ -27,7 +27,7 @@
 #define JCAL_VALID_ARGS "13jyVNePp"
 #define PAHLAVI_ISLAMIC_DIFF 1180
 
-#define JCAL_VERSION "0.4"
+#define JCAL_VERSION "0.4.1"
 
 struct cal_layout {
 	int color;		/* If enabled, drawer tries to colorize output. */

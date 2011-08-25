@@ -1,5 +1,8 @@
 2011-08-26  Ashkan Ghassemi <ghassemi@ftml.net>
 
+  * sources/ChangeLog, sources/libjalali/jtime.c: fixing __CYGWIN__ macro typo
+  in jtime.c.
+
   * sources/ChangeLog, sources/libjalali/jalali.c, sources/libjalali/jtime.c:
   limiting gettimeofday() usage to windows as it doesn't work as expected on
   some platforms.
