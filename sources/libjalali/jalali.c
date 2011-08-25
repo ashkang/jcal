@@ -250,8 +250,10 @@ jalali_get_date(int p, struct jtm* j)
 {
 	time_t t;
 	struct tm lt;
+#if defined _WIN32 || defined __MINGW32__ || defined __CYGWIN__
 	struct timezone tz;
 	struct timeval tv;
+#endif 
 
 	int wd = (p + J_UTC_EPOCH_WDAY) % J_WEEK_LENGTH;
 
@@ -285,12 +287,18 @@ jalali_get_date(int p, struct jtm* j)
 	tzset();
 	t = p * J_DAY_LENGTH_IN_SECONDS;
 	localtime_r(&t, &lt);
-	gettimeofday(&tv, &tz);
 
+#if defined _WIN32 || defined __MINGW32__ || defined __CYGWIN__
+	gettimeofday(&tv, &tz);
 	j->tm_gmtoff = (-tz.tz_minuteswest) * J_MINUTE_LENGTH_IN_SECONDS
 		+ (tz.tz_dsttime * J_HOUR_LENGTH_IN_SECONDS);
-	j->tm_isdst = lt.tm_isdst;
 	j->tm_zone = tzname[lt.tm_isdst];
+#else
+	j->tm_gmtoff = lt.tm_gmtoff;
+	j->tm_zone = lt.tm_zone;
+#endif
+
+	j->tm_isdst = lt.tm_isdst;
 }
 
 /*

@@ -1,5 +1,7 @@
 2011-06-15  Ashkan Ghassemi <ghassemi@ftml.net>
 
+  * sources/ChangeLog, sources/autogen.sh: autogen.sh: minor fixes.
+
   * docs/jalali.html, docs/jcal.html, docs/jdate.html, docs/jstrftime.html,
   docs/jstrptime.html, sources/autogen.sh, sources/configure.in: configure.in:
   minor fixes.
