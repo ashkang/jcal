@@ -111,7 +111,7 @@ in_jlocaltime(const time_t* timep, struct jtm* result) {
 
 	localtime_r(timep, &t);
 
-#if defined _WIN32 || defined __MINGW32__ || defined __CYGWIN
+#if defined _WIN32 || defined __MINGW32__ || defined __CYGWIN__
 	struct timeval tv;
 	struct timezone tz;
 
