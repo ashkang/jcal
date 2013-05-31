@@ -1,3 +1,11 @@
+2013-06-01  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * sources/ChangeLog, sources/libjalali/jalali.c, sources/libjalali/jalali.h,
+  sources/libjalali/jtime.c, sources/libjalali/jtime.h, sources/man/jcal.1,
+  sources/src/jcal.c, sources/src/jcal.h, sources/src/jdate.c,
+  sources/src/jdate.h: proper source indentation and using of spaces instead of
+  tabs.
+
 2011-08-26  Ashkan Ghassemi <ghassemi@ftml.net>
 
   * sources/ChangeLog, sources/libjalali/jalali.h, sources/src/jcal.h,
@@ -73,8 +81,6 @@
   sources/src/jdate.c, sources/src/jdate.h: whitespace fix on sources.
 
 2011-06-02  Ashkan Ghassemi <ghassemi@ftml.net>
-
-  * sources/autogen.sh: autogen help fixed.
 
   * sources/ChangeLog, sources/autogen.sh: glibtoolize fix for autogen script.
 
