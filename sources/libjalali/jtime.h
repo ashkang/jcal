@@ -42,7 +42,7 @@ extern struct jtm* jlocaltime(const time_t* timep);
 extern time_t jmktime(const struct jtm* jtm);
 
 extern size_t jstrftime(char* s, size_t max, const char* format,
-			const struct jtm* jtm);
+            const struct jtm* jtm);
 
 extern char* jstrptime(const char* s, const char* format, struct jtm* jtm);
 

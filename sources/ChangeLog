@@ -1,5 +1,8 @@
 2011-08-26  Ashkan Ghassemi <ghassemi@ftml.net>
 
+  * sources/ChangeLog, sources/libjalali/jalali.h, sources/src/jcal.h,
+  sources/src/jdate.h: version string fix.
+
   * sources/ChangeLog, sources/libjalali/jtime.c: fixing __CYGWIN__ macro typo
   in jtime.c.
 
