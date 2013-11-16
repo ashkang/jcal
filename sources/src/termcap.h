@@ -46,7 +46,7 @@
 /* Attribute reset.*/
 #define TERM_RESET "\033[0m"
 
-#else /* NO_COLORS*/
+#else /* NO_COLORS */
 
 #define TERM_BLACK ""
 #define TERM_RED ""

@@ -58,9 +58,11 @@ extern char* optarg;
  * Sets the matrix according to a given jalali date and prefix.
  */
 
-void
-set_cal_matrix(struct cal_layout* l, struct jtm* ct, struct cal_matrix* mat,
-               int prefix) {
+void set_cal_matrix(struct cal_layout* l,
+                    struct jtm* ct,
+                    struct cal_matrix* mat,
+                    int prefix)
+{
     struct jtm mb;
     struct jtm lt;
 
@@ -110,8 +112,10 @@ set_cal_matrix(struct cal_layout* l, struct jtm* ct, struct cal_matrix* mat,
  * 1 otherwise.
  */
 
-int
-is_in_margin(struct cal_layout* l, struct cal_matrix* mat, int c) {
+int is_in_margin(struct cal_layout* l,
+                 struct cal_matrix* mat,
+                 int c)
+{
     int i;
 
     if (mat->n == 1) {
@@ -144,8 +148,9 @@ is_in_margin(struct cal_layout* l, struct cal_matrix* mat, int c) {
  * @Should not be used directly. (See display_cal())
  */
 
-void
-show_cal_matrix(struct cal_layout* l, struct cal_matrix* mat) {
+void show_cal_matrix(struct cal_layout* l,
+                     struct cal_matrix* mat)
+{
     int i, j, m;
     char buf[100];
 
@@ -186,7 +191,7 @@ show_cal_matrix(struct cal_layout* l, struct cal_matrix* mat) {
                 else {
                     if (l->farsi) {
                         jalali_to_farsi(buf, 100, 2+l->julian,
-                                 " ", mat->m[i][j]);
+                                        " ", mat->m[i][j]);
                     } else {
                         snprintf(buf, 100, "%*d",
                                  2+l->julian, mat->m[i][j]);
@@ -201,20 +206,20 @@ show_cal_matrix(struct cal_layout* l, struct cal_matrix* mat) {
                 else if (mat->m[i][j] > 1000 && l->color) {
                     if (l->farsi) {
                         jalali_to_farsi(buf, 100, 2+l->julian,
-                                 " ", mat->m[i][j] - 1000);
+                                        " ", mat->m[i][j] - 1000);
                     } else {
                         snprintf(buf, 100, "%*d",
                                  2+l->julian, mat->m[i][j] - 1000);
                     }
 
-                    printf("%s%s%s ",
+                    printf("%s%s%s",
                            TERM_RED_ON_WHITE,
                            buf, TERM_RESET);
 
                 } else if ((mat->m[i][j] > 1000) && (!l->color)) {
                     if (l->farsi) {
                         jalali_to_farsi(buf, 100, 2+l->julian,
-                                 " ", mat->m[i][j] - 1000);
+                                        " ", mat->m[i][j] - 1000);
                     } else {
                         snprintf(buf, 100, "%*d",
                                  2+l->julian, mat->m[i][j] - 1000);
@@ -224,7 +229,7 @@ show_cal_matrix(struct cal_layout* l, struct cal_matrix* mat) {
                 } else if (l->color) {
                     if (l->farsi) {
                         jalali_to_farsi(buf, 100, 2+l->julian,
-                                 " ", mat->m[i][j]);
+                                        " ", mat->m[i][j]);
                     } else {
                         snprintf(buf, 100, "%*d",
                                  2+l->julian, mat->m[i][j]);
@@ -239,7 +244,7 @@ show_cal_matrix(struct cal_layout* l, struct cal_matrix* mat) {
                 else {
                     if (l->farsi) {
                         jalali_to_farsi(buf, 100, 2+l->julian,
-                                 " ", mat->m[i][j]);
+                                        " ", mat->m[i][j]);
                     } else {
                         snprintf(buf, 100, "%*d",
                                  2+l->julian, mat->m[i][j]);
@@ -259,13 +264,15 @@ show_cal_matrix(struct cal_layout* l, struct cal_matrix* mat) {
  * and height according to number of calendars.
  */
 
-void
-create_cal_matrix(struct cal_layout* l, struct cal_matrix* mat) {
+void create_cal_matrix(struct cal_layout* l,
+                       struct cal_matrix* mat)
+{
     mat->width = (mat->n * 7) + ((mat->n - 1) * l->margin) ;
     mat->height = 6;
-
     mat->m = malloc(mat->height * sizeof(int*));
+
     int i;
+
     for (i=0; i<mat->height; i++) {
         mat->m[i] = malloc(mat->width * sizeof(int));
         memset(mat->m[i], 0, mat->width * sizeof(int));
@@ -277,9 +284,10 @@ create_cal_matrix(struct cal_layout* l, struct cal_matrix* mat) {
  * Frees the allocated calendar memory.
  */
 
-void
-destroy_cal_matrix(struct cal_matrix* mat) {
+void destroy_cal_matrix(struct cal_matrix* mat)
+{
     int i;
+
     for (i=0; i<mat->height; i++) {
         free(mat->m[i]);
     }
@@ -292,8 +300,10 @@ destroy_cal_matrix(struct cal_matrix* mat) {
  * Displays calendar, including cal title and week days.
  */
 
-void
-show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j) {
+void show_cal(struct cal_layout* l,
+              struct cal_matrix* m,
+              struct jtm** _j)
+{
     char** ptr_d;
 
     int i, k;
@@ -397,8 +407,9 @@ show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j) {
  * screen according to a given jalali date.
  */
 
-void
-show_3(struct cal_layout* l, struct jtm* j) {
+void show_3(struct cal_layout* l, 
+            struct jtm* j)
+{
     struct jtm** _j;
     struct cal_matrix m;
 
@@ -440,8 +451,9 @@ show_3(struct cal_layout* l, struct jtm* j) {
  * Displays a calendar on standard screen according to a given jalali date.
  */
 
-void
-show_1(struct cal_layout* l, struct jtm* j) {
+void show_1(struct cal_layout* l,
+            struct jtm* j)
+{
     struct jtm** _j;
     struct cal_matrix m;
 
@@ -464,8 +476,9 @@ show_1(struct cal_layout* l, struct jtm* j) {
  * to a given jalali date.
  */
 
-void
-show_year(struct cal_layout* l, struct jtm* j) {
+void show_year(struct cal_layout* l,
+               struct jtm* j)
+{
     struct jtm _j[4];
 
     char title[100];
@@ -523,8 +536,8 @@ show_year(struct cal_layout* l, struct jtm* j) {
     show_3(l, &_j[3]);
 }
 
-int
-main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
     struct cal_layout l;
     struct jtm j;
     time_t t;

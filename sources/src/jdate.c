@@ -44,8 +44,10 @@ extern char* optarg;
  * otherwise: st_atime (last access time)
  */
 
-int
-mod_time(const char* path, time_t* t, int a) {
+int mod_time(const char* path,
+             time_t* t,
+             int a)
+{
     struct stat st;
     int err;
 
@@ -58,8 +60,8 @@ mod_time(const char* path, time_t* t, int a) {
     return 0;
 }
 
-int
-main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
     int opt;
     int i;
     int err;

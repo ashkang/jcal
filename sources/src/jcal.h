@@ -46,23 +46,34 @@ struct cal_matrix {
     int height; /* Matrix height. */
 };
 
-void set_cal_matrix(struct cal_layout* l, struct jtm* ct,
-                    struct cal_matrix* mat, int prefix);
+void set_cal_matrix(struct cal_layout* l,
+                    struct jtm* ct,
+                    struct cal_matrix* mat,
+                    int prefix);
 
-int is_in_margin(struct cal_layout* l, struct cal_matrix* mat, int c);
+int is_in_margin(struct cal_layout* l,
+                 struct cal_matrix* mat,
+                 int c);
 
-void show_cal_matrix(struct cal_layout* l, struct cal_matrix* mat);
+void show_cal_matrix(struct cal_layout* l,
+                     struct cal_matrix* mat);
 
-void create_cal_matrix(struct cal_layout* l, struct cal_matrix* mat);
+void create_cal_matrix(struct cal_layout* l,
+                       struct cal_matrix* mat);
 
 void destroy_cal_matrix(struct cal_matrix* mat);
 
-void show_cal(struct cal_layout* l, struct cal_matrix* m, struct jtm** _j);
+void show_cal(struct cal_layout* l,
+              struct cal_matrix* m,
+              struct jtm** _j);
 
-void show_3(struct cal_layout* l, struct jtm* j);
+void show_3(struct cal_layout* l,
+            struct jtm* j);
 
-void show_1(struct cal_layout* l, struct jtm* j);
+void show_1(struct cal_layout* l,
+            struct jtm* j);
 
-void show_year(struct cal_layout* l, struct jtm* j);
+void show_year(struct cal_layout* l,
+               struct jtm* j);
 
 #endif /* JCAL_H */
