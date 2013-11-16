@@ -46,8 +46,7 @@ extern char* tzname[2];
  * The current 2820 year period started in the year AP 475 (AD 1096).
  */
 
-int
-jalali_is_jleap(int year)
+int jalali_is_jleap(int year)
 {
     int pr = year;
 
@@ -110,8 +109,7 @@ jalali_is_jleap(int year)
  * Creates absolute values for day, hour, minute and seconds from time_t.
  * Values are signed integers.
  */
-void
-jalali_create_time_from_secs(time_t t, struct ab_jtm* d)
+void jalali_create_time_from_secs(time_t t, struct ab_jtm* d)
 {
     d->ab_days = (t >= 0) ? (t / (time_t) J_DAY_LENGTH_IN_SECONDS) :
         ((t - (time_t) J_DAY_LENGTH_IN_SECONDS + (time_t) 1) /
@@ -137,8 +135,7 @@ jalali_create_time_from_secs(time_t t, struct ab_jtm* d)
  * Creates a timestamp from day, hour, minute and seconds.
  * Values are signed integers.
  */
-time_t
-jalali_create_secs_from_time(const struct ab_jtm* d)
+time_t jalali_create_secs_from_time(const struct ab_jtm* d)
 {
     return (time_t)
         ((time_t) d->ab_days * (time_t) J_DAY_LENGTH_IN_SECONDS +
@@ -152,8 +149,7 @@ jalali_create_secs_from_time(const struct ab_jtm* d)
  * Alters only tm_mday and tm_mon.
  * Zero on success, -1 on failure.
  */
-int
-jalali_create_date_from_days(struct jtm* j)
+int jalali_create_date_from_days(struct jtm* j)
 {
     int p = j->tm_yday;
     if (p > 365 || p < 0)
@@ -179,8 +175,7 @@ jalali_create_date_from_days(struct jtm* j)
 /*
  * Calculate day of year (0-365) based on month and day.
  */
-int
-jalali_create_days_from_date(struct jtm* j)
+int jalali_create_days_from_date(struct jtm* j)
 {
     int p = 0;
     int i;
@@ -207,8 +202,7 @@ jalali_create_days_from_date(struct jtm* j)
  * 3. Passed and remaining leap years in grand leap cycle. -pl, -rl
  * 4. Absolute passed leap years since grand leap cycle epoch (AP 475). -apl
  */
-void
-jalali_get_jyear_info(struct jyinfo* year)
+void jalali_get_jyear_info(struct jyinfo* year)
 {
     int y = year->y;
     year->lf = jalali_is_jleap(year->y);
@@ -245,8 +239,7 @@ jalali_get_jyear_info(struct jyinfo* year)
  * Calculates date (Jalali) based on difference factor from UTC Epoch by days.
  * 0 means 1 January 1970 (11 Dey 1348).
  */
-void
-jalali_get_date(int p, struct jtm* j)
+void jalali_get_date(int p, struct jtm* j)
 {
     time_t t;
     struct tm lt;
@@ -304,8 +297,7 @@ jalali_get_date(int p, struct jtm* j)
 /*
  * Calculates UTC epoch difference of a desired date by measure of days.
  */
-int
-jalali_get_diff(const struct jtm* j)
+int jalali_get_diff(const struct jtm* j)
 {
     int p = 0;
     int i;
@@ -349,8 +341,8 @@ jalali_get_diff(const struct jtm* j)
 /*
  * Updates a jalali date struct fields based on tm_year, tm_mon and tm_mday
  */
-void
-jalali_update(struct jtm* jtm) {
+void jalali_update(struct jtm* jtm)
+{
     int d;
 
     jalali_create_days_from_date(jtm);
@@ -362,8 +354,8 @@ jalali_update(struct jtm* jtm) {
  * Displays a jalali date struct fields.
  * should be used for debugging purposes only.
  */
-void
-jalali_show_time(const struct jtm* j) {
+void jalali_show_time(const struct jtm* j)
+{
     printf("%d/%02d/%02d (%02d:%02d:%02d) [%d]",
            j->tm_year, j->tm_mon + 1, j->tm_mday, j->tm_hour, j->tm_min,
            j->tm_sec, j->tm_wday);

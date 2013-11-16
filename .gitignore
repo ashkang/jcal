@@ -48,3 +48,4 @@ test_kit/jyinfo
 test_kit/leap
 test_kit/sec_converter
 docs/genpages.sh
+sources/compile

@@ -67,8 +67,8 @@ static struct jtm in_jtm;
 
 extern char* tzname[2];
 
-void
-in_jasctime(const struct jtm* jtm, char* buf) {
+void in_jasctime(const struct jtm* jtm, char* buf)
+{
     if (!jtm)
         return;
 
@@ -96,8 +96,8 @@ in_jasctime(const struct jtm* jtm, char* buf) {
     }
 }
 
-void
-in_jlocaltime(const time_t* timep, struct jtm* result) {
+void in_jlocaltime(const time_t* timep, struct jtm* result)
+{
     if (!timep)
         return;
 
@@ -143,8 +143,8 @@ in_jlocaltime(const time_t* timep, struct jtm* result) {
     memcpy(&in_jtm, &c_jtm, sizeof(struct jtm));
 }
 
-void
-in_jctime(const time_t* timep, char* buf) {
+void in_jctime(const time_t* timep, char* buf)
+{
     if (!timep)
         return;
 
@@ -159,8 +159,8 @@ in_jctime(const time_t* timep, char* buf) {
     }
 }
 
-void
-in_jgmtime(const time_t* timep, struct jtm* result) {
+void in_jgmtime(const time_t* timep, struct jtm* result)
+{
     if (!timep)
         return;
 
@@ -191,8 +191,8 @@ in_jgmtime(const time_t* timep, struct jtm* result) {
     memcpy(&in_jtm, &c_jtm, sizeof(struct jtm));
 }
 
-char*
-jasctime(const struct jtm* jtm) {
+char* jasctime(const struct jtm* jtm)
+{
     if (!jtm)
         return 0;
 
@@ -200,8 +200,8 @@ jasctime(const struct jtm* jtm) {
     return in_buf;
 }
 
-char*
-jctime(const time_t* timep) {
+char* jctime(const time_t* timep)
+{
     if (!timep)
         return 0;
 
@@ -209,16 +209,16 @@ jctime(const time_t* timep) {
     return in_buf;
 }
 
-struct jtm*
-jgmtime(const time_t* timep) {
+struct jtm* jgmtime(const time_t* timep)
+{
     if (!timep)
         return 0;
     in_jgmtime(timep, 0);
     return &in_jtm;
 }
 
-struct jtm*
-jlocaltime(const time_t* timep) {
+struct jtm* jlocaltime(const time_t* timep)
+{
     if (!timep)
         return 0;
 
@@ -226,8 +226,8 @@ jlocaltime(const time_t* timep) {
     return &in_jtm;
 }
 
-time_t
-jmktime(const struct jtm* jtm) {
+time_t jmktime(const struct jtm* jtm)
+{
     if (!jtm)
         return (time_t) (-1);
     tzset();
@@ -242,8 +242,8 @@ jmktime(const struct jtm* jtm) {
     return t;
 }
 
-size_t
-jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
+size_t jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm)
+{
     if (!s || max <= 0 || !format || !jtm)
         return -1;
 
@@ -641,8 +641,8 @@ jstrftime(char* s, size_t max, const char* format, const struct jtm* jtm) {
     return rb;
 }
 
-char*
-jstrptime(const char* s, const char* format, struct jtm* jtm) {
+char* jstrptime(const char* s, const char* format, struct jtm* jtm)
+{
     char buf[MAX_BUF_SIZE];
     char delim[MAX_BUF_SIZE];
 
@@ -844,8 +844,8 @@ jstrptime(const char* s, const char* format, struct jtm* jtm) {
     return (char*) &s[s_s];
 }
 
-char*
-jasctime_r(const struct jtm* jtm, char* buf) {
+char* jasctime_r(const struct jtm* jtm, char* buf)
+{
     if (!jtm || !buf)
         return 0;
 
@@ -854,8 +854,8 @@ jasctime_r(const struct jtm* jtm, char* buf) {
     return in_buf;
 }
 
-struct jtm*
-jlocaltime_r(const time_t* timep, struct jtm* result) {
+struct jtm* jlocaltime_r(const time_t* timep, struct jtm* result)
+{
     if (!timep || !result)
         return 0;
 
@@ -864,8 +864,8 @@ jlocaltime_r(const time_t* timep, struct jtm* result) {
     return &in_jtm;
 }
 
-struct jtm*
-jgmtime_r(const time_t* timep, struct jtm* result) {
+struct jtm* jgmtime_r(const time_t* timep, struct jtm* result)
+{
     if (!timep || !result)
         return 0;
 
@@ -874,8 +874,8 @@ jgmtime_r(const time_t* timep, struct jtm* result) {
     return &in_jtm;
 }
 
-char*
-jctime_r(const time_t* timep, char* buf) {
+char* jctime_r(const time_t* timep, char* buf)
+{
     if (!timep || !buf)
         return 0;
 
@@ -890,8 +890,12 @@ jctime_r(const time_t* timep, char* buf) {
  * jalali_to_farsi() converts an integer's digits to Arabic-Indic
  * padding works just like printf() field width.
  */
-int jalali_to_farsi(char* buf, size_t n, int padding, char* pad,
-                    int d) {
+int jalali_to_farsi(char* buf,
+                    size_t n,
+                    int padding,
+                    char* pad,
+                    int d)
+{
     char _buf[100] = {0};
     int i=0, j=0;
     int p = 0;

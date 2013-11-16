@@ -44,9 +44,7 @@ extern char* optarg;
  * otherwise: st_atime (last access time)
  */
 
-int mod_time(const char* path,
-             time_t* t,
-             int a)
+int mod_time(const char* path, time_t* t, int a)
 {
     struct stat st;
     int err;

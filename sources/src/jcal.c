@@ -148,8 +148,7 @@ int is_in_margin(struct cal_layout* l,
  * @Should not be used directly. (See display_cal())
  */
 
-void show_cal_matrix(struct cal_layout* l,
-                     struct cal_matrix* mat)
+void show_cal_matrix(struct cal_layout* l, struct cal_matrix* mat)
 {
     int i, j, m;
     char buf[100];
@@ -264,8 +263,7 @@ void show_cal_matrix(struct cal_layout* l,
  * and height according to number of calendars.
  */
 
-void create_cal_matrix(struct cal_layout* l,
-                       struct cal_matrix* mat)
+void create_cal_matrix(struct cal_layout* l, struct cal_matrix* mat)
 {
     mat->width = (mat->n * 7) + ((mat->n - 1) * l->margin) ;
     mat->height = 6;
@@ -407,8 +405,7 @@ void show_cal(struct cal_layout* l,
  * screen according to a given jalali date.
  */
 
-void show_3(struct cal_layout* l, 
-            struct jtm* j)
+void show_3(struct cal_layout* l, struct jtm* j)
 {
     struct jtm** _j;
     struct cal_matrix m;
@@ -451,8 +448,7 @@ void show_3(struct cal_layout* l,
  * Displays a calendar on standard screen according to a given jalali date.
  */
 
-void show_1(struct cal_layout* l,
-            struct jtm* j)
+void show_1(struct cal_layout* l, struct jtm* j)
 {
     struct jtm** _j;
     struct cal_matrix m;
@@ -476,8 +472,7 @@ void show_1(struct cal_layout* l,
  * to a given jalali date.
  */
 
-void show_year(struct cal_layout* l,
-               struct jtm* j)
+void show_year(struct cal_layout* l, struct jtm* j)
 {
     struct jtm _j[4];
 
