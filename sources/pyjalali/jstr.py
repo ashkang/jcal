@@ -33,7 +33,7 @@ def jstrftime(j_date, format):
     :param date: struct_jtm
     :param format: string
     """
-    n = len(format) << 2
+    n = len(format) << 8
     res = create_string_buffer(n)
     _jstrftime(res, n, format, byref(j_date))
     return res.value
