@@ -39,7 +39,7 @@ extern struct jtm* jgmtime(const time_t* timep);
 
 extern struct jtm* jlocaltime(const time_t* timep);
 
-extern time_t jmktime(const struct jtm* jtm);
+extern time_t jmktime(struct jtm* jtm);
 
 extern size_t jstrftime(char* s, size_t max, const char* format,
             const struct jtm* jtm);
