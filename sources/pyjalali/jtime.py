@@ -125,9 +125,9 @@ def jalali_get_jyear_info(jyinfo):
 
 
 _jalali_get_date = _libj.jalali_get_date
-_jalali_get_date.argtypes = (c_int, POINTER(struct_jyinfo))
+_jalali_get_date.argtypes = (c_int, POINTER(struct_jtm))
 def jalali_get_date(year):
-    res = struct_jyinfo()
+    res = struct_jtm()
     _jalali_get_date(year, byref(res))
     return res
 

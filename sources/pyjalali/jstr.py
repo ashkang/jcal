@@ -15,7 +15,7 @@ __all__ = ['jstrftime', 'jstrptime']
 _jstrptime = _libj.jstrptime
 _jstrptime.argtypes = (c_char_p, c_char_p, POINTER(struct_jtm))
 _jstrptime.restype = c_char_p
-def jstrptime(date_str, format):
+def jstrptime(format, date_str):
     """Return date from date_str according to format
     :param date_str: string
     :param format: string
@@ -28,7 +28,7 @@ def jstrptime(date_str, format):
 
 _jstrftime = _libj.jstrftime
 _jstrftime.argtypes = (c_char_p, c_int, c_char_p, POINTER(struct_jtm))
-def jstrftime(j_date, format):
+def jstrftime(format, j_date):
     """Return string representation of date according to format
     :param date: struct_jtm
     :param format: string
