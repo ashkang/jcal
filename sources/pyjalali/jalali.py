@@ -77,8 +77,5 @@ def jalali_get_diff(j_date):
 _jalali_update = _libj.jalali_update
 _jalali_update.argtypes = (POINTER(struct_jtm),)
 def jalali_update(j_date):
-    """
-    this doesn't set isdst
-    """
     if _jalali_update(byref(j_date)) != 0:
         raise ValueError
