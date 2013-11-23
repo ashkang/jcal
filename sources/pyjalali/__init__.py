@@ -14,4 +14,4 @@
 from ctypes import cdll
 _libj = cdll.LoadLibrary('libjalali.so')
 
-import pyjalali.jtime, pyjalali.jstr
+import pyjalali.jtime, pyjalali.jstr, pyjalali.jalali
