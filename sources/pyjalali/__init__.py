@@ -5,8 +5,8 @@
     Python bindings for libjalali.
 
     Low level API could be accessed through :data:`~pyjalali.jstr` and
-    :data:`~pyjalali.ctime` modules.  core libjalali data structures resides
-    in `types
+    :data:`~pyjalali.ctime` modules.  Core libjalali data structures resides
+    in `types` module.
     
     An implementation of standard datetime module provided in module datetime
     using libjalali tools.
