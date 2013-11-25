@@ -12,8 +12,13 @@
     using libjalali tools.
     """
 
-
+import sys
+import ctypes.util
 from ctypes import cdll
-_libj = cdll.LoadLibrary('libjalali.so')
 
-import pyjalali.jtime, pyjalali.jstr, pyjalali.jalali, pyjalali.datetime
+if sys.platform.startswith('win'):
+    libname = 'libjalali.dll'
+else:
+    libname = ctypes.util.find_library('jalali')
+_libj = cdll.LoadLibrary(libname)
+del cdll, ctypes, sys, libname
