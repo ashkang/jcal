@@ -21,7 +21,7 @@ from pyjalali.jalali import jalali_update, jalali_create_days_from_date
 from pyjalali.jtime import jctime_r, jgmtime_r, jlocaltime_r, jmktime
 from pyjalali.jstr import jstrftime, jstrptime
 from pyjalali.types import struct_jtm, jtm_to_struct_time
-from pyjalali.helpers import normalize_jtm
+from pyjalali.helpers import normalize_jtm, month_days
 
 
 __all__ = ('date', 'datetime', 'jdatetime_from_dt', 'dt_from_jdatetime',
@@ -30,10 +30,13 @@ __all__ = ('date', 'datetime', 'jdatetime_from_dt', 'dt_from_jdatetime',
 
 class date(object):
     __have_yday_wday = False
+    __hash_val = None
 
     def __init__(self, year, month, day):
         if not 1 <= month <= 12:
             raise ValueError('month value out of range [1, 12]')
+        if day > month_days(year, month - 1):
+            raise ValueError('day is out of range for month')
         self.__jtm = struct_jtm()
         self.__jtm.tm_year = year
         self.__jtm.tm_mon = month - 1
@@ -48,11 +51,24 @@ class date(object):
         raise TypeError('Unsupported operand type for +: %s and %s' %
                         (self.__class__.__name__, delta.__class__.__name__))
 
+    def __eq__(self, jdate):
+        if isinstance(jdate, date):
+            return (self.year == jdate.year and self.month == jdate.month and
+                    self.day == jdate.day)
+            raise TypeError('Unsupported operand type for ==: %s and %s' %
+                            (self.__class__.__name__,
+                             jdate.__class__.__name__))
+
+    def __hash__(self):
+        if self.__hash_val is None:
+            self.__hash_val = hash(self.year, self.month, self.day, 101)
+        return self.__hash_val
+
     def __lt__(self, jdate):
         if isinstance(jdate, date):
             return (self.year < jdate.year or self.month < jdate.month or
                     self.day < jdate.day)
-        raise TypeError('Unsupported operand type for =: %s and %s' %
+        raise TypeError('Unsupported operand type for <: %s and %s' %
                         (self.__class__.__name__, jdate.__class__.__name__))
 
     def __sub__(self, delta_or_date):
@@ -125,7 +141,7 @@ class date(object):
         return date.fromtimestamp(_timestamp())
 
     def timetuple(self):
-        # TODO: chaneg after jmktime fix
+        # TODO: change after jmktime fix
         njtm = self.__jtm.copy()
         jalali_update(njtm)
         njtm.tm_isdst = -1
@@ -164,7 +180,6 @@ class datetime():
           formatting that differs with standard formatting.
     """
 
-    tzinfo = None
     __hash_val = None
 
     def __init__(self, year, month, day, hour=None, minute=None, second=None,
@@ -174,10 +189,16 @@ class datetime():
         self.__date = date(year, month, day)
         self.__jtm = self.__date.jtm
         if hour is not None:
+            if not 0 <= hour <= 23:
+                raise ValueError('hour must be in 0..23')
             self.__jtm.tm_hour = hour
         if minute is not None:
+            if not 0 <= minute <= 59:
+                raise ValueError('minute must be in 0..59')
             self.__jtm.tm_min = minute
         if second is not None:
+            if not 0 <= second <= 59:
+                raise ValueError('second must be in 0..59')
             self.__jtm.tm_sec = second
         self.microsecond = microsecond
         self.tzinfo = tzinfo
@@ -208,19 +229,18 @@ class datetime():
                         (self.__class__.__name__, jdt.__class__.__name__))
 
     def __hash__(self):
-        # XXX:
         # tzinfo shoudn't count, two date with different zone's should produce
         # same hash but if one is aware and one is naive it should be different
         if self.__hash_val is None:
-            self.__hash_val = self.year
-            self.__hash_val = self.__hash_val * 100 + self.month
-            self.__hash_val = self.__hash_val * 100 + self.day
-            self.__hash_val = self.__hash_val * 100 + self.hour
-            self.__hash_val = self.__hash_val * 100 + self.minute
-            self.__hash_val = self.__hash_val * 100 + self.day
-            self.__hash_val = self.__hash_val * 1000000 + self.second
-            if self.tzinfo is not None:
-                self.__hash_val += hash(self.tzinfo)
+            if self.tzinfo is None:
+                d = self
+            else:
+                d = self - self.utcoffset()
+            # yes, who cares?
+            str = '%d%d%d%d%d%d%d%d' % (d.year, d.month, d.day, d.hour,
+                                        d.minute, d.second, d.microsecond,
+                                        d.tzinfo is None)
+            self.__hash_val = hash(str)
         return self.__hash_val
 
     def __lt__(self, dt):

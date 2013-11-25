@@ -30,16 +30,6 @@
 from pyjalali.jalali import jalali_is_jleap
 
 days_in_month = (31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29)
-# accumulated_month_days = (0, 31, 62, 93, 124, 155, 186, 216, 246, 276, 306,
-                          # 336)
-
-
-# def get_yday(year, month, mday):
-    # """
-        # Assumes valid input
-        # 0 <= month <= 11
-    # """
-    # return accumulated_month_days[month] + mday - 1
 
 
 def normalized_pair(hi, lo, factor):
@@ -59,6 +49,8 @@ def month_days(year, mon):
 
 
 def normalized_date(year, mon, mday):
+    # this usage should be integrated in jmktime probably
+    # TODO
     if mon < 0 or mon > 11:
         year, mon = normalized_pair(year, mon, 12)
     assert 0 <= mon <= 11

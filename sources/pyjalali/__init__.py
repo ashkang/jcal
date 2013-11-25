@@ -10,7 +10,7 @@
     
     An implementation of standard datetime module provided in module datetime
     using libjalali tools.
-    """
+"""
 
 import sys
 import ctypes.util

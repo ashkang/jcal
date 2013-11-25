@@ -233,36 +233,6 @@ time_t jmktime(struct jtm* jtm)
         return (time_t) (-1);
     tzset();
 
-    if (jtm->tm_sec >= J_MINUTE_LENGTH_IN_SECONDS) {
-        jtm->tm_min += jtm->tm_sec / J_MINUTE_LENGTH_IN_SECONDS;
-        jtm->tm_sec %= J_MINUTE_LENGTH_IN_SECONDS;
-    }
-    if (jtm->tm_min >= J_HOUR_LENGTH_IN_MINUTES) {
-        jtm->tm_hour += jtm->tm_min / J_HOUR_LENGTH_IN_MINUTES;
-        jtm->tm_min %= J_HOUR_LENGTH_IN_MINUTES;
-    }
-    if (jtm->tm_hour >= J_DAY_LENGTH_IN_HOURS) {
-        jtm->tm_mday += jtm->tm_hour / J_DAY_LENGTH_IN_HOURS;
-        jtm->tm_hour %= J_DAY_LENGTH_IN_HOURS;
-    }
-    int lm;
-    while (jtm->tm_mday>jalali_month_len[jtm->tm_mon%J_YEAR_LENGTH_IN_MONTHS]) {
-        if (jalali_is_jleap(jtm->tm_year+jtm->tm_mon/J_YEAR_LENGTH_IN_MONTHS)) {
-            if (jtm->tm_mon % J_YEAR_LENGTH_IN_MONTHS == 11 && jtm->tm_mday ==30)
-                break;
-            lm = 30;
-        } else {
-            lm = jalali_month_len[jtm->tm_mon % J_YEAR_LENGTH_IN_MONTHS];
-        }
-        jtm->tm_mday -= lm;
-        jtm->tm_mon += 1;
-    }
-    if (jtm->tm_mon >= J_YEAR_LENGTH_IN_MONTHS) {
-        jtm->tm_year += jtm->tm_mon / J_YEAR_LENGTH_IN_MONTHS;
-        jtm->tm_mon %= J_YEAR_LENGTH_IN_MONTHS;
-    }
-    jalali_create_days_from_date(jtm); /* set tm_yday */
-
     int p = jalali_get_diff(jtm);
     time_t t;
     t = ((time_t) p * (time_t) J_DAY_LENGTH_IN_SECONDS) +
@@ -270,8 +240,6 @@ time_t jmktime(struct jtm* jtm)
         + ((time_t) jtm->tm_min *
            (time_t) J_MINUTE_LENGTH_IN_SECONDS) + (time_t) jtm->tm_sec -
         ((time_t) jtm->tm_gmtoff);
-
-    jalali_get_date(p, jtm); /* set tm_wday, reset tz info, etc .. */
     return t;
 }
 
