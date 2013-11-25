@@ -30,6 +30,17 @@
 from pyjalali.jalali import jalali_is_jleap
 
 days_in_month = (31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29)
+# accumulated_month_days = (0, 31, 62, 93, 124, 155, 186, 216, 246, 276, 306,
+                          # 336)
+
+
+# def get_yday(year, month, mday):
+    # """
+        # Assumes valid input
+        # 0 <= month <= 11
+    # """
+    # return accumulated_month_days[month] + mday - 1
+
 
 def normalized_pair(hi, lo, factor):
     assert factor > 0
@@ -88,7 +99,7 @@ def normalized_date_time(year, mon, mday, hour, min, sec, ms):
 
 def normalize_jtm(jtm, microsecond=0):
     (jtm.tm_year, jtm.tm_mon, jtm.tm_mday, jtm.tm_hour,
-        jtm.tm_min, jtm.tm_sec, microsecond) = normalized_date_time (
-            jtm.tm_year, jtm.tm_mon, jtm.tm_mday, jtm.tm_hour, \
+        jtm.tm_min, jtm.tm_sec, microsecond) = normalized_date_time(
+            jtm.tm_year, jtm.tm_mon, jtm.tm_mday, jtm.tm_hour,
             jtm.tm_min, jtm.tm_sec, microsecond)
     return microsecond

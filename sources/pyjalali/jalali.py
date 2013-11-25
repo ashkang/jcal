@@ -71,7 +71,7 @@ _jalali_get_diff = _libj.jalali_get_diff
 _jalali_get_diff.argtypes = (POINTER(struct_jtm),)
 def jalali_get_diff(j_date):
     if _jalali_get_diff(byref(j_date)) == -1:
-       raise ValueError 
+        raise ValueError
 
 
 _jalali_update = _libj.jalali_update
