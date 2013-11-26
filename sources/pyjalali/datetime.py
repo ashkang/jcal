@@ -61,7 +61,7 @@ class date(object):
 
     def __hash__(self):
         if self.__hash_val is None:
-            self.__hash_val = hash(self.year, self.month, self.day, 101)
+            self.__hash_val = hash((self.year, self.month, self.day, 101))
         return self.__hash_val
 
     def __lt__(self, jdate):
