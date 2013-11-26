@@ -172,7 +172,7 @@ date.max = date(9999, 12, 29)
 date.resolution = _std_dt_mod.timedelta(days=1)
 
 
-class datetime():
+class datetime(object):
     """Differences with :class:`datetime.datetime`:
         * Microsecond could not specified here.
 
@@ -181,6 +181,7 @@ class datetime():
     """
 
     __hash_val = None
+    tzinfo = None  # let be here, might be invoked before init carelessly
 
     def __init__(self, year, month, day, hour=None, minute=None, second=None,
                  microsecond=0, tzinfo=None):
@@ -245,7 +246,21 @@ class datetime():
 
     def __lt__(self, dt):
         if isinstance(dt, datetime):
-            return (self - dt).total_seconds() < 0
+            d1 = self
+            d2 = dt
+            if (d1.tzinfo or d2.tzinfo) is None:
+                return (d1.year < d2.year or d1.month < d2.month or d1.day <
+                        d2.day or d1.hour < d2.hour or d1.minute < d2.minute or
+                        d1.second < d2.second or d1.microsecond <
+                        d2.microsecond)
+            if not (d1.tzinfo and d2.tzinfo):
+                raise TypeError("can't compare offset-naive and offset-aware"
+                                "datetimes")
+            if d1.tzinfo is not None:
+                d1 = d1.replace(tzinfo=None) - d1.utcoffset()
+            if d2.tzinfo is not None:
+                d2 = d2.replace(tzinfo=None) - d2.utcoffset()
+            return d1 < d2
         if isinstance(dt, _std_dt_mod.datetime):
             # It might seem stupid but pytz needs this anyway
             return self.gregorian < dt
@@ -253,18 +268,18 @@ class datetime():
                         (self.__class__.__name__, dt.__class__.__name__))
 
     def __repr__(self):
-        fmt = '%s.%s(%s, %s, %s, %s, %s, %s, %s%%s' % \
+        fmt = '%s.%s(%r, %r, %r, %r, %r, %r, %r%%s' % \
               (self.__module__,
                self.__class__.__name__,
-               repr(self.year),
-               repr(self.month),
-               repr(self.day),
-               repr(self.hour),
-               repr(self.minute),
-               repr(self.second),
-               repr(self.microsecond))
+               self.year,
+               self.month,
+               self.day,
+               self.hour,
+               self.minute,
+               self.second,
+               self.microsecond)
         if self.tzinfo is not None:
-            return fmt % ', tzinfo=%s)' % repr(self.tzinfo)
+            return fmt % (', tzinfo=%r)' % self.tzinfo)
         return fmt % ')'
 
     def __str__(self):
