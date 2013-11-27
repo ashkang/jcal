@@ -1,25 +1,29 @@
 #!/bin/env python
 
 import os
+import sys
 from distutils.core import setup
+src_p = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, src_p)
+import pyjalali
 
-try:
-    src_p = os.path.dirname(os.path.abspath(__file__))
-    mkfile_p = os.path.join(src_p, 'libjalali', 'Makefile.am')
-    with open(mkfile_p) as mkfile:
-        content = mkfile.read()
-        snt = '-version-info'
-        pos = content.find(snt)
-        assert pos > -1
-        vpos = pos + len(snt) + 1
-        __version__ = content[vpos:].split('\n', 1)[0].replace(':','.')
-except:
-    __version__ = 'unknown'
+version = '.'.join(map(str, pyjalali.__version__))
 
 setup(
         name='pyjalali',
         description='Jalali calendar tools based on libjalali',
+        long_description=pyjalali.__doc__.replace(' '*4, ''),
         url='http://github.com/ashkang/jcal',
-        version=__version__,
-        packages=['pyjalali']
+        license='GPLv3',
+        version=version,
+
+        packages=['pyjalali'],
+
+        classifiers = [
+            'Development Status :: 3 - Alpha',
+            'Intended Audience :: Developers',
+            'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+            'Topic :: Software Development :: Libraries :: Python Modules',
+            'Topic :: Software Development :: Localization'
+        ]
 )

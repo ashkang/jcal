@@ -16,6 +16,9 @@ import sys
 import ctypes.util
 from ctypes import cdll
 
+# hardcoded libjalali version, binding revision
+__version__ = (0, 5, 0, 1)
+
 if sys.platform.startswith('win'):
     libname = 'libjalali.dll'
 else:

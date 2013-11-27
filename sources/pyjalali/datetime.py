@@ -435,11 +435,27 @@ class datetime(object):
         :class:`datetime.datetime` since it should store more information and
         change method signatures.
 
-        So consider returned values for every switch depending on timezone
-        information, like '%s', as wrong.
+        .. UPDATE :: This should be fixed using __fix_strftime
         """
         self.__date._compute_yday_wday_if_necessary()
-        return jstrftime(format, self.__jtm)
+        njtm = self.__fix_strftime()
+        return jstrftime(format, njtm)
+
+    def __fix_strftime(self):
+        # workaround for strftime GMT offset dependecy
+        if getattr(self, '_strftime_fixed', False):
+            return self.__jtm
+        njtm = self.__jtm.copy()
+        if self.tzinfo is None:
+            njtm.tm_gmtoff = 0
+            njtm.tm_sec -= jlocaltime_r(int(_timestamp())).tm_gmtoff
+            njtm.tm_zone = ''
+            normalize_jtm(njtm)
+        else:
+            njtm.tm_gmtoff = int(self.utcoffset().total_seconds())
+            njtm.tm_zone = self.tzname()
+        self._strftime_fixed = True
+        return njtm
 
     @classmethod
     def strptime(self, date_str, format):
