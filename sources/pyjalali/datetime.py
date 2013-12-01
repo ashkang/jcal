@@ -24,8 +24,9 @@ from pyjalali.types import struct_jtm, jtm_to_struct_time
 from pyjalali.helpers import normalize_jtm, month_days
 
 
-__all__ = ('date', 'datetime', 'jdatetime_from_dt', 'dt_from_jdatetime',
-           'now', 'utcnow', 'jdatetime_from_ts')
+__all__ = ('date', 'datetime', 'j2g', 'g2j', 'now', 'utcnow',
+           'jalali_from_gregorian', 'gregorian_from_jalali',
+           'datetime_from_ts')
 
 
 class date(object):
@@ -174,8 +175,6 @@ date.resolution = _std_dt_mod.timedelta(days=1)
 
 class datetime(object):
     """Differences with :class:`datetime.datetime`:
-        * Microsecond could not specified here.
-
         * :attr:`strftime` and :attr:`strptime` accept customized libjalali
           formatting that differs with standard formatting.
     """
@@ -344,7 +343,7 @@ class datetime(object):
     @property
     def gregorian(self):
         if getattr(self, '__gregorian', None) is None:
-            self.__gregorian = dt_from_jdatetime(self)
+            self.__gregorian = gregorian_from_jalali(self)
         return self.__gregorian
 
     @property
@@ -390,7 +389,7 @@ class datetime(object):
 
     @classmethod
     def fromtimestamp(self, ts, tz=None):
-        return jdatetime_from_ts(ts, True, tz)
+        return datetime_from_ts(ts, True, tz)
 
     @property
     def jtm(self):
@@ -435,7 +434,7 @@ class datetime(object):
         :class:`datetime.datetime` since it should store more information and
         change method signatures.
 
-        .. UPDATE :: This should be fixed using __fix_strftime
+        .. UPDATE :: This should fixed now using __fix_strftime
         """
         self.__date._compute_yday_wday_if_necessary()
         njtm = self.__fix_strftime()
@@ -532,7 +531,7 @@ class datetime(object):
 
     @classmethod
     def utcfromtimestamp(self, ts):
-        return jdatetime_from_ts(ts, False)
+        return datetime_from_ts(ts, False)
 
     @classmethod
     def utcnow(self):
@@ -549,14 +548,14 @@ datetime.resolution = _std_dt_mod.timedelta(seconds=1)
 
 
 def now(timezone=None):
-    return jdatetime_from_ts(_timestamp(), True, tz=timezone)
+    return datetime_from_ts(_timestamp(), True, tz=timezone)
 
 
 def utcnow():
-    return jdatetime_from_ts(_timestamp(), False)
+    return datetime_from_ts(_timestamp(), False)
 
 
-def jdatetime_from_ts(ts, local, tz=None):
+def datetime_from_ts(ts, local, tz=None):
     uts = int(ts % 1 * 1000000)
     tts = int(ts)
     if local and tz is None:
@@ -569,40 +568,69 @@ def jdatetime_from_ts(ts, local, tz=None):
     return jdatetime_from_jtm(jtm, uts, tz)
 
 
-def jdatetime_from_dt(dt):
-    """Make Jalali datetime from Gregorian datetime
-    >>> from datetime import datetime as _dtm
-    >>> jdatetime_from_dt(_dtm(2013, 11, 23, 23, 46, 0, 703498))
+def jalali_from_gregorian(date_or_datetime):
+    """Make Jalali datetime from Gregorian datetime or Jalali date from
+    Gregorian date
+    >>> from datetime import datetime as _dtm, date as _dt
+    >>> jalali_from_gregorian(_dtm(2013, 11, 23, 23, 46, 0, 703498))
     pyjalali.datetime.datetime(1392, 9, 2, 23, 46, 0, 703498)
-    >>> jdatetime_from_dt(_dtm(2013, 4, 13, 21, 10, 2, 292))
+    >>> jalali_from_gregorian(_dtm(2013, 4, 13, 21, 10, 2, 292))
     pyjalali.datetime.datetime(1392, 1, 24, 21, 10, 2, 292)
-    >>> jdatetime_from_dt(_dtm(2013, 3, 22, 0, 12))
+    >>> jalali_from_gregorian(_dtm(2013, 3, 22, 0, 12))
     pyjalali.datetime.datetime(1392, 1, 2, 0, 12, 0, 0)
+    >>> jalali_from_gregorian(_dt(2013, 3, 21))
+    pyjalali.datetime.date(1392, 1, 1)
     """
-    if not isinstance(dt, _std_dt_mod.datetime):
-        raise TypeError('Expected %s instance' % _std_dt_mod.datetime)
-    gdate, time = dt.date(), dt.timetz()
+    if isinstance(date_or_datetime, _std_dt_mod.datetime):
+        gdate = date_or_datetime.date()
+        time = date_or_datetime.time()
+    elif isinstance(date_or_datetime, _std_dt_mod.date):
+        gdate = date_or_datetime
+        time = None
+    else:
+        raise TypeError('Expected Gregorian %s or %s instance, not %s' %
+                        (_std_dt_mod.datetime.__name__,
+                         _std_dt_mod.date.__name__,
+                         date_or_datetime.__class__.__name__))
     jdate = date.fromtimestamp(mktime(gdate.timetuple()))
+    if time is None:
+        return jdate
     return datetime.combine(jdate, time)
 
 
-def dt_from_jdatetime(jdt):
-    """Make gregorian datetime from Jalali datetime
-    >>> dt_from_jdatetime(datetime(1392, 9, 2, 23, 10, 2))
+def gregorian_from_jalali(date_or_datetime):
+    """Make Gregorian datetime from Jalali datetime or Gregorian date from
+    Jalali date
+    >>> gregorian_from_jalali(datetime(1392, 9, 2, 23, 10, 2))
     datetime.datetime(2013, 11, 23, 23, 10, 2)
-    >>> dt_from_jdatetime(datetime(1392, 6, 30, 22, 30))
+    >>> gregorian_from_jalali(datetime(1392, 6, 30, 22, 30))
     datetime.datetime(2013, 9, 21, 22, 30)
+    >>> gregorian_from_jalali(date(1392, 6, 30))
+    datetime.date(2013, 9, 21)
     """
-    if not isinstance(jdt, datetime):
-        raise TypeError
+    if isinstance(date_or_datetime, datetime):
+        jdate = date_or_datetime.date()
+        time = date_or_datetime.timetz()
+    elif isinstance(date_or_datetime, date):
+        jdate = date_or_datetime
+        time = None
+    else:
+        raise TypeError('Expected Jalali %s or %s instance, not %s' %
+                        (datetime.__name__, date.__name__,
+                         date_or_datetime.__class__.__name__))
     # to stop dst changes from bugging conversion, just convert date
-    jdate, time = jdt.date(), jdt.timetz()
     njtm = jdate.jtm.copy()
     jalali_update(njtm)  # pragma: jmktime needs yday TODO: remove
     gdate = _std_dt_mod.date.fromtimestamp(jmktime(njtm))
+    if time is None:
+        return gdate
     return _std_dt_mod.datetime.combine(gdate, time)
 
 
 def jdatetime_from_jtm(jtm, microsecond=0, tz=None):
     return datetime(*jtm_to_struct_time(jtm)[:6], microsecond=microsecond,
                     tzinfo=tz)
+
+
+g2j = jalali_from_gregorian
+j2g = gregorian_from_jalali
