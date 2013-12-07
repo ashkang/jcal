@@ -67,8 +67,15 @@ class date(object):
 
     def __lt__(self, jdate):
         if isinstance(jdate, date):
-            return (self.year < jdate.year or self.month < jdate.month or
-                    self.day < jdate.day)
+            if self.year < jdate.year:
+                return True
+            elif self.year != jdate.year:
+                return False
+            if self.month < jdate.month:
+                return True
+            elif self.month != jdate.month:
+                return False
+            return True if self.day < jdate.day else False
         raise TypeError('Unsupported operand type for <: %s and %s' %
                         (self.__class__.__name__, jdate.__class__.__name__))
 
@@ -248,10 +255,31 @@ class datetime(object):
             d1 = self
             d2 = dt
             if (d1.tzinfo or d2.tzinfo) is None:
-                return (d1.year < d2.year or d1.month < d2.month or d1.day <
-                        d2.day or d1.hour < d2.hour or d1.minute < d2.minute or
-                        d1.second < d2.second or d1.microsecond <
-                        d2.microsecond)
+                if d1.year < d2.year:
+                    return True
+                if d1.year != d2.year:
+                    return False
+                if d1.month < d2.month:
+                    return True
+                if d1.month != d2.month:
+                    return False
+                if d1.day < d2.day:
+                    return True
+                elif d1.day != d2.day:
+                    return False
+                if d1.hour < d2.hour:
+                    return True
+                elif d1.hour != d2.hour:
+                    return False
+                if d1.minute < d2.minute:
+                    return True
+                elif d1.minute != d2.minute:
+                    return False
+                if d1.second < d2.second:
+                    return True
+                elif d1.second != d2.second:
+                    return False
+                return True if d1.microsecond < d2.microsecond else False
             if not (d1.tzinfo and d2.tzinfo):
                 raise TypeError("can't compare offset-naive and offset-aware"
                                 "datetimes")
@@ -592,6 +620,8 @@ def jalali_from_gregorian(date_or_datetime):
                         (_std_dt_mod.datetime.__name__,
                          _std_dt_mod.date.__name__,
                          date_or_datetime.__class__.__name__))
+    if gdate < _std_dt_mod.date(1970, 1, 1):
+        raise ValueError("xxxxx Can't convert dates before Epoch")
     jdate = date.fromtimestamp(mktime(gdate.timetuple()))
     if time is None:
         return jdate
@@ -618,6 +648,8 @@ def gregorian_from_jalali(date_or_datetime):
         raise TypeError('Expected Jalali %s or %s instance, not %s' %
                         (datetime.__name__, date.__name__,
                          date_or_datetime.__class__.__name__))
+    if jdate < date(1348, 10, 11):
+        raise ValueError("Can't convert dates before Epoch")
     # to stop dst changes from bugging conversion, just convert date
     njtm = jdate.jtm.copy()
     jalali_update(njtm)  # pragma: jmktime needs yday TODO: remove
