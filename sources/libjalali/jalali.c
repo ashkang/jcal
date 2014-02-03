@@ -33,6 +33,8 @@ const int leaps[] = { J_L0, J_L1, J_L2, J_L3, INT_MAX };
 
 const int jalali_month_len[] = { 31, 31, 31, 31, 31, 31, 30, 30, 30, 30,
                                  30, 29 };
+const int accumulated_jalali_month_len[] = { 0, 31, 62, 93, 124, 155, 186,
+                                 216, 246, 276, 306, 336 };
 
 extern char* tzname[2];
 
@@ -177,18 +179,14 @@ int jalali_create_date_from_days(struct jtm* j)
  */
 int jalali_create_days_from_date(struct jtm* j)
 {
-    int p = 0;
-    int i;
+    int p;
     if (j->tm_mon < 0 || j->tm_mon > 11)
         return -1;
 
     if (j->tm_mday < 1 || j->tm_mday > 31)
         return -1;
 
-    for (i=0; i<j->tm_mon; i++) {
-        p+= jalali_month_len[i];
-    }
-
+    p = accumulated_jalali_month_len[j->tm_mon];
     p+= j->tm_mday - 1;
     j->tm_yday = p;
 

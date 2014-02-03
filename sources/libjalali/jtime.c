@@ -66,6 +66,7 @@ static char in_buf[MAX_BUF_SIZE] = {0};
 static struct jtm in_jtm;
 
 extern char* tzname[2];
+extern const int jalali_month_len[];
 
 void in_jasctime(const struct jtm* jtm, char* buf)
 {
@@ -226,7 +227,7 @@ struct jtm* jlocaltime(const time_t* timep)
     return &in_jtm;
 }
 
-time_t jmktime(const struct jtm* jtm)
+time_t jmktime(struct jtm* jtm)
 {
     if (!jtm)
         return (time_t) (-1);
