@@ -212,7 +212,6 @@ int main(int argc, char** argv)
     if (action.date) {
 
         char* ptr;
-        size_t ds;
 
         ptr = strchr(action.date_ptr, ';');
 
@@ -222,10 +221,7 @@ int main(int argc, char** argv)
             exit(EXIT_FAILURE);
         }
 
-        ds = strlen(ptr);
-
-        strncpy(date_format, action.date_ptr, (size_t) (ptr - action.date_ptr));
-        strncpy(date_string, ptr+1, ds);
+        sscanf(action.date_ptr, "%[^;];%s", date_format, date_string);
 
         jstrptime(date_string, date_format, &j);
         jalali_update(&j);

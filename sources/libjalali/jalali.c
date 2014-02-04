@@ -34,7 +34,7 @@ const int leaps[] = { J_L0, J_L1, J_L2, J_L3, INT_MAX };
 const int jalali_month_len[] = { 31, 31, 31, 31, 31, 31, 30, 30, 30, 30,
                                  30, 29 };
 const int accumulated_jalali_month_len[] = { 0, 31, 62, 93, 124, 155, 186,
-                                 216, 246, 276, 306, 336 };
+                                             216, 246, 276, 306, 336 };
 
 extern char* tzname[2];
 
