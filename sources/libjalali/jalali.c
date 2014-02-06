@@ -239,6 +239,7 @@ void jalali_get_jyear_info(struct jyinfo* year)
  */
 void jalali_get_date(int p, struct jtm* j)
 {
+    int porg = p;
     time_t t;
     struct tm lt;
 #if defined _WIN32 || defined __MINGW32__ || defined __CYGWIN__
@@ -259,7 +260,7 @@ void jalali_get_date(int p, struct jtm* j)
     int d;
 
     while (1) {
-        d = (p >= 0 ) ? 1 : -1;
+        d = (p >= 0) ? 1 : -1;
         f = jalali_is_jleap(((d > 0) ? y : y-1)) ?
             JALALI_LEAP_YEAR_LENGTH_IN_DAYS:
             JALALI_NORMAL_YEAR_LENGTH_IN_DAYS;
@@ -276,7 +277,7 @@ void jalali_get_date(int p, struct jtm* j)
 
     jalali_create_date_from_days(j);
     tzset();
-    t = p * J_DAY_LENGTH_IN_SECONDS;
+    t = porg * J_DAY_LENGTH_IN_SECONDS;
     localtime_r(&t, &lt);
 
 #if defined _WIN32 || defined __MINGW32__ || defined __CYGWIN__
@@ -333,6 +334,7 @@ int jalali_get_diff(const struct jtm* j)
 
     p += r + ed;
     p*= f;
+
     return p;
 }
 
