@@ -4,13 +4,13 @@
 
     Python bindings for libjalali.
 
-    Low level API could be accessed through :data:`jstr`, :data:`jtime` and
-    :data:`jalali` modules.  Core libjalali data structures resides in
-    :data:`types` module.
+    Low level API could be accessed through :mod:`.jstr`, :mod:`.jtime` and
+    :mod:`.jalali` modules.  Core libjalali data structures resides in
+    :mod:`.types` module.
     
-    An implementation of standard :data:`datetime`'s :class:`date` and
-    :class:`datetime` provided in module :data:`~pyjalali.datetime` using
-    libjalali tools.
+    An implementation of standard :class:`python:datetime.date` and
+    :class:`python:datetime.datetime` provided in module :mod:`.datetime`
+    using libjalali tools.
 """
 
 import sys
@@ -18,7 +18,7 @@ import ctypes.util
 from ctypes import cdll
 
 # hardcoded libjalali version, binding revision
-__version__ = (0, 5, 0, 1)
+__version__ = (0, 5, 0, 2)
 
 if sys.platform.startswith('win'):
     libname = 'libjalali.dll'

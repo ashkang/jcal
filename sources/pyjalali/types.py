@@ -40,6 +40,7 @@ class struct_jtm(Structure):
                                               self.tm_min, self.tm_sec,
                                               self.tm_gmtoff, self.tm_zone)
     def copy(self):
+        """New instance of this object"""
         return struct_jtm(self.tm_sec, self.tm_min, self.tm_hour, self.tm_mday,
                           self.tm_mon, self.tm_year, self.tm_wday,
                           self.tm_yday, self.tm_isdst, self.tm_gmtoff,
@@ -61,6 +62,8 @@ time_t = c_int
 time_t_p = POINTER(c_int)
 
 def jtm_to_struct_time(src_jtm):
+    """Make :class:`time.struct_time` from broken-down jalali time
+    structure"""
     return struct_time((src_jtm.tm_year, src_jtm.tm_mon+1, src_jtm.tm_mday,
                         src_jtm.tm_hour, src_jtm.tm_min, src_jtm.tm_sec,
                         src_jtm.tm_wday, src_jtm.tm_yday+1, src_jtm.tm_isdst))

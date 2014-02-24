@@ -14,7 +14,7 @@
     (1390, 0, 1)
     >>> normalized_date (1390, 0, 0)
     (1389, 11, 29)
-    >>> normalized_date (1391, 0, 0) # leap year, one day befor
+    >>> normalized_date (1391, 0, 0) # leap year, one day before
     (1390, 11, 29)
     >>> normalized_date (1392, 0, 0)
     (1391, 11, 30)

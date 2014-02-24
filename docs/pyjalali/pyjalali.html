@@ -1,0 +1,1025 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyjalali Package &mdash; pyjalali 0.5.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.5.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyjalali 0.5.0.2 documentation" href="index.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyjalali 0.5.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pyjalali-package">
+<h1>pyjalali Package<a class="headerlink" href="#pyjalali-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">pyjalali</span></tt> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-pyjalali.__init__"></span><div class="section" id="pyjalali">
+<h3>pyjalali<a class="headerlink" href="#pyjalali" title="Permalink to this headline">¶</a></h3>
+<p>Python bindings for libjalali.</p>
+<p>Low level API could be accessed through <a class="reference internal" href="#module-pyjalali.jstr" title="pyjalali.jstr"><tt class="xref py py-mod docutils literal"><span class="pre">jstr</span></tt></a>, <a class="reference internal" href="#module-pyjalali.jtime" title="pyjalali.jtime"><tt class="xref py py-mod docutils literal"><span class="pre">jtime</span></tt></a> and
+<a class="reference internal" href="#module-pyjalali.jalali" title="pyjalali.jalali"><tt class="xref py py-mod docutils literal"><span class="pre">jalali</span></tt></a> modules.  Core libjalali data structures resides in
+<a class="reference internal" href="#module-pyjalali.types" title="pyjalali.types"><tt class="xref py py-mod docutils literal"><span class="pre">types</span></tt></a> module.</p>
+<p>An implementation of standard <a class="reference external" href="http://docs.python.org/library/datetime.html#datetime.date" title="(in Python v2.7)"><tt class="docutils literal"><span class="pre">datetime.date</span></tt></a> and
+<a class="reference external" href="http://docs.python.org/library/datetime.html#datetime.datetime" title="(in Python v2.7)"><tt class="docutils literal"><span class="pre">datetime.datetime</span></tt></a> provided in module <a class="reference internal" href="#module-pyjalali.datetime" title="pyjalali.datetime"><tt class="xref py py-mod docutils literal"><span class="pre">datetime</span></tt></a>
+using libjalali tools.</p>
+</div>
+</div>
+<div class="section" id="module-pyjalali.datetime">
+<span id="datetime-module"></span><h2><a class="reference internal" href="#module-pyjalali.datetime" title="pyjalali.datetime"><tt class="xref py py-mod docutils literal"><span class="pre">datetime</span></tt></a> Module<a class="headerlink" href="#module-pyjalali.datetime" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pyjalali-datetime">
+<h3>pyjalali.datetime<a class="headerlink" href="#pyjalali-datetime" title="Permalink to this headline">¶</a></h3>
+<p>High level API for libjalali.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>There is no <cite>iso_calendar</cite> or <cite>to_ordinal</cite> or <cite>fromordinal</cite> method
+here.  Implementing them is easy, just forward to
+<a class="reference internal" href="#pyjalali.datetime.datetime.gregorian" title="pyjalali.datetime.datetime.gregorian"><tt class="xref py py-attr docutils literal"><span class="pre">datetime.gregorian</span></tt></a> but those methods are not related to
+Jalali really.</li>
+</ul>
+</div>
+<dl class="class">
+<dt id="pyjalali.datetime.date">
+<em class="property">class </em><tt class="descclassname">pyjalali.datetime.</tt><tt class="descname">date</tt><big>(</big><em>year</em>, <em>month</em>, <em>day</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.date" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pyjalali.datetime.date.ctime">
+<tt class="descname">ctime</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.date.ctime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string representing the date, <tt class="docutils literal"><span class="pre">date(1392,</span> <span class="pre">8,</span> <span class="pre">2).ctime()</span> <span class="pre">==</span>
+<span class="pre">'Thu</span> <span class="pre">Aba</span> <span class="pre">02</span> <span class="pre">00:00:00</span> <span class="pre">1392'</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.date.day">
+<tt class="descname">day</tt><a class="headerlink" href="#pyjalali.datetime.date.day" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="pyjalali.datetime.date.fromtimestamp">
+<em class="property">classmethod </em><tt class="descname">fromtimestamp</tt><big>(</big><em>ts</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.date.fromtimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the local date corresponding to the POSIX timestamp</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.date.isoformat">
+<tt class="descname">isoformat</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.date.isoformat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string representing the date in ISO 8601 format,
+<cite>YYYY-MM-DD</cite>.  For example <tt class="docutils literal"><span class="pre">date(1392,</span> <span class="pre">8,</span> <span class="pre">2).isoformat()</span> <span class="pre">==</span>
+<span class="pre">1392-08-02'</span></tt></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.date.isoweekday">
+<tt class="descname">isoweekday</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.date.isoweekday" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the day of the week as an integer, where Shanbeh is 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.date.jtm">
+<tt class="descname">jtm</tt><a class="headerlink" href="#pyjalali.datetime.date.jtm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Broken-down jalali time structure for this date</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.date.max">
+<tt class="descname">max</tt><em class="property"> = pyjalali.datetime.date(9999, 12, 29)</em><a class="headerlink" href="#pyjalali.datetime.date.max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.date.min">
+<tt class="descname">min</tt><em class="property"> = pyjalali.datetime.date(1, 1, 1)</em><a class="headerlink" href="#pyjalali.datetime.date.min" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.date.month">
+<tt class="descname">month</tt><a class="headerlink" href="#pyjalali.datetime.date.month" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.date.replace">
+<tt class="descname">replace</tt><big>(</big><em>**kw</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.date.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return new date object where values for supplied keyword keywrod
+arguments reset: <tt class="docutils literal"><span class="pre">date(1392,</span> <span class="pre">2,</span> <span class="pre">8).replace(month=9)</span> <span class="pre">==</span> <span class="pre">date(1392,</span> <span class="pre">9,</span>
+<span class="pre">8)`</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.date.resolution">
+<tt class="descname">resolution</tt><em class="property"> = datetime.timedelta(1)</em><a class="headerlink" href="#pyjalali.datetime.date.resolution" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.date.strftime">
+<tt class="descname">strftime</tt><big>(</big><em>format</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.date.strftime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string representing the date, controlled by an explicit
+format string.  Format codes referring to hours, minutes or seconds
+will see 0 values.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">libjalali&#8217;s <tt class="xref py py-func docutils literal"><span class="pre">jstrftime()</span></tt> defines custom formatting directives
+which might defined in your platform too but for other intentions.
+Check list of libjalali&#8217;s formatting directives.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.date.timetuple">
+<tt class="descname">timetuple</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.date.timetuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference external" href="http://docs.python.org/library/time.html#time.struct_time" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">time.struct_time</span></tt></a> from this date.  DST flag is
+-1</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyjalali.datetime.date.today">
+<em class="property">classmethod </em><tt class="descname">today</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.date.today" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return current local date</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.date.weekday">
+<tt class="descname">weekday</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.date.weekday" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the day of the week as an integer, where Shanbeh is 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.date.year">
+<tt class="descname">year</tt><a class="headerlink" href="#pyjalali.datetime.date.year" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyjalali.datetime.datetime">
+<em class="property">class </em><tt class="descclassname">pyjalali.datetime.</tt><tt class="descname">datetime</tt><big>(</big><em>year</em>, <em>month</em>, <em>day</em>, <em>hour=None</em>, <em>minute=None</em>, <em>second=None</em>, <em>microsecond=0</em>, <em>tzinfo=None</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pyjalali.datetime.datetime.astimezone">
+<tt class="descname">astimezone</tt><big>(</big><em>tz</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.astimezone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#pyjalali.datetime.datetime" title="pyjalali.datetime.datetime"><tt class="xref py py-class docutils literal"><span class="pre">datetime</span></tt></a> object with new <a class="reference internal" href="#pyjalali.datetime.datetime.tzinfo" title="pyjalali.datetime.datetime.tzinfo"><tt class="xref py py-attr docutils literal"><span class="pre">tzinfo</span></tt></a> attribute
+<em>tz</em>, adjusting the date and time data so the result is the same UTC
+time as self, but in <em>tz</em>&#8216;s local time.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pytz</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="p">(</span><span class="s">&#39;Asia/Tehran&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d2</span> <span class="o">=</span> <span class="n">d1</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="p">(</span><span class="s">&#39;Asia/Dubai&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d1</span> <span class="o">==</span> <span class="n">d2</span><span class="p">,</span> <span class="n">d1</span> <span class="o">-</span> <span class="n">d2</span>
+<span class="go">(True, datetime.timedelta(0))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyjalali.datetime.datetime.combine">
+<em class="property">classmethod </em><tt class="descname">combine</tt><big>(</big><em>date</em>, <em>time</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.combine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make <a class="reference internal" href="#pyjalali.datetime.datetime" title="pyjalali.datetime.datetime"><tt class="xref py py-class docutils literal"><span class="pre">datetime</span></tt></a> from supplied date and time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>date</strong> (<a class="reference internal" href="#pyjalali.datetime.date" title="pyjalali.datetime.date"><em>pyjalali.datetime.date</em></a>) &#8211; </li>
+<li><strong>time</strong> (<a class="reference external" href="http://docs.python.org/library/datetime.html#datetime.time" title="(in Python v2.7)"><em>datetime.time</em></a>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.datetime.ctime">
+<tt class="descname">ctime</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.ctime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string representing the date and time.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">datetime</span><span class="p">(</span><span class="mi">1392</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">992</span><span class="p">)</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span>
+<span class="go">&#39;Fri Aza 01 12:32:14 1392&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.datetime.date">
+<tt class="descname">date</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <a class="reference internal" href="#pyjalali.datetime.date" title="pyjalali.datetime.date"><tt class="xref py py-class docutils literal"><span class="pre">date</span></tt></a> object with same year, month and day.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.datetime.day">
+<tt class="descname">day</tt><a class="headerlink" href="#pyjalali.datetime.datetime.day" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.datetime.dst">
+<tt class="descname">dst</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.dst" title="Permalink to this definition">¶</a></dt>
+<dd><p>If <a class="reference internal" href="#pyjalali.datetime.datetime.tzinfo" title="pyjalali.datetime.datetime.tzinfo"><tt class="xref py py-attr docutils literal"><span class="pre">tzinfo</span></tt></a> is None, returns None, else returns
+<tt class="docutils literal"><span class="pre">self.tzinfo.dst(self)</span></tt>, and raises an exception if the latter
+doesn&#8217;t return None, or a timedelta object.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyjalali.datetime.datetime.fromtimestamp">
+<em class="property">classmethod </em><tt class="descname">fromtimestamp</tt><big>(</big><em>ts</em>, <em>tz=None</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.fromtimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the local date and time corresponding to the POSIX
+timestamp, such as is returned by <a class="reference external" href="http://docs.python.org/library/time.html#time.time" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">time.time()</span></tt></a>.  If optional
+argument <em>tz</em> is None or not specified, the timestamp is converted to
+the platform&#8217;s local date and time, and the returned datetime object
+is naive.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.datetime.gregorian">
+<tt class="descname">gregorian</tt><a class="headerlink" href="#pyjalali.datetime.datetime.gregorian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return Gregorian <a class="reference external" href="http://docs.python.org/library/datetime.html#datetime.datetime" title="(in Python v2.7)"><tt class="docutils literal"><span class="pre">datetime.datetime</span></tt></a> object
+corresponding to this datetime.  Result will cached for future uses.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.datetime.hour">
+<tt class="descname">hour</tt><a class="headerlink" href="#pyjalali.datetime.datetime.hour" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.datetime.isoformat">
+<tt class="descname">isoformat</tt><big>(</big><em>sep='T'</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.isoformat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string representing the date and time in ISO 8601 format,
+YYYY-MM-DDTHH:MM:SS.mmmmmm or, if :attr`:<cite>.microsecond</cite> is 0,
+YYYY-MM-DDTHH:MM:SS.  The optional argument sep (default &#8216;T&#8217;) is a
+separator, placed between the date and time portions of the result.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">datetime</span><span class="p">(</span><span class="mi">1392</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">992</span><span class="p">)</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+<span class="go">&#39;1392-09-01 12:32:14.992&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.datetime.isoweekday">
+<tt class="descname">isoweekday</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.isoweekday" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the day of the week as an integer, where Shanbeh is 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.datetime.jtm">
+<tt class="descname">jtm</tt><a class="headerlink" href="#pyjalali.datetime.datetime.jtm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Broken-down jalali time structure for this date</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.datetime.max">
+<tt class="descname">max</tt><em class="property"> = pyjalali.datetime.datetime(9999, 12, 29, 23, 59, 59, 0)</em><a class="headerlink" href="#pyjalali.datetime.datetime.max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.datetime.min">
+<tt class="descname">min</tt><em class="property"> = pyjalali.datetime.datetime(1, 1, 1, 0, 0, 0, 0)</em><a class="headerlink" href="#pyjalali.datetime.datetime.min" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.datetime.minute">
+<tt class="descname">minute</tt><a class="headerlink" href="#pyjalali.datetime.datetime.minute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.datetime.month">
+<tt class="descname">month</tt><a class="headerlink" href="#pyjalali.datetime.datetime.month" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="pyjalali.datetime.datetime.now">
+<em class="property">classmethod </em><tt class="descname">now</tt><big>(</big><em>tz=None</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.now" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current local date and time.  If a timezone provided,
+date and time will adjusted to that timezone.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.datetime.replace">
+<tt class="descname">replace</tt><big>(</big><em>**kw</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a datetime with the same attributes, except for those
+attributes given new values by whichever keyword arguments are
+specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.datetime.resolution">
+<tt class="descname">resolution</tt><em class="property"> = datetime.timedelta(0, 1)</em><a class="headerlink" href="#pyjalali.datetime.datetime.resolution" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.datetime.second">
+<tt class="descname">second</tt><a class="headerlink" href="#pyjalali.datetime.datetime.second" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.datetime.strftime">
+<tt class="descname">strftime</tt><big>(</big><em>format</em>, <em>_decrease_gmtoff_from_secs=False</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.strftime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a string representing the date and time, controlled by an
+explicit format string.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>To show correct value for some formatting specials, e.g.&#8217;%s&#8217;,
+libjalali&#8217;s <tt class="xref py py-func docutils literal"><span class="pre">jstrftime()</span></tt> needs timezone informations filled
+in <tt class="xref py py-attr docutils literal"><span class="pre">jtm.tm_gmtoff</span></tt> (<a class="reference external" href="https://github.com/ashkang/jcal/issues/4">issue 4</a>) which we could not depend
+on here, since naive datetime objects have zero knowledge about
+it.  Storing these timezone information in a naive datetime
+object, make datetime implementation heavily depended on
+<tt class="xref py py-func docutils literal"><span class="pre">jmktime()</span></tt> which have several issues itself.  Additionally it
+makes <a class="reference internal" href="#pyjalali.datetime.datetime" title="pyjalali.datetime.datetime"><tt class="xref py py-class docutils literal"><span class="pre">datetime</span></tt></a> less like
+<a class="reference external" href="http://docs.python.org/library/datetime.html#datetime.datetime" title="(in Python v2.7)"><tt class="docutils literal"><span class="pre">datetime.datetime</span></tt></a> since it should store more
+information and change method signatures.</p>
+<p class="last">For those directives, a possible workaround is to change
+<a class="reference internal" href="#pyjalali.datetime.datetime.jtm" title="pyjalali.datetime.datetime.jtm"><tt class="xref py py-attr docutils literal"><span class="pre">jtm</span></tt></a> by detecting local zone and putting its effect in
+other field values, but this makes other directives (hour, minute,
+etc) incorrect.  You can use this workaround by passing True as
+second argument.</p>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyjalali.datetime.datetime.strptime">
+<em class="property">classmethod </em><tt class="descname">strptime</tt><big>(</big><em>date_str</em>, <em>format</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.strptime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a datetime corresponding to <cite>date_str</cite>, parsed according to
+<cite>format</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.datetime.time">
+<tt class="descname">time</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <a class="reference external" href="http://docs.python.org/library/datetime.html#datetime.time" title="(in Python v2.7)"><tt class="docutils literal"><span class="pre">datetime.time</span></tt></a> object with same hour, minute,
+second and microsecond.  <a class="reference internal" href="#pyjalali.datetime.datetime.tzinfo" title="pyjalali.datetime.datetime.tzinfo"><tt class="xref py py-attr docutils literal"><span class="pre">tzinfo</span></tt></a> is None.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.datetime.timetuple">
+<tt class="descname">timetuple</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.timetuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference external" href="http://docs.python.org/library/time.html#time.struct_time" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">time.struct_time</span></tt></a> from this date. The tm_isdst
+flag of the result is set according to the dst() method: tzinfo is
+None or dst() returns None, tm_isdst is set to -1; else if dst()
+returns a non-zero value, tm_isdst is set to 1; else tm_isdst is set
+to 0.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.datetime.timetz">
+<tt class="descname">timetz</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.timetz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <a class="reference external" href="http://docs.python.org/library/datetime.html#datetime.time" title="(in Python v2.7)"><tt class="docutils literal"><span class="pre">datetime.time</span></tt></a> object with same hour, minute,
+second, microsecond, and tzinfo attributes.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyjalali.datetime.datetime.today">
+<em class="property">classmethod </em><tt class="descname">today</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.today" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current local datetime, with <a class="reference internal" href="#pyjalali.datetime.datetime.tzinfo" title="pyjalali.datetime.datetime.tzinfo"><tt class="xref py py-attr docutils literal"><span class="pre">tzinfo</span></tt></a> None.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.datetime.tzinfo">
+<tt class="descname">tzinfo</tt><em class="property"> = None</em><a class="headerlink" href="#pyjalali.datetime.datetime.tzinfo" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.datetime.tzname">
+<tt class="descname">tzname</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.tzname" title="Permalink to this definition">¶</a></dt>
+<dd><p>If tzinfo is None, returns None, else returns
+<tt class="docutils literal"><span class="pre">self.tzinfo.tzname(self)</span></tt>, raises an exception if the latter
+doesn&#8217;t return None or a string object.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyjalali.datetime.datetime.utcfromtimestamp">
+<em class="property">classmethod </em><tt class="descname">utcfromtimestamp</tt><big>(</big><em>ts</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.utcfromtimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the UTC <a class="reference internal" href="#pyjalali.datetime.datetime" title="pyjalali.datetime.datetime"><tt class="xref py py-class docutils literal"><span class="pre">datetime</span></tt></a> corresponding to the POSIX
+timestamp, with <a class="reference internal" href="#pyjalali.datetime.datetime.tzinfo" title="pyjalali.datetime.datetime.tzinfo"><tt class="xref py py-attr docutils literal"><span class="pre">tzinfo</span></tt></a> None.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyjalali.datetime.datetime.utcnow">
+<em class="property">classmethod </em><tt class="descname">utcnow</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.utcnow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current UTC date and time, with <a class="reference internal" href="#pyjalali.datetime.datetime.tzinfo" title="pyjalali.datetime.datetime.tzinfo"><tt class="xref py py-attr docutils literal"><span class="pre">tzinfo</span></tt></a> None.
+This is like <a class="reference internal" href="#pyjalali.datetime.datetime.now" title="pyjalali.datetime.datetime.now"><tt class="xref py py-meth docutils literal"><span class="pre">now()</span></tt></a>, but returns the current UTC date and time,
+as a naive <a class="reference internal" href="#pyjalali.datetime.datetime" title="pyjalali.datetime.datetime"><tt class="xref py py-class docutils literal"><span class="pre">datetime</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.datetime.utcoffset">
+<tt class="descname">utcoffset</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.utcoffset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Timezone offset.  If <a class="reference internal" href="#pyjalali.datetime.datetime.tzinfo" title="pyjalali.datetime.datetime.tzinfo"><tt class="xref py py-attr docutils literal"><span class="pre">tzinfo</span></tt></a> is None, returns None, else
+returns <tt class="docutils literal"><span class="pre">self.tzinfo.utcoffset(self)</span></tt>, and raises an exception if
+the latter doesn&#8217;t return None, or a <a class="reference external" href="http://docs.python.org/library/datetime.html#datetime.timedelta" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">datetime.timedelta</span></tt></a>
+object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pytz</span> <span class="kn">import</span> <span class="n">timezone</span><span class="p">,</span><span class="n">AmbiguousTimeError</span><span class="p">,</span><span class="n">NonExistentTimeError</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">timezone</span><span class="p">(</span><span class="s">&#39;Asia/Tehran&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">utcoffset</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1390</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">datetime.timedelta(0, 12600)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">timezone</span><span class="p">(</span><span class="s">&#39;Asia/Tehran&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">utcoffset</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1390</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
+<span class="go">datetime.timedelta(0, 16200)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ambiguous</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">1392</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">timezone</span><span class="p">(</span><span class="s">&#39;Asia/Tehran&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">utcoffset</span><span class="p">(</span><span class="n">ambiguous</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="n">AmbiguousTimeError</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="s">&quot;caught&quot;</span>
+<span class="go">caught</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">non_existent</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">1390</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">timezone</span><span class="p">(</span><span class="s">&#39;Asia/Tehran&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">utcoffset</span><span class="p">(</span><span class="n">non_existent</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="n">NonExistentTimeError</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="s">&quot;caught&quot;</span>
+<span class="go">caught</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.datetime.utctimetuple">
+<tt class="descname">utctimetuple</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.utctimetuple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyjalali.datetime.datetime.weekday">
+<tt class="descname">weekday</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime.weekday" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the day of the week as an integer, where Shanbeh is 0.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.datetime.datetime.year">
+<tt class="descname">year</tt><a class="headerlink" href="#pyjalali.datetime.datetime.year" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.datetime.j2g">
+<tt class="descclassname">pyjalali.datetime.</tt><tt class="descname">j2g</tt><big>(</big><em>date_or_datetime</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.j2g" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#pyjalali.datetime.gregorian_from_jalali" title="pyjalali.datetime.gregorian_from_jalali"><tt class="xref py py-func docutils literal"><span class="pre">gregorian_from_jalali()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.datetime.g2j">
+<tt class="descclassname">pyjalali.datetime.</tt><tt class="descname">g2j</tt><big>(</big><em>date_or_datetime</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.g2j" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#pyjalali.datetime.jalali_from_gregorian" title="pyjalali.datetime.jalali_from_gregorian"><tt class="xref py py-func docutils literal"><span class="pre">jalali_from_gregorian()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.datetime.now">
+<tt class="descclassname">pyjalali.datetime.</tt><tt class="descname">now</tt><big>(</big><em>timezone=None</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.now" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#pyjalali.datetime.datetime.now" title="pyjalali.datetime.datetime.now"><tt class="xref py py-meth docutils literal"><span class="pre">datetime.now()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.datetime.utcnow">
+<tt class="descclassname">pyjalali.datetime.</tt><tt class="descname">utcnow</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.datetime.utcnow" title="Permalink to this definition">¶</a></dt>
+<dd><p>See <a class="reference internal" href="#pyjalali.datetime.datetime.utcnow" title="pyjalali.datetime.datetime.utcnow"><tt class="xref py py-meth docutils literal"><span class="pre">datetime.utcnow()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.datetime.jalali_from_gregorian">
+<tt class="descclassname">pyjalali.datetime.</tt><tt class="descname">jalali_from_gregorian</tt><big>(</big><em>date_or_datetime</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.jalali_from_gregorian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make Jalali <a class="reference internal" href="#pyjalali.datetime.datetime" title="pyjalali.datetime.datetime"><tt class="xref py py-class docutils literal"><span class="pre">datetime</span></tt></a> from Gregorian
+<a class="reference external" href="http://docs.python.org/library/datetime.html#datetime.datetime" title="(in Python v2.7)"><tt class="docutils literal"><span class="pre">datetime.datetime</span></tt></a> or make Jalali <a class="reference internal" href="#pyjalali.datetime.date" title="pyjalali.datetime.date"><tt class="xref py py-class docutils literal"><span class="pre">date</span></tt></a> from
+Gregorian <a class="reference external" href="http://docs.python.org/library/datetime.html#datetime.date" title="(in Python v2.7)"><tt class="docutils literal"><span class="pre">datetime.date</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span> <span class="k">as</span> <span class="n">_dtm</span><span class="p">,</span> <span class="n">date</span> <span class="k">as</span> <span class="n">_dt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">jalali_from_gregorian</span><span class="p">(</span><span class="n">_dtm</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">703498</span><span class="p">))</span>
+<span class="go">pyjalali.datetime.datetime(1392, 9, 2, 23, 46, 0, 703498)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">jalali_from_gregorian</span><span class="p">(</span><span class="n">_dtm</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">292</span><span class="p">))</span>
+<span class="go">pyjalali.datetime.datetime(1392, 1, 24, 21, 10, 2, 292)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">jalali_from_gregorian</span><span class="p">(</span><span class="n">_dtm</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="go">pyjalali.datetime.datetime(1392, 1, 2, 0, 12, 0, 0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">jalali_from_gregorian</span><span class="p">(</span><span class="n">_dt</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">21</span><span class="p">))</span>
+<span class="go">pyjalali.datetime.date(1392, 1, 1)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.datetime.gregorian_from_jalali">
+<tt class="descclassname">pyjalali.datetime.</tt><tt class="descname">gregorian_from_jalali</tt><big>(</big><em>date_or_datetime</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.gregorian_from_jalali" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make Gregorian <a class="reference external" href="http://docs.python.org/library/datetime.html#datetime.datetime" title="(in Python v2.7)"><tt class="docutils literal"><span class="pre">datetime.datetime</span></tt></a> from Jalali
+<a class="reference internal" href="#pyjalali.datetime.datetime" title="pyjalali.datetime.datetime"><tt class="xref py py-class docutils literal"><span class="pre">datetime</span></tt></a> or make Gregorian <a class="reference external" href="http://docs.python.org/library/datetime.html#datetime.date" title="(in Python v2.7)"><tt class="docutils literal"><span class="pre">datetime.date</span></tt></a> from
+Jalali <a class="reference internal" href="#pyjalali.datetime.date" title="pyjalali.datetime.date"><tt class="xref py py-class docutils literal"><span class="pre">date</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">gregorian_from_jalali</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1392</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">datetime.datetime(2013, 11, 23, 23, 10, 2)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gregorian_from_jalali</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1392</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
+<span class="go">datetime.datetime(2013, 9, 21, 22, 30)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gregorian_from_jalali</span><span class="p">(</span><span class="n">date</span><span class="p">(</span><span class="mi">1392</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
+<span class="go">datetime.date(2013, 9, 21)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.datetime.datetime_from_ts">
+<tt class="descclassname">pyjalali.datetime.</tt><tt class="descname">datetime_from_ts</tt><big>(</big><em>ts</em>, <em>local</em>, <em>tz=None</em><big>)</big><a class="headerlink" href="#pyjalali.datetime.datetime_from_ts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <a class="reference internal" href="#pyjalali.datetime.datetime" title="pyjalali.datetime.datetime"><tt class="xref py py-class docutils literal"><span class="pre">datetime</span></tt></a> from provided timestamp <cite>ts</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ts</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; timestamp</li>
+<li><strong>local</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; if True, return local date else return date in UTC</li>
+<li><strong>tz</strong> (<a class="reference external" href="http://docs.python.org/library/datetime.html#datetime.tzinfo" title="(in Python v2.7)"><em>datetime.tzinfo</em></a>) &#8211; if provided, make timezone aware datetime
+discarding effect of local parameter</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-pyjalali.jalali">
+<span id="jalali-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">jalali</span></tt> Module<a class="headerlink" href="#module-pyjalali.jalali" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pyjalali-jalali">
+<h3>pyjalali.jalali<a class="headerlink" href="#pyjalali-jalali" title="Permalink to this headline">¶</a></h3>
+<p>libjalali custom functions.</p>
+<dl class="function">
+<dt id="pyjalali.jalali.jalali_create_date_from_days">
+<tt class="descclassname">pyjalali.jalali.</tt><tt class="descname">jalali_create_date_from_days</tt><big>(</big><em>jtm</em>, <em>silent=False</em><big>)</big><a class="headerlink" href="#pyjalali.jalali.jalali_create_date_from_days" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alter provided <a class="reference internal" href="#pyjalali.types.struct_jtm" title="pyjalali.types.struct_jtm"><tt class="xref py py-class docutils literal"><span class="pre">types.struct_jtm</span></tt></a> object&#8217;s fields
+<a class="reference internal" href="#pyjalali.types.struct_jtm.tm_mon" title="pyjalali.types.struct_jtm.tm_mon"><tt class="xref py py-attr docutils literal"><span class="pre">tm_mon</span></tt></a> and <a class="reference internal" href="#pyjalali.types.struct_jtm.tm_mday" title="pyjalali.types.struct_jtm.tm_mday"><tt class="xref py py-attr docutils literal"><span class="pre">tm_mday</span></tt></a>
+based on its <a class="reference internal" href="#pyjalali.types.struct_jtm.tm_yday" title="pyjalali.types.struct_jtm.tm_yday"><tt class="xref py py-attr docutils literal"><span class="pre">tm_yday</span></tt></a> field.  In case of
+failure raise <cite>ValueError</cite> exception if silent is not True.</p>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<tt class="descclassname">pyjalali.jalali.</tt><tt class="descname">jalali_create_date_from_days</tt><big>(</big><em>jtm</em>, <em>silent=False</em><big>)</big></dt>
+<dd><p>Alter provided <a class="reference internal" href="#pyjalali.types.struct_jtm" title="pyjalali.types.struct_jtm"><tt class="xref py py-class docutils literal"><span class="pre">types.struct_jtm</span></tt></a> object&#8217;s fields
+<a class="reference internal" href="#pyjalali.types.struct_jtm.tm_mon" title="pyjalali.types.struct_jtm.tm_mon"><tt class="xref py py-attr docutils literal"><span class="pre">tm_mon</span></tt></a> and <a class="reference internal" href="#pyjalali.types.struct_jtm.tm_mday" title="pyjalali.types.struct_jtm.tm_mday"><tt class="xref py py-attr docutils literal"><span class="pre">tm_mday</span></tt></a>
+based on its <a class="reference internal" href="#pyjalali.types.struct_jtm.tm_yday" title="pyjalali.types.struct_jtm.tm_yday"><tt class="xref py py-attr docutils literal"><span class="pre">tm_yday</span></tt></a> field.  In case of
+failure raise <cite>ValueError</cite> exception if silent is not True.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.jalali.jalali_create_secs_from_time">
+<tt class="descclassname">pyjalali.jalali.</tt><tt class="descname">jalali_create_secs_from_time</tt><big>(</big><em>ab_jtm</em><big>)</big><a class="headerlink" href="#pyjalali.jalali.jalali_create_secs_from_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return number of seconds elapsed since UTC Epoch based on supplied
+<a class="reference internal" href="#pyjalali.types.struct_ab_jtm" title="pyjalali.types.struct_ab_jtm"><tt class="xref py py-class docutils literal"><span class="pre">types.struct_ab_jtm</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.jalali.jalali_create_time_from_secs">
+<tt class="descclassname">pyjalali.jalali.</tt><tt class="descname">jalali_create_time_from_secs</tt><big>(</big><em>timestamp</em><big>)</big><a class="headerlink" href="#pyjalali.jalali.jalali_create_time_from_secs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <a class="reference internal" href="#pyjalali.types.struct_ab_jtm" title="pyjalali.types.struct_ab_jtm"><tt class="xref py py-class docutils literal"><span class="pre">types.struct_ab_jtm</span></tt></a> from given timestamp.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.jalali.jalali_get_date">
+<tt class="descclassname">pyjalali.jalali.</tt><tt class="descname">jalali_get_date</tt><big>(</big><em>days</em><big>)</big><a class="headerlink" href="#pyjalali.jalali.jalali_get_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates Jalali date based on given number of days since UTC
+Epoch and return result as <a class="reference internal" href="#pyjalali.types.struct_jtm" title="pyjalali.types.struct_jtm"><tt class="xref py py-class docutils literal"><span class="pre">types.struct_jtm</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.jalali.jalali_get_diff">
+<tt class="descclassname">pyjalali.jalali.</tt><tt class="descname">jalali_get_diff</tt><big>(</big><em>jtm</em>, <em>silent=False</em><big>)</big><a class="headerlink" href="#pyjalali.jalali.jalali_get_diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return number of days passed since UTC Epoch based on given
+<a class="reference internal" href="#pyjalali.types.struct_jtm" title="pyjalali.types.struct_jtm"><tt class="xref py py-class docutils literal"><span class="pre">types.struct_jtm</span></tt></a>.  In case of failure raise <cite>ValueError</cite>
+exception if silent is not True.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.jalali.jalali_get_jyear_info">
+<tt class="descclassname">pyjalali.jalali.</tt><tt class="descname">jalali_get_jyear_info</tt><big>(</big><em>jyinfo</em><big>)</big><a class="headerlink" href="#pyjalali.jalali.jalali_get_jyear_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill given <a class="reference internal" href="#pyjalali.types.struct_jyinfo" title="pyjalali.types.struct_jyinfo"><tt class="xref py py-class docutils literal"><span class="pre">types.struct_jyinfo</span></tt></a> object&#8217;s fields with year
+information based on given year by <a class="reference internal" href="#pyjalali.types.struct_jyinfo.y" title="pyjalali.types.struct_jyinfo.y"><tt class="xref py py-attr docutils literal"><span class="pre">types.struct_jyinfo.y</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.jalali.jalali_is_jleap">
+<tt class="descclassname">pyjalali.jalali.</tt><tt class="descname">jalali_is_jleap</tt><big>(</big><em>year</em><big>)</big><a class="headerlink" href="#pyjalali.jalali.jalali_is_jleap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if given year is leap year else False.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.jalali.jalali_update">
+<tt class="descclassname">pyjalali.jalali.</tt><tt class="descname">jalali_update</tt><big>(</big><em>jtm</em><big>)</big><a class="headerlink" href="#pyjalali.jalali.jalali_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates given <a class="reference internal" href="#pyjalali.types.struct_jtm" title="pyjalali.types.struct_jtm"><tt class="xref py py-class docutils literal"><span class="pre">types.struct_jtm</span></tt></a> object&#8217;s fields based on its
+<a class="reference internal" href="#pyjalali.types.struct_jtm.tm_year" title="pyjalali.types.struct_jtm.tm_year"><tt class="xref py py-attr docutils literal"><span class="pre">tm_year</span></tt></a>, <a class="reference internal" href="#pyjalali.types.struct_jtm.tm_mon" title="pyjalali.types.struct_jtm.tm_mon"><tt class="xref py py-attr docutils literal"><span class="pre">tm_mon</span></tt></a> and
+<a class="reference internal" href="#pyjalali.types.struct_jtm.tm_mday" title="pyjalali.types.struct_jtm.tm_mday"><tt class="xref py py-attr docutils literal"><span class="pre">tm_mday</span></tt></a>.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-pyjalali.jstr">
+<span id="jstr-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">jstr</span></tt> Module<a class="headerlink" href="#module-pyjalali.jstr" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pyjalali-jstr">
+<h3>pyjalali.jstr<a class="headerlink" href="#pyjalali-jstr" title="Permalink to this headline">¶</a></h3>
+<p>String formatting and deformatting</p>
+<dl class="function">
+<dt id="pyjalali.jstr.jstrftime">
+<tt class="descclassname">pyjalali.jstr.</tt><tt class="descname">jstrftime</tt><big>(</big><em>format</em>, <em>jtm</em><big>)</big><a class="headerlink" href="#pyjalali.jstr.jstrftime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return string representation of given time according to format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>format</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; format of date representation</li>
+<li><strong>jtm</strong> (<a class="reference internal" href="#pyjalali.types.struct_jtm" title="pyjalali.types.struct_jtm"><em>pyjalali.types.struct_jtm</em></a>) &#8211; broken-down jalali time</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.jstr.jstrptime">
+<tt class="descclassname">pyjalali.jstr.</tt><tt class="descname">jstrptime</tt><big>(</big><em>format</em>, <em>date_str</em><big>)</big><a class="headerlink" href="#pyjalali.jstr.jstrptime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <a class="reference internal" href="#pyjalali.types.struct_jtm" title="pyjalali.types.struct_jtm"><tt class="xref py py-class docutils literal"><span class="pre">types.struct_jtm</span></tt></a> from date_str according to format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>format</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; format of string representation</li>
+<li><strong>date_str</strong> (<a class="reference external" href="http://docs.python.org/library/string.html#string" title="(in Python v2.7)"><em>string</em></a>) &#8211; string representation</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-pyjalali.jtime">
+<span id="jtime-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">jtime</span></tt> Module<a class="headerlink" href="#module-pyjalali.jtime" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pyjalali-time">
+<h3>pyjalali.time<a class="headerlink" href="#pyjalali-time" title="Permalink to this headline">¶</a></h3>
+<p>Time functions.</p>
+<p>Functions <cite>jasctime</cite>, <cite>jctime</cite>, <cite>jgmtime</cite> and <cite>jlocaltime</cite> are forwarded
+to reentrant backends.</p>
+<dl class="function">
+<dt id="pyjalali.jtime.jasctime">
+<tt class="descclassname">pyjalali.jtime.</tt><tt class="descname">jasctime</tt><big>(</big><em>jtm</em>, <em>retain_nl=False</em><big>)</big><a class="headerlink" href="#pyjalali.jtime.jasctime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return string representation of given time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>jtm</strong> (<a class="reference internal" href="#pyjalali.types.struct_jtm" title="pyjalali.types.struct_jtm"><em>pyjalali.types.struct_jtm</em></a>) &#8211; </li>
+<li><strong>retain_nl</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; keep trailing newline character</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.jtime.jctime">
+<tt class="descclassname">pyjalali.jtime.</tt><tt class="descname">jctime</tt><big>(</big><em>timestamp</em>, <em>retain_nl=False</em><big>)</big><a class="headerlink" href="#pyjalali.jtime.jctime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return string representation of time from timestamp.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>timestamp</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; </li>
+<li><strong>retain_nl</strong> (<a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) &#8211; keep trailing newline character</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.jtime.jgmtime">
+<tt class="descclassname">pyjalali.jtime.</tt><tt class="descname">jgmtime</tt><big>(</big><em>timestamp</em><big>)</big><a class="headerlink" href="#pyjalali.jtime.jgmtime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <a class="reference internal" href="#pyjalali.types.struct_jtm" title="pyjalali.types.struct_jtm"><tt class="xref py py-class docutils literal"><span class="pre">types.struct_jtm</span></tt></a> from <cite>timestamp</cite> expressed in UTC.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.jtime.jlocaltime">
+<tt class="descclassname">pyjalali.jtime.</tt><tt class="descname">jlocaltime</tt><big>(</big><em>timestamp</em><big>)</big><a class="headerlink" href="#pyjalali.jtime.jlocaltime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make <a class="reference internal" href="#pyjalali.types.struct_jtm" title="pyjalali.types.struct_jtm"><tt class="xref py py-class docutils literal"><span class="pre">types.struct_jtm</span></tt></a> from <cite>timestamp</cite> according to local
+zone and dst settings.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyjalali.jtime.jmktime">
+<tt class="descclassname">pyjalali.jtime.</tt><tt class="descname">jmktime</tt><big>(</big><em>jtm</em><big>)</big><a class="headerlink" href="#pyjalali.jtime.jmktime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return timestamp from provided time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>jtm</strong> (<a class="reference internal" href="#pyjalali.types.struct_jtm" title="pyjalali.types.struct_jtm"><em>pyjalali.types.struct_jtm</em></a>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Inconsistenices with POSIX <tt class="xref c c-func docutils literal"><span class="pre">mktime()</span></tt>:</p>
+<ol class="last arabic simple">
+<li>it doesn&#8217;t normalize input.</li>
+<li>it needs glibc defined timezone information.</li>
+<li>it needs <a class="reference internal" href="#pyjalali.types.struct_jtm.tm_yday" title="pyjalali.types.struct_jtm.tm_yday"><tt class="xref py py-attr docutils literal"><span class="pre">types.struct_jtm.tm_yday</span></tt></a> provided.</li>
+<li>it reads zone information from provided time structure instead of
+local timezone.</li>
+</ol>
+</div>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-pyjalali.types">
+<span id="types-module"></span><h2><a class="reference external" href="http://docs.python.org/library/types.html#types" title="(in Python v2.7)"><tt class="xref py py-mod docutils literal"><span class="pre">types</span></tt></a> Module<a class="headerlink" href="#module-pyjalali.types" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pyjalali-types">
+<h3>pyjalali.types<a class="headerlink" href="#pyjalali-types" title="Permalink to this headline">¶</a></h3>
+<p>Core C types for libjalali binding.</p>
+<dl class="function">
+<dt id="pyjalali.types.jtm_to_struct_time">
+<tt class="descclassname">pyjalali.types.</tt><tt class="descname">jtm_to_struct_time</tt><big>(</big><em>src_jtm</em><big>)</big><a class="headerlink" href="#pyjalali.types.jtm_to_struct_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make <a class="reference external" href="http://docs.python.org/library/time.html#time.struct_time" title="(in Python v2.7)"><tt class="xref py py-class docutils literal"><span class="pre">time.struct_time</span></tt></a> from broken-down jalali time
+structure</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyjalali.types.struct_ab_jtm">
+<em class="property">class </em><tt class="descclassname">pyjalali.types.</tt><tt class="descname">struct_ab_jtm</tt><a class="headerlink" href="#pyjalali.types.struct_ab_jtm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time passed since UTC Epoch</p>
+<dl class="attribute">
+<dt id="pyjalali.types.struct_ab_jtm.ab_days">
+<tt class="descname">ab_days</tt><a class="headerlink" href="#pyjalali.types.struct_ab_jtm.ab_days" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_ab_jtm.ab_hour">
+<tt class="descname">ab_hour</tt><a class="headerlink" href="#pyjalali.types.struct_ab_jtm.ab_hour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_ab_jtm.ab_min">
+<tt class="descname">ab_min</tt><a class="headerlink" href="#pyjalali.types.struct_ab_jtm.ab_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_ab_jtm.ab_sec">
+<tt class="descname">ab_sec</tt><a class="headerlink" href="#pyjalali.types.struct_ab_jtm.ab_sec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyjalali.types.struct_jtm">
+<em class="property">class </em><tt class="descclassname">pyjalali.types.</tt><tt class="descname">struct_jtm</tt><a class="headerlink" href="#pyjalali.types.struct_jtm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Broken-down jalali date and time</p>
+<dl class="method">
+<dt id="pyjalali.types.struct_jtm.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyjalali.types.struct_jtm.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>New instance of this object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jtm.tm_gmtoff">
+<tt class="descname">tm_gmtoff</tt><a class="headerlink" href="#pyjalali.types.struct_jtm.tm_gmtoff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jtm.tm_hour">
+<tt class="descname">tm_hour</tt><a class="headerlink" href="#pyjalali.types.struct_jtm.tm_hour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jtm.tm_isdst">
+<tt class="descname">tm_isdst</tt><a class="headerlink" href="#pyjalali.types.struct_jtm.tm_isdst" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jtm.tm_mday">
+<tt class="descname">tm_mday</tt><a class="headerlink" href="#pyjalali.types.struct_jtm.tm_mday" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jtm.tm_min">
+<tt class="descname">tm_min</tt><a class="headerlink" href="#pyjalali.types.struct_jtm.tm_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jtm.tm_mon">
+<tt class="descname">tm_mon</tt><a class="headerlink" href="#pyjalali.types.struct_jtm.tm_mon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jtm.tm_sec">
+<tt class="descname">tm_sec</tt><a class="headerlink" href="#pyjalali.types.struct_jtm.tm_sec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jtm.tm_wday">
+<tt class="descname">tm_wday</tt><a class="headerlink" href="#pyjalali.types.struct_jtm.tm_wday" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jtm.tm_yday">
+<tt class="descname">tm_yday</tt><a class="headerlink" href="#pyjalali.types.struct_jtm.tm_yday" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jtm.tm_year">
+<tt class="descname">tm_year</tt><a class="headerlink" href="#pyjalali.types.struct_jtm.tm_year" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jtm.tm_zone">
+<tt class="descname">tm_zone</tt><a class="headerlink" href="#pyjalali.types.struct_jtm.tm_zone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyjalali.types.struct_jyinfo">
+<em class="property">class </em><tt class="descclassname">pyjalali.types.</tt><tt class="descname">struct_jyinfo</tt><a class="headerlink" href="#pyjalali.types.struct_jyinfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Year specific information</p>
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jyinfo.apl">
+<tt class="descname">apl</tt><a class="headerlink" href="#pyjalali.types.struct_jyinfo.apl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jyinfo.lf">
+<tt class="descname">lf</tt><a class="headerlink" href="#pyjalali.types.struct_jyinfo.lf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jyinfo.p">
+<tt class="descname">p</tt><a class="headerlink" href="#pyjalali.types.struct_jyinfo.p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jyinfo.pl">
+<tt class="descname">pl</tt><a class="headerlink" href="#pyjalali.types.struct_jyinfo.pl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jyinfo.r">
+<tt class="descname">r</tt><a class="headerlink" href="#pyjalali.types.struct_jyinfo.r" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jyinfo.rl">
+<tt class="descname">rl</tt><a class="headerlink" href="#pyjalali.types.struct_jyinfo.rl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.struct_jyinfo.y">
+<tt class="descname">y</tt><a class="headerlink" href="#pyjalali.types.struct_jyinfo.y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Structure/Union member</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyjalali.types.time_t_p">
+<tt class="descclassname">pyjalali.types.</tt><tt class="descname">time_t_p</tt><a class="headerlink" href="#pyjalali.types.time_t_p" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">LP_c_int</span></tt></p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pyjalali Package</a><ul>
+<li><a class="reference internal" href="#id1"><tt class="docutils literal"><span class="pre">pyjalali</span></tt> Package</a><ul>
+<li><a class="reference internal" href="#pyjalali">pyjalali</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pyjalali.datetime"><tt class="docutils literal"><span class="pre">datetime</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#pyjalali-datetime">pyjalali.datetime</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pyjalali.jalali"><tt class="docutils literal"><span class="pre">jalali</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#pyjalali-jalali">pyjalali.jalali</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pyjalali.jstr"><tt class="docutils literal"><span class="pre">jstr</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#pyjalali-jstr">pyjalali.jstr</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pyjalali.jtime"><tt class="docutils literal"><span class="pre">jtime</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#pyjalali-time">pyjalali.time</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-pyjalali.types"><tt class="docutils literal"><span class="pre">types</span></tt> Module</a><ul>
+<li><a class="reference internal" href="#pyjalali-types">pyjalali.types</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="intro.html"
+                        title="previous chapter">Introduction</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/pyjalali.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction"
+             >previous</a> |</li>
+        <li><a href="index.html">pyjalali 0.5.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, reith.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

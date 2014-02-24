@@ -50,3 +50,4 @@ test_kit/sec_converter
 docs/genpages.sh
 sources/compile
 *.pyc
+*.swp

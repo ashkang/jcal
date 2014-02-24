@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; pyjalali 0.5.0.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.5.0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyjalali 0.5.0.2 documentation" href="index.html" />
+    <link rel="next" title="pyjalali Package" href="pyjalali.html" />
+    <link rel="prev" title="Welcome to pyjalali’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pyjalali.html" title="pyjalali Package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to pyjalali’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyjalali 0.5.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>This page introduce pyjalali to you.  If you want rather head into class and
+methods&#8217; documentation see <a class="reference internal" href="py-modindex.html"><em>Module Index</em></a>.</p>
+<div class="section" id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
+<p>In jcal source directory navigate to subdirectory <em>sources</em> and run <tt class="docutils literal"><span class="pre">python</span>
+<span class="pre">setup.py</span> <span class="pre">install</span></tt>.  You must have libjalali installed before.</p>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>You can use most functionalities of standard datetime module by
+<a class="reference internal" href="pyjalali.html#module-pyjalali.datetime" title="pyjalali.datetime"><tt class="xref py py-mod docutils literal"><span class="pre">pyjalali.datetime</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyjalali.datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="gp">... </span><span class="n">pyjalali</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1392</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">772116</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">-</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">1367</span><span class="p">,</span> <span class="mi">11</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">85313</span><span class="p">,</span> <span class="mi">805141</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There is also <a class="reference internal" href="pyjalali.html#pyjalali.datetime.date" title="pyjalali.datetime.date"><tt class="xref py py-class docutils literal"><span class="pre">pyjalali.datetime.date</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyjalali.datetime</span> <span class="kn">import</span> <span class="n">date</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+<span class="gp">... </span><span class="s">&#39;1392-12-01&#39;</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>You can make timezone aware datetimes:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pytz</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">now_in_teh</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">timezone</span><span class="p">(</span><span class="s">&#39;Asia/Tehran&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># see current time in another area</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">in_amsterdam</span> <span class="o">=</span> <span class="n">now_in_teh</span><span class="o">.</span><span class="n">astimezone</span><span class="p">(</span><span class="n">timezone</span><span class="p">(</span><span class="s">&#39;Europe/Amsterdam&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">now_in_teh</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="n">in_amsterdam</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="gp">... </span><span class="mi">10</span><span class="p">:</span><span class="mi">42</span><span class="p">:</span><span class="mf">03.233978</span> <span class="mi">08</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mf">03.233978</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">in_amsterdam</span> <span class="o">==</span> <span class="n">now_in_teh</span>
+<span class="gp">... </span><span class="bp">True</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>To convert between Hijri Shamsi and Gregorian calendars, you can use functions
+<a class="reference internal" href="pyjalali.html#pyjalali.datetime.jalali_from_gregorian" title="pyjalali.datetime.jalali_from_gregorian"><tt class="xref py py-func docutils literal"><span class="pre">jalali_from_gregorian()</span></tt></a> and
+<a class="reference internal" href="pyjalali.html#pyjalali.datetime.gregorian_from_jalali" title="pyjalali.datetime.gregorian_from_jalali"><tt class="xref py py-func docutils literal"><span class="pre">gregorian_from_jalali()</span></tt></a> (or respectively
+<a class="reference internal" href="pyjalali.html#pyjalali.datetime.g2j" title="pyjalali.datetime.g2j"><tt class="xref py py-func docutils literal"><span class="pre">g2j()</span></tt></a> and <a class="reference internal" href="pyjalali.html#pyjalali.datetime.j2g" title="pyjalali.datetime.j2g"><tt class="xref py py-func docutils literal"><span class="pre">j2g()</span></tt></a> for short).  Also you can use
+<a class="reference internal" href="pyjalali.html#pyjalali.datetime.datetime.gregorian" title="pyjalali.datetime.datetime.gregorian"><tt class="xref py py-attr docutils literal"><span class="pre">datetime.datetime.gregorian</span></tt></a> to get equal datetime in Gregorian
+calendar.  This will be cached for future uses:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span> <span class="k">as</span> <span class="n">_std_datetime</span><span class="p">,</span> <span class="n">date</span> <span class="k">as</span> <span class="n">_std_date</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyjalali.datetime</span> <span class="kn">import</span> <span class="n">jalali_from_gregorian</span><span class="p">,</span> <span class="n">gregorian_from_jalali</span><span class="p">,</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">date</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">jd</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">1389</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gd</span> <span class="o">=</span> <span class="n">jd</span><span class="o">.</span><span class="n">gregorian</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">gd</span><span class="p">,</span> <span class="n">jd</span>
+<span class="gp">... </span><span class="mi">2011</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">30</span> <span class="mi">18</span><span class="p">:</span><span class="mi">23</span><span class="p">:</span><span class="mi">10</span>  <span class="mi">1389</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">10</span> <span class="mi">18</span><span class="p">:</span><span class="mi">23</span><span class="p">:</span><span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gregorian_from_jalali</span><span class="p">(</span><span class="n">jd</span><span class="p">)</span> <span class="o">==</span> <span class="n">gd</span>
+<span class="gp">... </span><span class="bp">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">jalali_from_gregorian</span><span class="p">(</span><span class="n">_std_date</span><span class="o">.</span><span class="n">today</span><span class="p">())</span>
+<span class="gp">... </span><span class="n">pyjalali</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">1392</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note unlike many Hijri Shamsi implementations, libjalali doesn&#8217;t work by
+converting dates to Gregorian and forwarding operations to Gregorian date.
+It&#8217;s a Hijri Shamsi calendar implementation from base.  The only place
+pyjalali converts Hijri Shamsi date to Gregorian internally, is to work with
+<a class="reference external" href="http://pypi.python.org/pypi/pytz">pytz</a> package in timezone aware datetimes.  So keep in mind libjalali
+doesn&#8217;t offer a general converter for dates before UNIX Epoch and pyjalali
+converters will fail for them.</p>
+<p>If you need to invoke libjalali library functions directly, you can use wrapper
+functions.  <a class="reference internal" href="pyjalali.html#module-pyjalali.jtime" title="pyjalali.jtime"><tt class="xref py py-mod docutils literal"><span class="pre">jtime</span></tt></a> contains libjalali time functions.  Functions used
+internally by libjalali resides in <a class="reference internal" href="pyjalali.html#module-pyjalali.jalali" title="pyjalali.jalali"><tt class="xref py py-mod docutils literal"><span class="pre">jalali</span></tt></a>.  <a class="reference internal" href="pyjalali.html#module-pyjalali.jstr" title="pyjalali.jstr"><tt class="xref py py-mod docutils literal"><span class="pre">jstr</span></tt></a> contains
+functions for converting between dates and string representation.  Core
+libjalali data structures are simulated in <a class="reference internal" href="pyjalali.html#module-pyjalali.types" title="pyjalali.types"><tt class="xref py py-mod docutils literal"><span class="pre">types</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyjalali.jtime</span> <span class="kn">import</span> <span class="n">jlocaltime</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">jlocaltime</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">()))</span>
+<span class="gp">... </span><span class="mi">1392</span><span class="o">/</span><span class="mi">11</span><span class="o">/</span><span class="mi">2</span> <span class="mi">11</span><span class="o">-</span><span class="mi">29</span><span class="o">-</span><span class="mi">11</span> <span class="o">+</span><span class="mi">12600</span> <span class="p">(</span><span class="n">IRST</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<dl class="last docutils">
+<dt>You can use functions <a class="reference internal" href="pyjalali.html#pyjalali.datetime.now" title="pyjalali.datetime.now"><tt class="xref py py-func docutils literal"><span class="pre">datetime.now()</span></tt></a> and <a class="reference internal" href="pyjalali.html#pyjalali.datetime.utcnow" title="pyjalali.datetime.utcnow"><tt class="xref py py-func docutils literal"><span class="pre">datetime.utcnow()</span></tt></a> in module level:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyjalali.datetime</span> <span class="kn">import</span> <span class="n">utcnow</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">utcnow</span><span class="p">()</span>
+<span class="gp">... </span><span class="n">pyjalali</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1392</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">651499</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="version">
+<h2>Version<a class="headerlink" href="#version" title="Permalink to this headline">¶</a></h2>
+<p>pyjalali is a very thin wrapper around libjalali.  Package&#8217;s version you see
+in <tt class="xref py py-attr docutils literal"><span class="pre">pyjalali.__init__.__version__</span></tt> cosists of 3 numbers describing
+version of libjalali which pyjalali supposed to work with it and another
+number that is revision of pyjalali itself.  So <tt class="docutils literal"><span class="pre">0.6.11.92</span></tt> would expected
+to work with libjalali version <tt class="docutils literal"><span class="pre">0.6.11</span></tt>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#install">Install</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#version">Version</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to pyjalali&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyjalali.html"
+                        title="next chapter">pyjalali Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/intro.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pyjalali.html" title="pyjalali Package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to pyjalali’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">pyjalali 0.5.0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, reith.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
