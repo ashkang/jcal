@@ -28,6 +28,19 @@
 #include "jalali.h"
 #include "jconfig.h"
 
+/*
+ * Assuming *factor* numbers of *lo* make one *hi*, cluster *lo*s and change
+ * *hi* appropriately. In the end:
+ * - new lo will be in [0, factor)
+ * - new hi will be hi + lo / factor
+ */
+#define RECLUSTER(hi, lo, factor) \
+    if (lo < 0 || lo >= (factor)) {\
+        hi += lo / (factor);\
+        lo = lo % (factor);\
+        if (lo < 0) { lo += (factor); hi--; }\
+    }
+
 const int cycle_patterns[] = { J_PT0, J_PT1, J_PT2, J_PT3, INT_MAX };
 const int leaps[] = { J_L0, J_L1, J_L2, J_L3, INT_MAX };
 
@@ -187,8 +200,8 @@ int jalali_create_days_from_date(struct jtm* j)
         return -1;
 
     p = accumulated_jalali_month_len[j->tm_mon];
-    p+= j->tm_mday - 1;
-    j->tm_yday = p;
+    p += j->tm_mday;
+    j->tm_yday = p - 1 /* zero based offset */;
 
     return 0;
 }
@@ -339,15 +352,55 @@ int jalali_get_diff(const struct jtm* j)
 }
 
 /*
+ * Number of days in provided year and month
+ */
+static int jalali_year_month_days(int year, int month) {
+    int dim = jalali_month_len[month];
+    if (jalali_is_jleap(year) && month == 11)
+        dim += 1;
+    return dim;
+}
+
+/*
  * Updates a jalali date struct fields based on tm_year, tm_mon and tm_mday
  */
 void jalali_update(struct jtm* jtm)
 {
-    int d;
+    int dim; // number of days in current month
+    RECLUSTER(jtm->tm_min, jtm->tm_sec, J_MINUTE_LENGTH_IN_SECONDS);
+    RECLUSTER(jtm->tm_hour, jtm->tm_min, J_HOUR_LENGTH_IN_MINUTES);
+    RECLUSTER(jtm->tm_mday, jtm->tm_hour, J_DAY_LENGTH_IN_HOURS);
 
+    /* start by calculating a year based on month and change month and year till mday fit */
+    RECLUSTER(jtm->tm_year, jtm->tm_mon, J_YEAR_LENGTH_IN_MONTHS);
+
+    if (jtm->tm_mday < 1) {
+        /* breaking months to days */
+        while (jtm->tm_mday < 1) {
+            if (jtm->tm_mon == 0) {
+                jtm->tm_mon = 11;
+                jtm->tm_year -= 1;
+            } else {
+                jtm->tm_mon -= 1;
+            }
+            jtm->tm_mday += jalali_year_month_days(jtm->tm_year, jtm->tm_mon);
+        }
+    } else {
+        /* clustering days as months */
+        while (jtm->tm_mday > (dim=jalali_year_month_days(jtm->tm_year, jtm->tm_mon))) {
+            jtm->tm_mday -= dim;
+            if (jtm->tm_mon == 11) {
+                jtm->tm_mon = 0;
+                jtm->tm_year += 1;
+            } else {
+                jtm->tm_mon += 1;
+            }
+        }
+    }
+
+    /* date is normalized, compute tm_wday and tm_yday */
     jalali_create_days_from_date(jtm);
-    d = jalali_get_diff(jtm);
-    jalali_get_date(d, jtm);
+    jalali_get_date(jalali_get_diff(jtm), jtm);
 }
 
 /*
