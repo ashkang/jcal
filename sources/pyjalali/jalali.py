@@ -109,3 +109,9 @@ def jalali_update(jtm):
     :attr:`~.types.struct_jtm.tm_mday`.
     """
     _jalali_update(byref(jtm))
+
+_jalali_year_month_days = _libj.jalali_year_month_days
+_jalali_year_month_days.argtypes = (c_int, c_int)
+def jalali_year_month_days(year, month):
+    """Return number of days in given month of year."""
+    return _jalali_year_month_days(year, month)

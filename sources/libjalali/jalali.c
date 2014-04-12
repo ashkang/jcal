@@ -354,9 +354,9 @@ int jalali_get_diff(const struct jtm* j)
 /*
  * Number of days in provided year and month
  */
-static int jalali_year_month_days(int year, int month) {
+int jalali_year_month_days(int year, int month) {
     int dim = jalali_month_len[month];
-    if (jalali_is_jleap(year) && month == 11)
+    if (month == 11 && jalali_is_jleap(year))
         dim += 1;
     return dim;
 }

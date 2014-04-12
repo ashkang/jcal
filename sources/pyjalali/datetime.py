@@ -15,11 +15,12 @@ from __future__ import absolute_import
 import datetime as _std_dt_mod
 from time import time as _timestamp, mktime, strftime
 
-from pyjalali.jalali import jalali_update, jalali_create_days_from_date
+from pyjalali.jalali import (jalali_update, jalali_create_days_from_date,
+                             jalali_year_month_days)
 from pyjalali.jtime import jctime, jgmtime, jlocaltime, jmktime
 from pyjalali.jstr import jstrftime, jstrptime
 from pyjalali.types import struct_jtm, jtm_to_struct_time
-from pyjalali.helpers import normalize_jtm, month_days
+from pyjalali.helpers import normalize_jtm
 
 
 __all__ = ('date', 'datetime', 'j2g', 'g2j', 'now', 'utcnow',
@@ -34,7 +35,7 @@ class date(object):
     def __init__(self, year, month, day):
         if not 1 <= month <= 12:
             raise ValueError('month value out of range [1, 12]')
-        if day > month_days(year, month - 1):
+        if day > jalali_year_month_days(year, month - 1):
             raise ValueError('day is out of range for month')
         self.__jtm = struct_jtm()
         self.__jtm.tm_year = year

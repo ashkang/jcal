@@ -86,6 +86,8 @@ extern void jalali_update(struct jtm* jtm);
 
 extern void jalali_show_time(const struct jtm* j);
 
+extern int jalali_year_month_days(int year, int month);
+
 #ifdef __cplusplus
 }
 #endif
