@@ -13,6 +13,7 @@
     using libjalali tools.
 """
 
+import os
 import sys
 import ctypes.util
 from ctypes import cdll
@@ -23,6 +24,7 @@ __version__ = (0, 5, 0, 2)
 if sys.platform.startswith('win'):
     libname = 'libjalali.dll'
 else:
-    libname = ctypes.util.find_library('jalali')
-_libj = cdll.LoadLibrary(libname)
-del cdll, ctypes, sys, libname
+    libname = 'libjalali.so'
+_libj = cdll.LoadLibrary(os.path.join(os.environ.get('LIBJALALI_DIR', ''),
+                                      libname))
+del cdll, ctypes, sys, libname, os

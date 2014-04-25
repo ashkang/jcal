@@ -48,9 +48,15 @@ jdate switches in brief:
 If you're experiencing troubles, compiling the package with GNU's
 build system then keep reading.
 
-Unsafe way of compilation
-=========================
 
-There is a non-portable Makefile available in package tree ``Makefile.old''
-If you had troubles, compiling your package with ./configure script, rename
-Makefile.old to Makefile, then simply invoke make and then make install as root.
+Installation
+============
+Run ./autogen.sh to make `configure` script for you.  Then follow common
+package installation routine as described in INSTALL.
+
+If you want pyjalali package too, you can either pass `--enable-pyjalali`
+option to ./configure script or after installing libjalali use provided
+`setup.py` directly:
+
+# cd jcal/sources
+# python setup.py install
