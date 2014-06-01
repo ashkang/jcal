@@ -474,7 +474,7 @@ void show_1(struct cal_layout* l, struct jtm* j)
 
 void show_year(struct cal_layout* l, struct jtm* j)
 {
-    struct jtm _j[4];
+    struct jtm _j[4] = {{0}};
 
     char title[100];
     char buf[100];
@@ -534,7 +534,7 @@ void show_year(struct cal_layout* l, struct jtm* j)
 int main(int argc, char** argv)
 {
     struct cal_layout l;
-    struct jtm j;
+    struct jtm j = {0};
     time_t t;
 
     int opt;
