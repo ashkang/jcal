@@ -465,6 +465,9 @@ class datetime(object):
         """
         return datetime_from_ts(ts, True, tz)
 
+    def __format__(self, format):
+        return self.strftime(format)
+
     @property
     def jtm(self):
         """Broken-down jalali time structure for this date"""
