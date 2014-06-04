@@ -83,11 +83,10 @@ void in_jasctime(const struct jtm* jtm, char* buf)
         return;
 
     if (buf) {
-        snprintf(buf, MAX_BUF_SIZE, "%s %s %02d %02d:%02d:%02d %d\n",
+        sprintf(buf, "%s %s %02d %02d:%02d:%02d %d\n",
                  jalali_days_3[jtm->tm_wday], jalali_months_3[jtm->tm_mon],
                  jtm->tm_mday, jtm->tm_hour, jtm->tm_min, jtm->tm_sec,
                  jtm->tm_year);
-        memcpy(in_buf, buf, MAX_BUF_SIZE);
     } else {
     snprintf(in_buf, MAX_BUF_SIZE, "%s %s %02d %02d:%02d:%02d %d\n",
              jalali_days_3[jtm->tm_wday], jalali_months_3[jtm->tm_mon],
@@ -136,12 +135,8 @@ void in_jlocaltime(const time_t* timep, struct jtm* result)
     c_jtm.tm_isdst = t.tm_isdst;
 
     c_jtm.tm_gmtoff = gmtoff;
+    memcpy(result ? result : &in_jtm, &c_jtm, sizeof(struct jtm));
 
-    if (result) {
-        memcpy(result, &c_jtm, sizeof(struct jtm));
-    }
-
-    memcpy(&in_jtm, &c_jtm, sizeof(struct jtm));
 }
 
 void in_jctime(const time_t* timep, char* buf)
@@ -152,12 +147,7 @@ void in_jctime(const time_t* timep, char* buf)
     struct jtm c_jtm;
     in_jlocaltime(timep, &c_jtm);
 
-    if (buf) {
-        in_jasctime(&c_jtm, buf);
-    }
-    else {
-        in_jasctime(&c_jtm, 0);
-    }
+    in_jasctime(&c_jtm, buf ? buf : 0);
 }
 
 void in_jgmtime(const time_t* timep, struct jtm* result)
@@ -185,11 +175,8 @@ void in_jgmtime(const time_t* timep, struct jtm* result)
     c_jtm.tm_zone = GMT_ZONE;
     c_jtm.tm_gmtoff = 0;
 
-    if (result) {
-        memcpy(result, &c_jtm, sizeof(struct jtm));
-    }
+    memcpy(result ? result : &in_jtm, &c_jtm, sizeof(struct jtm));
 
-    memcpy(&in_jtm, &c_jtm, sizeof(struct jtm));
 }
 
 char* jasctime(const struct jtm* jtm)
@@ -851,8 +838,8 @@ char* jasctime_r(const struct jtm* jtm, char* buf)
         return 0;
 
     in_jasctime(jtm, buf);
-
-    return in_buf;
+    strncpy(in_buf, buf, MAX_BUF_SIZE);
+    return buf;
 }
 
 struct jtm* jlocaltime_r(const time_t* timep, struct jtm* result)
@@ -861,8 +848,8 @@ struct jtm* jlocaltime_r(const time_t* timep, struct jtm* result)
         return 0;
 
     in_jlocaltime(timep, result);
-
-    return &in_jtm;
+    memcpy(&in_buf, result, sizeof(result));
+    return result;
 }
 
 struct jtm* jgmtime_r(const time_t* timep, struct jtm* result)
@@ -871,8 +858,8 @@ struct jtm* jgmtime_r(const time_t* timep, struct jtm* result)
         return 0;
 
     in_jgmtime(timep, result);
-
-    return &in_jtm;
+    memcpy(&in_buf, result, sizeof(result));
+    return result;
 }
 
 char* jctime_r(const time_t* timep, char* buf)
@@ -881,8 +868,8 @@ char* jctime_r(const time_t* timep, char* buf)
         return 0;
 
     in_jctime(timep, buf);
-
-    return in_buf;
+    strncpy(in_buf, buf, MAX_BUF_SIZE);
+    return buf;
 }
 
 /*
