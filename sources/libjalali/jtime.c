@@ -838,6 +838,7 @@ char* jasctime_r(const struct jtm* jtm, char* buf)
         return 0;
 
     in_jasctime(jtm, buf);
+    strncpy(in_buf, buf, MAX_BUF_SIZE);
     return buf;
 }
 
@@ -847,6 +848,7 @@ struct jtm* jlocaltime_r(const time_t* timep, struct jtm* result)
         return 0;
 
     in_jlocaltime(timep, result);
+    memcpy(&in_buf, result, sizeof(result));
     return result;
 }
 
@@ -856,6 +858,7 @@ struct jtm* jgmtime_r(const time_t* timep, struct jtm* result)
         return 0;
 
     in_jgmtime(timep, result);
+    memcpy(&in_buf, result, sizeof(result));
     return result;
 }
 
@@ -865,6 +868,7 @@ char* jctime_r(const time_t* timep, char* buf)
         return 0;
 
     in_jctime(timep, buf);
+    strncpy(in_buf, buf, MAX_BUF_SIZE);
     return buf;
 }
 
