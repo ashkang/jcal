@@ -134,7 +134,6 @@ class date(object):
         """Return a string representing the date, ``date(1392, 8, 2).ctime() ==
         'Thu Aba 02 00:00:00 1392'``"""
         njtm = self.__jtm.copy()
-        jalali_update(njtm)
         return jctime(jmktime(njtm))
 
     @property
@@ -157,7 +156,6 @@ class date(object):
     def timetuple(self):
         """Return a :class:`time.struct_time` from this date.  DST flag is
         -1"""
-        # TODO: change after jmktime fix
         njtm = self.__jtm.copy()
         jalali_update(njtm)
         njtm.tm_isdst = -1
@@ -444,12 +442,7 @@ class datetime(object):
         >>> datetime(1392, 9, 1, 12, 32, 14, 992).ctime()
         'Fri Aza 01 12:32:14 1392'
         """
-        # TODO:
-        # this should be enough if jmktime fixed:
-        # return jctime(jmktime(self.__jtm))
-        njtm = self.__jtm.copy()
-        jalali_update(njtm)
-        return jctime(jmktime(njtm))
+        return jctime(jmktime(self.__jtm.copy()))
 
     def date(self):
         """Return :class:`.date` object with same year, month and day."""
@@ -773,7 +766,6 @@ def gregorian_from_jalali(date_or_datetime):
         raise ValueError("Can't convert dates before Epoch")
     # to stop dst changes from bugging conversion, just convert date
     njtm = jdate.jtm.copy()
-    jalali_update(njtm)  # pragma: jmktime needs yday TODO: remove
     gdate = _std_dt_mod.date.fromtimestamp(jmktime(njtm))
     if time is None:
         return gdate

@@ -383,10 +383,6 @@ Calling
 also sets the external variable <I>tzname</I> with
 information about the current timezone.
 <P>
-<B>jmktime</B>()
-
-function does not check the values of the <I>jtm</I> structure.
-<P>
 <P>
 
 There are a number of non-standard functions also provided
@@ -477,10 +473,12 @@ The
 <B>jalali_update</B>()
 
 function updates <I>tm_wday</I> and <I>tm_yday</I> fields of the
-broken-down jalali time structure based on it's <I>tm_year</I>
-, <I>tm_mon</I> and <I>tm_mday</I>. <I>tm_isdst</I>, <I>tm_gmtoff</I>
-and <I>tm_zone</I> fields are set accordingly. <I>tm_hour</I>, <I>tm_min</I> and
-<I>tm_sec</I> fields remain untouched.
+broken-down jalali time structure based on it's <I>tm_year</I>,
+<I>tm_mon</I>, <I>tm_mday</I>, <I>tm_hour</I>, <I>tm_min</I> and
+<I>tm_sec</I> fields. If structure members are outside their
+valid interval, they will be normalized (so that, for example,
+40 Bahman is changed into 10 Esfand). <I>tm_isdst</I>,
+<I>tm_gmtoff</I> and <I>tm_zone</I> fields are set accordingly.
 <P>
 <A NAME="lbAE">&nbsp;</A>
 <H2>EXAMPLES</H2>
@@ -504,7 +502,6 @@ main(int argc, char ** argv)
     jtm.tm_mon = atoi(argv[2]);
     jtm.tm_mday = atoi(argv[3]);
 
-    jalali_update(&amp;jtm);
     t = jmktime(&amp;jtm);
     localtime_r(&amp;t, &amp;tm);
     printf(&quot;%d/%d/%d \n&quot;, tm.tm_year, tm.tm_mon, tm.tm_mday);
@@ -667,6 +664,6 @@ law.
 This document was created by
 <A HREF="http://localhost/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 00:22:18 GMT, June 15, 2011
+Time: 06:28:14 GMT, June 05, 2014
 </BODY>
 </HTML>

@@ -319,9 +319,6 @@ Calling
 also sets the external variable \fItzname\fP with
 information about the current timezone.
 
-.BR jmktime ()
-function does not check the values of the \fIjtm\fP structure.
-
 .PP
 There are a number of non-standard functions also provided
 to work with jalali date and time.
@@ -391,10 +388,12 @@ on a broken-down jalali time structure supplied to it.
 The
 .BR jalali_update ()
 function updates \fItm_wday\fP and \fItm_yday\fP fields of the
-broken-down jalali time structure based on it's \fItm_year\fP
-, \fItm_mon\fP and \fItm_mday\fP. \fItm_isdst\fP, \fItm_gmtoff\fP
-and \fItm_zone\fP fields are set accordingly. \fItm_hour\fP, \fItm_min\fP and
-\fItm_sec\fP fields remain untouched.
+broken-down jalali time structure based on it's \fItm_year\fP,
+\fItm_mon\fP, \fItm_mday\fP, \fItm_hour\fP, \fItm_min\fP and
+\fItm_sec\fP fields. If structure members are outside their
+valid interval, they will be normalized (so that, for example,
+40 Bahman is changed into 10 Esfand). \fItm_isdst\fP,
+\fItm_gmtoff\fP and \fItm_zone\fP fields are set accordingly.
 
 .SH "EXAMPLES"
 The following program converts a jalali date to gregorian
@@ -416,7 +415,6 @@ main(int argc, char ** argv)
     jtm.tm_mon = atoi(argv[2]);
     jtm.tm_mday = atoi(argv[3]);
 
-    jalali_update(&jtm);
     t = jmktime(&jtm);
     localtime_r(&t, &tm);
     printf("%d/%d/%d \\n", tm.tm_year, tm.tm_mon, tm.tm_mday);

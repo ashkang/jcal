@@ -12,7 +12,8 @@ from ctypes import POINTER, byref, c_int
 __all__ = ('jalali_create_date_from_days', 'jalali_create_date_from_days',
            'jalali_create_secs_from_time', 'jalali_create_time_from_secs',
            'jalali_get_date', 'jalali_get_diff', 'jalali_get_jyear_info',
-           'jalali_is_jleap', 'jalali_update')
+           'jalali_year_month_days', 'jalali_is_jleap', 'jalali_update')
+
 
 _jalali_is_jleap = _libj.jalali_is_jleap
 _jalali_is_jleap.argtypes = (c_int,)
@@ -109,3 +110,13 @@ def jalali_update(jtm):
     :attr:`~.types.struct_jtm.tm_mday`.
     """
     _jalali_update(byref(jtm))
+
+
+_jalali_year_month_days = _libj.jalali_year_month_days
+_jalali_year_month_days.argtypes = (c_int, c_int)
+_jalali_year_month_days.restype = c_int
+def jalali_year_month_days(year, month):
+    """Return number of days in provided month of year.
+    Month number starts at zero
+    """
+    return _jalali_year_month_days(year, month)
