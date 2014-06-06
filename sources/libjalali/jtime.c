@@ -84,12 +84,12 @@ void in_jasctime(const struct jtm* jtm, char* buf)
 
     if (buf) {
         sprintf(buf, "%s %s %02d %02d:%02d:%02d %d\n",
-                jalali_days_3[jtm->tm_wday], jalali_months_3[jtm->tm_mon],
+                jalali_days_3_fa[jtm->tm_wday], jalali_months_3[jtm->tm_mon],
                 jtm->tm_mday, jtm->tm_hour, jtm->tm_min, jtm->tm_sec,
                 jtm->tm_year);
     } else {
         snprintf(in_buf, MAX_BUF_SIZE, "%s %s %02d %02d:%02d:%02d %d\n",
-                 jalali_days_3[jtm->tm_wday], jalali_months_3[jtm->tm_mon],
+                 jalali_days_3_fa[jtm->tm_wday], jalali_months_3[jtm->tm_mon],
                  jtm->tm_mday, jtm->tm_hour, jtm->tm_min, jtm->tm_sec,
                  jtm->tm_year);
 
