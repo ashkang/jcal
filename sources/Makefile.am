@@ -1,5 +1,5 @@
 ACLOCAL_AMFLAGS = -I m4
-SUBDIRS         = libjalali src man
+SUBDIRS         = libjalali src man test_kit
 
 if WANT_PYJALALI
 install-exec-hook:

@@ -29,13 +29,16 @@ AC_CHECK_FUNCS([gettimeofday localtime_r memset strcasecmp strchr strstr tzset])
 
 AC_CONFIG_FILES([Makefile
                  libjalali/Makefile
+                 test_kit/Makefile
+                 test_kit/jalali/Makefile
+                 test_kit/jtime/Makefile
                  man/Makefile
                  src/Makefile
                 ])
 
 PYTHON_COMPAT=( python2.7 python2.6 )
 
-AC_ARG_ENABLE([pyjalali], 
+AC_ARG_ENABLE([pyjalali],
               AC_HELP_STRING([--enbale-pyjalali], [Install Python bindings (pyjalali)]),
               [case $enableval in
                       yes|no) installpyjalali=$enableval ;;

@@ -1,4 +1,130 @@
+2014-06-05  Amir Ghassemi Nasr <Ameretat.Reith@gmail.com>
+
+  * docs/jalali.html, sources/man/jctime.3, sources/pyjalali/datetime.py,
+  sources/pyjalali/jalali.py: pyjalali and documentation update for
+  jalali_update and jmktime integration
+
+2014-04-25  Amir Ghassemi Nasr <Ameretat.Reith@gmail.com>
+
+  * sources/Makefile.am, sources/README, sources/configure.ac,
+  sources/configure.in, sources/pyjalali/__init__.py: call setup.py from
+  makefile. resolves #7
+
+2014-04-12  Amir Ghassemi Nasr <Ameretat.Reith@gmail.com>
+
+  * sources/libjalali/jalali.c, sources/libjalali/jalali.h,
+  sources/pyjalali/datetime.py, sources/pyjalali/helpers.py,
+  sources/pyjalali/jalali.py: forward pyjalali date normalization to underlying
+  C implementation
+
+2014-04-11  Amir Ghassemi Nasr <Ameretat.Reith@gmail.com>
+
+  * sources/libjalali/jalali.c, test_kit/jalali_update.c: normalize date in
+  jalali_update
+
+2014-02-18  Amir Ghassemi Nasr <Ameretat.Reith@gmail.com>
+
+  * sources/libjalali/jtime.c, sources/pyjalali/jalali.py: reentrant library
+  functions don't touch internal variables anymore
+
+2014-02-24  Amir Ghassemi Nasr <Ameretat.Reith@gmail.com>
+
+  * .gitignore, docs/pyjalali/.buildinfo, docs/pyjalali/.doctrees/api.doctree,
+  docs/pyjalali/.doctrees/environment.pickle,
+  docs/pyjalali/.doctrees/index.doctree, docs/pyjalali/.doctrees/intro.doctree,
+  docs/pyjalali/.doctrees/modules.doctree,
+  docs/pyjalali/.doctrees/pyjalali.doctree, docs/pyjalali/_sources/index.txt,
+  docs/pyjalali/_sources/intro.txt, docs/pyjalali/_sources/pyjalali.txt,
+  docs/pyjalali/_static/ajax-loader.gif, docs/pyjalali/_static/basic.css,
+  docs/pyjalali/_static/comment-bright.png,
+  docs/pyjalali/_static/comment-close.png, docs/pyjalali/_static/comment.png,
+  docs/pyjalali/_static/default.css, docs/pyjalali/_static/doctools.js,
+  docs/pyjalali/_static/down-pressed.png, docs/pyjalali/_static/down.png,
+  docs/pyjalali/_static/file.png, docs/pyjalali/_static/jquery.js,
+  docs/pyjalali/_static/minus.png, docs/pyjalali/_static/plus.png,
+  docs/pyjalali/_static/pygments.css, docs/pyjalali/_static/searchtools.js,
+  docs/pyjalali/_static/sidebar.js, docs/pyjalali/_static/underscore.js,
+  docs/pyjalali/_static/up-pressed.png, docs/pyjalali/_static/up.png,
+  docs/pyjalali/_static/websupport.js, docs/pyjalali/genindex.html,
+  docs/pyjalali/index.html, docs/pyjalali/intro.html,
+  docs/pyjalali/objects.inv, docs/pyjalali/py-modindex.html,
+  docs/pyjalali/pyjalali.html, docs/pyjalali/search.html,
+  docs/pyjalali/searchindex.js, sources/pyjalali/__init__.py,
+  sources/pyjalali/datetime.py, sources/pyjalali/docs/Makefile,
+  sources/pyjalali/docs/conf.py, sources/pyjalali/docs/index.rst,
+  sources/pyjalali/docs/intro.rst, sources/pyjalali/docs/pyjalali.rst,
+  sources/pyjalali/helpers.py, sources/pyjalali/jalali.py,
+  sources/pyjalali/jstr.py, sources/pyjalali/jtime.py,
+  sources/pyjalali/types.py: some documentations for pyjalali added
+
+2014-02-04  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * sources/libjalali/jalali.c, sources/src/jdate.c: fixes #8: incorrect
+  string/format parsing when using -d on jdate due to undefined behaviour of
+  strncpy() across different platforms. using sscanf() instead.
+
+2013-12-01  Amir Ghassemi Nasr <Ameretat.Reith@gmail.com>
+
+  * sources/pyjalali/__init__.py, sources/pyjalali/datetime.py: date convertion
+  added to datetime convertion functions
+
+2013-11-27  Amir Ghassemi Nasr <Ameretat.Reith@gmail.com>
+
+  * sources/pyjalali/__init__.py, sources/pyjalali/datetime.py,
+  sources/setup.py: datetime.strftime workaround
+
+2013-11-25  Amir Ghassemi Nasr <Ameretat.Reith@gmail.com>
+
+  * sources/libjalali/jtime.c, sources/pyjalali/__init__.py,
+  sources/pyjalali/datetime.py, sources/pyjalali/helpers.py: cleanup; revert
+  jmktime changes due to jalali_update problems
+
+  * sources/pyjalali/__init__.py, sources/setup.py: added installer
+
+  * sources/pyjalali/__init__.py, sources/pyjalali/datetime.py,
+  sources/pyjalali/helpers.py, sources/pyjalali/jalali.py: datetime.date
+  implemented
+
+2013-11-24  Amir Ghassemi Nasr <Ameretat.Reith@gmail.com>
+
+  * sources/pyjalali/datetime.py, sources/pyjalali/helpers.py,
+  sources/pyjalali/jalali.py: datetime.datetime implemented.
+
+  * sources/pyjalali/__init__.py, sources/pyjalali/jalali.py,
+  sources/pyjalali/jtime.py: jalali seperated from jtime
+
+2013-11-21  Amir Ghassemi Nasr <Ameretat.Reith@gmail.com>
+
+  * sources/pyjalali/jstr.py, sources/pyjalali/jtime.py: make str functions
+  std, jalali_get_date bugfix
+
+2013-11-19  Amir Ghassemi Nasr <Ameretat.Reith@gmail.com>
+
+  * sources/pyjalali/jstr.py, sources/pyjalali/types.py: chages for datetime
+
+  * sources/libjalali/jtime.c, sources/libjalali/jtime.h: added normalization
+  to jmktime
+
+2013-11-17  Amir Ghassemi Nasr <Ameretat.Reith@gmail.com>
+
+  * .gitignore, sources/pyjalali/__init__.py, sources/pyjalali/jstr.py,
+  sources/pyjalali/jtime.py, sources/pyjalali/types.py: python bindings added
+
+2013-11-16  Ashkan Ghassemi <ashkan@tidm.ir>
+
+  * .gitignore, sources/libjalali/Makefile.am, sources/libjalali/jalali.c,
+  sources/libjalali/jtime.c, sources/src/jcal.c, sources/src/jcal.h,
+  sources/src/jdate.c: fixes an issue which caused an extra space to be printed
+  after day number indicator when highlighted current day was friday. closes #1
+
+2013-11-16  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * sources/src/jcal.c, sources/src/jcal.h, sources/src/jdate.c,
+  sources/src/termcap.h: code sanitization. NOT COMPLETE.
+
 2013-06-01  Ashkan Ghassemi <ghassemi@ftml.net>
+
+  * sources/ChangeLog, sources/gitlog2changelog.py: ChangeLog updated.
 
   * sources/ChangeLog, sources/libjalali/jalali.c, sources/libjalali/jalali.h,
   sources/libjalali/jtime.c, sources/libjalali/jtime.h, sources/man/jcal.1,

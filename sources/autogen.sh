@@ -68,13 +68,17 @@ function clean() {
 		"configure" "config.sub" "config.guess" "config.log"
 		"config.status" "depcomp" "install-sh" "libtool" "ltmain.sh"
 		"missing" "src/Makefile.in" "man/Makefile.in"
+        "test_kit/jalali/Makefile.in" "test_kit/jalali/Makefile"
+        "test_kit/Makefile.in" "test_kit/Makefile"
+        "test_kit/jalali/.deps" "test_kit/jtime/.deps"
+        "test_kit/jtime/Makefile.in" "test_kit/jalali/Makefile"
 		"libjalali/Makefile.in" "INSTALL" )
 
 	echo -e "${GREEN}*${RESET} ${YELLOW}cleaning source tree...${RESET}"
 
 	# Makefile is present.
 	if test -f Makefile; then
-		echo -ne "${GREEN}*{RESET} {YELLOW}performing distclean on"
+		echo -ne "${GREEN}* ${RESET}${YELLOW}performing distclean on"
 		echo -ne " sources if possible...${RESET} "
 		make distclean >/dev/null 2>&1
 		let STAT=$?
@@ -215,8 +219,8 @@ which which 1>/dev/null 2>&1
 if [ $? -ne 0 ]; then
 	echo -e "cannot find \`\`which''. autogen cannot continue."
 	exit 1
-fi 
-	
+fi
+
 # Parsing command-line arguments
 GETOPT=`which getopt 2>/dev/null`
 if [ -z ${GETOPT} ]; then
