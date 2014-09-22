@@ -2,8 +2,8 @@
 #include <time.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <jalali/jalali.h>
-#include <jalali/jtime.h>
+#include "jalali.h"
+#include "jtime.h"
 
 int main() {
     char *s;
@@ -15,4 +15,3 @@ int main() {
     jalali_show_time(&j);
     return 0;
 }
-

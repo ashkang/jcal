@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <jalali/jalali.h>
+#include "jalali.h"
 
 int main(int argc, char** argv)
 {
     if (argc != 4) {
-	printf("wrong arguments given\n");
-	printf("usage: get_diff DAY MONTH YEAR\n");
-	exit(1);
+    printf("wrong arguments given\n");
+    printf("usage: get_diff DAY MONTH YEAR\n");
+    exit(1);
     }
 
     int d = atoi(argv[1]);

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
-#include <jalali/jalali.h>
-#include <jalali/jtime.h>
+#include "jalali.h"
+#include "jtime.h"
 
 int main() {
     time_t t;
@@ -14,4 +14,3 @@ int main() {
     jalali_show_time(&j);
     return 0;
 }
-

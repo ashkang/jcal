@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <jalali/jalali.h>
-#include <jalali/jtime.h>
+#include "jalali.h"
+#include "jtime.h"
 
 int main(int argc, char** argv) {
     if (argc != 2) {
-	printf("wrong arguments given\n");
-	printf("usage jstrftime FORMAT\n");
-	exit(1);
+    printf("wrong arguments given\n");
+    printf("usage jstrftime FORMAT\n");
+    exit(1);
     }
 
     const char* fmt = argv[1];
@@ -24,4 +24,3 @@ int main(int argc, char** argv) {
 
     exit(0);
 }
-

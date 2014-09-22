@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "jalali/jalali.h"
+#include "jalali.h"
 
 int main(int argc, char** argv)
 {
     if (argc != 2) {
-	printf("wrong arguments given\n");
-	printf("usage: sec_converter SECONDS\n");
-	exit(1);
+    printf("wrong arguments given\n");
+    printf("usage: sec_converter SECONDS\n");
+    exit(1);
     }
 
     struct ab_jtm a;

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
-#include <jalali/jalali.h>
-#include <jalali/jtime.h>
+#include "jalali.h"
+#include "jtime.h"
 
 int main(int argc, char** argv) {
     time_t t;
@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
     jlocaltime_r(&t, &j);
     puts("Current time jtm:");
     jalali_show_time(&j);
-    
+
     char ans;
     int* mem_ref;
     char* mem_name;
