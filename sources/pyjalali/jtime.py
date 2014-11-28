@@ -68,15 +68,6 @@ _jmktime.restype = time_t
 def jmktime(jtm):
     """Return timestamp from provided time.
 
-    :param `pyjalali.types.struct_jtm` jtm:
-
-    .. Warning ::
-        Inconsistenices with POSIX :c:func:`mktime`:
-
-        1. it doesn't normalize input.
-        2. it needs glibc defined timezone information.
-        3. it needs :attr:`.types.struct_jtm.tm_yday` provided.
-        4. it reads zone information from provided time structure instead of
-           local timezone.
+    :param `pyjalali.types.struct_jtm` jtm
     """
     return _jmktime(byref(jtm))

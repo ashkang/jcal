@@ -440,7 +440,7 @@ class datetime(object):
         """Return a string representing the date and time.
 
         >>> datetime(1392, 9, 1, 12, 32, 14, 992).ctime()
-        'Fri Aza 01 12:32:14 1392'
+        'Jom Aza 01 12:32:14 1392'
         """
         return jctime(jmktime(self.__jtm.copy()))
 
@@ -510,52 +510,17 @@ class datetime(object):
         d.update(**kw)
         return datetime(**d)
 
-    def strftime(self, format, _decrease_gmtoff_from_secs=False):
+    def strftime(self, format):
         """Return a string representing the date and time, controlled by an
         explicit format string.
-
-        .. Note ::
-            To show correct value for some formatting specials, e.g.'%s',
-            libjalali's :func:`jstrftime` needs timezone informations filled
-            in :attr:`.jtm.tm_gmtoff` (`issue 4`_) which we could not depend
-            on here, since naive datetime objects have zero knowledge about
-            it.  Storing these timezone information in a naive datetime
-            object, make datetime implementation heavily depended on
-            :func:`jmktime` which have several issues itself.  Additionally it
-            makes :class:`~pyjalali.datetime.datetime` less like
-            :class:`python:datetime.datetime` since it should store more
-            information and change method signatures.
-
-            For those directives, a possible workaround is to change
-            :attr:`.jtm` by detecting local zone and putting its effect in
-            other field values, but this makes other directives (hour, minute,
-            etc) incorrect.  You can use this workaround by passing True as
-            second argument.
-
-            .. _issue 4: https://github.com/ashkang/jcal/issues/4
         """
         self.__date._compute_yday_wday_if_necessary()
         if self.tzinfo is not None:
             njtm = self.__jtm.copy()
             njtm.tm_gmtoff = int(self.utcoffset().total_seconds())
             njtm.tm_zone = self.tzname()
-            if _decrease_gmtoff_from_secs:
-                njtm.tm_sec += (njtm.tm_gmtoff -
-                                jlocaltime(int(_timestamp())).tm_gmtoff)
             return jstrftime(format, njtm)
-        if _decrease_gmtoff_from_secs:
-            return jstrftime(format, self.__localtime_offset_decreased_jtm())
         return jstrftime(format, self.jtm)
-
-    def __localtime_offset_decreased_jtm(self):
-        # workaround for strftime GMT offset dependecy
-        njtm = self.__jtm.copy()
-        if self.tzinfo is None:
-            njtm.tm_gmtoff = 0
-            njtm.tm_sec -= jlocaltime(int(_timestamp())).tm_gmtoff
-            njtm.tm_zone = ''
-            normalize_jtm(njtm)
-        return njtm
 
     @classmethod
     def strptime(self, date_str, format):
